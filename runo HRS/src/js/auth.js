@@ -117,6 +117,38 @@ function initAuth() {
   });
 }
 
+function applyRBAC(role) {
+  const roleUpper = (role || 'ADMIN').toUpperCase();
+  const rolePermissions = {
+    'ADMIN': ['dashboard', 'projects', 'customers', 'sales', 'commercial', 'design', 'accounts', 'store', 'purchase', 'manufacturing', 'approvals', 'users', 'completed-projects', 'new-project'],
+    'SALES': ['dashboard', 'projects', 'customers', 'sales', 'commercial', 'completed-projects', 'new-project'],
+    'COMMERCIAL': ['dashboard', 'projects', 'customers', 'commercial', 'sales', 'completed-projects', 'new-project'],
+    'DESIGN': ['dashboard', 'projects', 'design', 'completed-projects'],
+    'ACCOUNTS': ['dashboard', 'accounts', 'customers', 'projects'],
+    'STORE': ['dashboard', 'store', 'purchase'],
+    'PURCHASE': ['dashboard', 'purchase', 'store'],
+    'ENGINEER': ['dashboard', 'projects', 'design', 'manufacturing', 'completed-projects', 'new-project'],
+    'OPERATOR': ['dashboard', 'manufacturing']
+  };
+
+  const allowed = rolePermissions[roleUpper] || rolePermissions['ADMIN'];
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    const v = item.getAttribute('data-view');
+    if (!v) return;
+    if (allowed.includes(v)) {
+      item.style.display = 'flex';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+
+  const usersNav = document.querySelector('.nav-item[data-view="users"]');
+  if (usersNav) {
+    usersNav.style.display = (roleUpper === 'ADMIN') ? 'flex' : 'none';
+  }
+}
+
 function setSession(user) {
   window.AppState.currentUser = user;
   document.getElementById('display-user-info').innerText = 
@@ -133,9 +165,11 @@ function setSession(user) {
     viewMain.style.display = 'flex';
   }
 
+  applyRBAC(user.role);
   window.switchView('dashboard');
   window.showToast(`Welcome back, ${user.name || user.username}!`, 'success');
 }
 
 window.initAuth = initAuth;
 window.setSession = setSession;
+window.applyRBAC = applyRBAC;

@@ -1,0 +1,58 @@
+<div class="view-header">
+  <div class="view-title-group">
+    <h1>DESIGN &amp; ENGINEERING LIFECYCLE</h1>
+    <p>Hot runner 2D AutoCAD detailing, 3D parametric flow modeling, design checks, and customer approvals</p>
+  </div>
+  <div class="view-actions">
+    <button class="btn-action-primary" id="btn-design-refresh">⟳ REFRESH</button>
+    <button class="btn-action-secondary" id="btn-export-design-excel">EXPORT EXCEL</button>
+    <button class="btn-action-secondary" id="btn-export-design-pdf">EXPORT PDF</button>
+  </div>
+</div>
+
+<div class="table-card">
+  <div class="table-toolbar">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" id="search-design" placeholder="Search by Project, Customer or Engineer...">
+    </div>
+    <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px;">
+      SELECT A PROJECT ROW TO ADVANCE WORKFLOW MILESTONES
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>DATE</th>
+          <th>CUSTOMER NAME</th>
+          <th>PROJECT CODE</th>
+          <th>CATEGORY</th>
+          <th>QUOTE</th>
+          <th>PO STATUS</th>
+          <th>2D START</th>
+          <th>2D END</th>
+          <th>3D START</th>
+          <th>3D END</th>
+          <th>DESIGN SEND</th>
+          <th>OVERALL STATUS</th>
+          <th>OWNER</th>
+        </tr>
+      </thead>
+      <tbody id="design-table-body"></tbody>
+    </table>
+  </div>
+
+  <!-- Milestone Workflow Control Buttons (Bottom Action Bar) -->
+  <div class="design-action-bar">
+    <span style="font-size: 12px; font-weight: 700; color: var(--text-primary);" id="design-selected-hint">Select a row to execute design actions:</span>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <button class="btn-workflow-step" id="btn-step-2d-start">START 2D</button>
+      <button class="btn-workflow-step" id="btn-step-2d-end">END 2D</button>
+      <button class="btn-workflow-step" id="btn-step-3d-start">START 3D</button>
+      <button class="btn-workflow-step" id="btn-step-3d-end">END 3D</button>
+      <button class="btn-workflow-step primary" id="btn-step-design-send">DESIGN SEND</button>
+    </div>
+  </div>
+</div>

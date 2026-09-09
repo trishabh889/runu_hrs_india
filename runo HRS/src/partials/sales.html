@@ -1,0 +1,66 @@
+<div class="view-header">
+  <div class="view-title-group">
+    <h1>SALES &amp; ORDER PIPELINE</h1>
+    <p>Hot runner tooling inquiries, quotations, purchase orders, and technical design handoffs</p>
+  </div>
+  <div class="view-actions">
+    <button class="btn-action-primary" id="btn-sales-add-project">+ ADD NEW PROJECT</button>
+    <button class="btn-action-secondary" id="btn-sales-update-quote">UPDATE QUOTE</button>
+    <button class="btn-action-secondary" id="btn-sales-update-po">UPDATE PO</button>
+    <button class="btn-action-secondary" id="btn-export-sales-excel">EXPORT EXCEL</button>
+    <button class="btn-action-secondary" id="btn-export-sales-pdf">EXPORT PDF</button>
+  </div>
+</div>
+
+<div class="table-card">
+  <div class="table-toolbar" style="flex-wrap: wrap; gap: 10px; align-items: center;">
+    <div class="search-box" style="flex: 1 1 240px;">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" id="search-sales" placeholder="Search by Project, Customer, Category or Status...">
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">CATEGORY:</span>
+      <select id="filter-sales-category" class="filter-select-compact">
+        <option value="ALL">ALL CATEGORIES</option>
+        <option value="HRS">HRS</option>
+        <option value="HRTC">HRTC</option>
+        <option value="SPARE-HRS">SPARE-HRS</option>
+        <option value="SPARE-HRTC">SPARE-HRTC</option>
+      </select>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">FINANCIAL YEAR:</span>
+      <select id="filter-sales-fy" class="filter-select-compact">
+        <option value="ALL">ALL PROJECTS</option>
+        <option value="2026">FY 2026-27</option>
+        <option value="2027">FY 2027-28</option>
+        <option value="2028">FY 2028-29</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>DATE</th>
+          <th>CUSTOMER NAME</th>
+          <th>PROJECT CODE</th>
+          <th>CATEGORY</th>
+          <th>QUOTE STATUS</th>
+          <th>PO RECEIVED</th>
+          <th>2D DESIGN</th>
+          <th>3D DESIGN</th>
+          <th>DESIGN SEND</th>
+          <th>DESIGN CHECK</th>
+          <th>OWNER</th>
+          <th>STATUS</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody id="sales-table-body"></tbody>
+    </table>
+  </div>
+</div>

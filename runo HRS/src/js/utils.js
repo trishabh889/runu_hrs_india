@@ -166,4 +166,103 @@ window.showConfirmDialog = function({
   });
 };
 
+window.exportTableToExcel = function(tableId, filename = 'export.xls') {
+  const table = typeof tableId === 'string' ? document.getElementById(tableId) : tableId;
+  if (!table) {
+    if (window.showToast) window.showToast('Table not found for export', 'error');
+    return;
+  }
+
+  let html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
+  html += '<head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Sheet1</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><style>table { border-collapse: collapse; font-family: Segoe UI, sans-serif; font-size: 11px; } th, td { border: 1px solid #999; padding: 6px; } th { background: #E0E0E0; font-weight: bold; }</style></head><body>';
+
+  const clone = table.cloneNode(true);
+  clone.querySelectorAll('.action-col, .actions-cell, button').forEach(el => el.remove());
+  clone.querySelectorAll('select').forEach(sel => {
+    const span = document.createElement('span');
+    span.innerText = sel.options[sel.selectedIndex]?.text || sel.value;
+    sel.parentNode.replaceChild(span, sel);
+  });
+
+  html += clone.outerHTML;
+  html += '</body></html>';
+
+  const blob = new Blob([html], { type: 'application/vnd.ms-excel;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename.endsWith('.xls') ? filename : `${filename}.xls`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  if (window.showToast) window.showToast(`Exported ${filename} successfully`, 'success');
+};
+
+window.exportTableToPDF = function(tableId, title = 'RUNO HRS REPORT') {
+  const table = typeof tableId === 'string' ? document.getElementById(tableId) : tableId;
+  if (!table) {
+    if (window.showToast) window.showToast('Table not found for printing', 'error');
+    return;
+  }
+  const clone = table.cloneNode(true);
+  clone.querySelectorAll('.action-col, .actions-cell, button').forEach(el => el.remove());
+  clone.querySelectorAll('select').forEach(sel => {
+    const span = document.createElement('span');
+    span.innerText = sel.options[sel.selectedIndex]?.text || sel.value;
+    sel.parentNode.replaceChild(span, sel);
+  });
+
+  const printWin = window.open('', '_blank', 'width=1000,height=720');
+  if (!printWin) {
+    window.print();
+    return;
+  }
+
+  printWin.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>${title}</title>
+      <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 20px; color: #1e293b; }
+        .header { border-bottom: 2px solid #FF5722; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .header h2 { margin: 0; color: #FF5722; font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .header .meta { font-size: 11px; color: #64748b; text-align: right; }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        th, td { border: 1px solid #cbd5e1; padding: 6px 8px; text-align: left; }
+        th { background: #f1f5f9; color: #0f172a; font-weight: 700; text-transform: uppercase; }
+        tr:nth-child(even) { background: #f8fafc; }
+        @media print {
+          body { margin: 0; }
+          @page { margin: 12mm; }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <div>
+          <h2>RUNO HRS INDIA</h2>
+          <div style="font-size: 13px; font-weight: 600; color: #334155; margin-top: 2px;">${title}</div>
+        </div>
+        <div class="meta">
+          <div>Printed On: ${new Date().toLocaleString()}</div>
+          <div>Industrial Management Information System</div>
+        </div>
+      </div>
+      ${clone.outerHTML}
+      <script>
+        window.onload = function() {
+          window.focus();
+          window.print();
+          window.onafterprint = function() { window.close(); };
+        };
+      </script>
+    </body>
+    </html>
+  `);
+  printWin.document.close();
+};
+
+
 

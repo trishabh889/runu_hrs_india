@@ -3,6 +3,8 @@ const path = require('path');
 const registerAuthHandlers = require('./ipc/authHandlers');
 const registerProjectHandlers = require('./ipc/projectHandlers');
 const registerMfgHandlers = require('./ipc/mfgHandlers');
+const registerAccountsHandlers = require('./ipc/accountsHandlers');
+const registerStoreHandlers = require('./ipc/storeHandlers');
 const registerWindowHandlers = require('./ipc/windowHandlers');
 
 let mainWindow = null;
@@ -14,7 +16,7 @@ function createWindow() {
     height: 900,
     minWidth: 1100,
     minHeight: 700,
-    title: 'RUNO HRS - MIS | RUNO BRANDED',
+    title: 'RUNO HRS - MIS | MANAGEMENT INFORMATION SYSTEM',
     backgroundColor: '#0d0f12',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -43,6 +45,8 @@ function createWindow() {
 registerAuthHandlers(sessionState);
 registerProjectHandlers();
 registerMfgHandlers(sessionState);
+registerAccountsHandlers();
+registerStoreHandlers();
 registerWindowHandlers(() => mainWindow);
 
 app.whenReady().then(() => {

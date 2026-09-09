@@ -23,7 +23,7 @@
     <div id="view-main" class="view">
       <header class="app-header">
         <div class="header-branding">
-          <img src="assets/icon.png" alt="RUNO" class="header-logo-mini" style="height: 32px; width: 32px; border-radius: 50%; box-shadow: 0 0 10px rgba(255, 87, 34, 0.45); object-fit: cover;">
+          <img src="assets/icon.png" alt="RUNO" class="header-logo-mini" style="height: 32px; width: 32px; border-radius: 6px; box-shadow: 0 0 10px rgba(255, 87, 34, 0.45); object-fit: cover;">
           <span class="header-title">RUNO HRS - MG V5 | <span>RUNO BRANDED</span> | 1920 X 1080</span>
         </div>
 
@@ -51,6 +51,30 @@
             <li class="nav-item" data-view="projects">
               <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
               <span>PROJECTS</span>
+            </li>
+            <li class="nav-item" data-view="sales">
+              <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+              <span>SALES PIPELINE</span>
+            </li>
+            <li class="nav-item" data-view="commercial">
+              <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+              <span>COMMERCIAL</span>
+            </li>
+            <li class="nav-item" data-view="design">
+              <svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm0 2.84L18 11v7h-2v-6H8v6H6v-7l6-5.16z"/></svg>
+              <span>DESIGN &amp; R&amp;D</span>
+            </li>
+            <li class="nav-item" data-view="accounts">
+              <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zm-3-7h-2V7h-2v2H9v2h2v2h2v-2h2z"/></svg>
+              <span>ACCOUNTS (TALLY)</span>
+            </li>
+            <li class="nav-item" data-view="store">
+              <svg viewBox="0 0 24 24"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/></svg>
+              <span>STORE (BUSY)</span>
+            </li>
+            <li class="nav-item" data-view="purchase">
+              <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+              <span>PURCHASE</span>
             </li>
             <li class="nav-item" data-view="completed-projects">
               <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
@@ -83,6 +107,12 @@
           <section id="subview-dashboard" class="sub-view active"></section>
           <section id="subview-customers" class="sub-view"></section>
           <section id="subview-projects" class="sub-view"></section>
+          <section id="subview-sales" class="sub-view"></section>
+          <section id="subview-commercial" class="sub-view"></section>
+          <section id="subview-design" class="sub-view"></section>
+          <section id="subview-accounts" class="sub-view"></section>
+          <section id="subview-store" class="sub-view"></section>
+          <section id="subview-purchase" class="sub-view"></section>
           <section id="subview-completed-projects" class="sub-view"></section>
           <section id="subview-new-project" class="sub-view"></section>
           <section id="subview-users" class="sub-view"></section>
@@ -103,6 +133,12 @@
   <script src="js/views/dashboardView.js"></script>
   <script src="js/views/customersView.js"></script>
   <script src="js/views/projectsView.js"></script>
+  <script src="js/views/salesView.js"></script>
+  <script src="js/views/commercialView.js"></script>
+  <script src="js/views/designView.js"></script>
+  <script src="js/views/accountsView.js"></script>
+  <script src="js/views/storeView.js"></script>
+  <script src="js/views/purchaseView.js"></script>
   <script src="js/views/completedView.js"></script>
   <script src="js/views/newProjectView.js"></script>
   <script src="js/views/mfgView.js"></script>

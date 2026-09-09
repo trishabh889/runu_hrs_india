@@ -1,3 +1,7 @@
+// ==========================================================================
+// RUNO HRS INDIA - Project, Sales, Commercial & Workflow IPC Handlers
+// ==========================================================================
+
 const { ipcMain } = require('electron');
 const db = require('../db');
 
@@ -18,6 +22,29 @@ function registerProjectHandlers() {
   ipcMain.handle('projects:create', (event, data) => db.projects.create(data));
   ipcMain.handle('projects:update', (event, { id, data }) => db.projects.update(id, data));
   ipcMain.handle('projects:delete', (event, id) => db.projects.delete(id));
+
+  // Quote & PO Status Updates
+  ipcMain.handle('projects:updateQuoteStatus', (event, { id, quoteStatus }) => {
+    return db.projects.update(id, { quote_status: quoteStatus });
+  });
+
+  ipcMain.handle('projects:updatePO', (event, { id, poReceived }) => {
+    return db.projects.update(id, { po_received: poReceived });
+  });
+
+  // 2D / 3D Design Workflow Handlers
+  ipcMain.handle('projects:getWorkflow', (event, projectId) => {
+    return db.projects.getWorkflow(projectId);
+  });
+
+  ipcMain.handle('projects:setWorkflow', (event, { projectId, step, timestamp }) => {
+    return db.projects.setWorkflow(projectId, step, timestamp);
+  });
+
+  // Data Export
+  ipcMain.handle('data:exportCSV', (event, type) => {
+    return db.exportCSV(type);
+  });
 }
 
 module.exports = registerProjectHandlers;

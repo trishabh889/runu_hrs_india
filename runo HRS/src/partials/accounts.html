@@ -1,0 +1,124 @@
+<div class="view-header">
+  <div class="view-title-group">
+    <h1>ACCOUNTS &amp; FINANCE WORKSPACE</h1>
+    <p>Tally-style financial accounting, double-entry ledger, receivables, payables, and vouchers</p>
+  </div>
+  <div class="view-actions">
+    <button class="btn-action-primary" id="btn-add-account-entry">+ NEW ENTRY</button>
+    <button class="btn-action-secondary" id="btn-export-accounts-excel">EXPORT EXCEL</button>
+    <button class="btn-action-secondary" id="btn-export-accounts-pdf">EXPORT PDF</button>
+  </div>
+</div>
+
+<!-- Department Navigation Tabs (15 Tabs) -->
+<div class="dept-tab-bar" id="accounts-tab-bar">
+  <button class="dept-tab-btn active" data-tab="DASHBOARD">DASHBOARD</button>
+  <button class="dept-tab-btn" data-tab="SALES">SALES</button>
+  <button class="dept-tab-btn" data-tab="PURCHASE">PURCHASE</button>
+  <button class="dept-tab-btn" data-tab="RECEIPT">RECEIPT</button>
+  <button class="dept-tab-btn" data-tab="PAYMENT">PAYMENT</button>
+  <button class="dept-tab-btn" data-tab="EXPENSES">EXPENSES</button>
+  <button class="dept-tab-btn" data-tab="JOURNAL">JOURNAL</button>
+  <button class="dept-tab-btn" data-tab="CREDIT NOTE">CREDIT NOTE</button>
+  <button class="dept-tab-btn" data-tab="DEBIT NOTE">DEBIT NOTE</button>
+  <button class="dept-tab-btn" data-tab="RECEIVABLE">RECEIVABLE</button>
+  <button class="dept-tab-btn" data-tab="PAYABLE">PAYABLE</button>
+  <button class="dept-tab-btn" data-tab="LEDGER">LEDGER</button>
+  <button class="dept-tab-btn" data-tab="BANK / CASH">BANK / CASH</button>
+  <button class="dept-tab-btn" data-tab="GST">GST</button>
+  <button class="dept-tab-btn" data-tab="REPORTS">REPORTS</button>
+</div>
+
+<!-- Sub-Section 1: Accounts Dashboard -->
+<div id="accounts-dashboard-section">
+  <div class="kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 20px;">
+    <div class="kpi-card">
+      <div class="kpi-title">TOTAL SALES</div>
+      <div class="kpi-value" id="acc-stat-sales">₹ 0.00</div>
+      <div class="kpi-subtext">Cumulative Billed Revenue</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">TOTAL PURCHASE</div>
+      <div class="kpi-value" id="acc-stat-purchase">₹ 0.00</div>
+      <div class="kpi-subtext">Material &amp; Jobwork Costs</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">RECEIVABLE</div>
+      <div class="kpi-value" style="color: #10B981;" id="acc-stat-receivable">₹ 0.00</div>
+      <div class="kpi-subtext">Outstanding Client Dues</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">PAYABLE</div>
+      <div class="kpi-value" style="color: #EF4444;" id="acc-stat-payable">₹ 0.00</div>
+      <div class="kpi-subtext">Vendor Balance Due</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">CASH BALANCE</div>
+      <div class="kpi-value" id="acc-stat-cash">₹ 45,000.00</div>
+      <div class="kpi-subtext">Petty Cash In-hand</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">BANK BALANCE</div>
+      <div class="kpi-value" id="acc-stat-bank">₹ 3,85,000.00</div>
+      <div class="kpi-subtext">HDFC Current Account</div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+    <div class="table-card">
+      <div class="table-toolbar" style="border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;">
+        <span style="font-weight: 700; color: var(--text-primary); font-size: 13px;">RECENT SALES VOUCHERS</span>
+      </div>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr><th>DATE</th><th>PARTY / CUSTOMER</th><th>REF NO</th><th>AMOUNT</th></tr>
+          </thead>
+          <tbody id="acc-recent-sales-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <div class="table-toolbar" style="border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;">
+        <span style="font-weight: 700; color: var(--text-primary); font-size: 13px;">RECENT PURCHASE BILLS</span>
+      </div>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr><th>DATE</th><th>SUPPLIER / VENDOR</th><th>REF NO</th><th>AMOUNT</th></tr>
+          </thead>
+          <tbody id="acc-recent-purchase-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sub-Section 2: Tabular Records & General Ledger -->
+<div id="accounts-table-section" class="table-card" style="display: none;">
+  <div class="table-toolbar">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" id="search-accounts" placeholder="Search by Party, Invoice No or Particulars...">
+    </div>
+    <div style="font-size: 12px; font-weight: 700; color: var(--brand-orange);" id="accounts-active-tab-title">VOUCHER LIST</div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table" id="accounts-table">
+      <thead id="accounts-table-head">
+        <tr>
+          <th>DATE</th>
+          <th>PARTICULARS</th>
+          <th>REFERENCE / BILL NO</th>
+          <th>DEBIT (₹)</th>
+          <th>CREDIT (₹)</th>
+          <th>BALANCE (₹)</th>
+          <th>STATUS</th>
+        </tr>
+      </thead>
+      <tbody id="accounts-table-body"></tbody>
+    </table>
+  </div>
+</div>

@@ -32,6 +32,28 @@ function initUsers() {
       loadUsers();
     });
   }
+
+  const pwdForm = document.getElementById('form-change-password');
+  if (pwdForm) {
+    pwdForm.addEventListener('submit', async () => {
+      const username = document.getElementById('pwd-username').value;
+      const newPwd = document.getElementById('pwd-new').value;
+      const confirmPwd = document.getElementById('pwd-confirm').value;
+
+      if (!newPwd || newPwd !== confirmPwd) {
+        window.showToast('Passwords do not match or are empty', 'error');
+        return;
+      }
+
+      const res = await window.api.changePassword(username, newPwd);
+      if (res.success) {
+        window.showToast(`Password changed successfully for ${username}`, 'success');
+        window.closeModal('modal-change-password');
+      } else {
+        window.showToast(res.message || 'Failed to change password', 'error');
+      }
+    });
+  }
 }
 
 function openAddUserModal() {
@@ -39,13 +61,21 @@ function openAddUserModal() {
   document.getElementById('usr-id').value = '';
   document.getElementById('usr-username').value = '';
   document.getElementById('usr-username').disabled = false;
-  document.getElementById('usr-role').value = 'ENGINEER';
+  document.getElementById('usr-role').value = 'SALES';
   document.getElementById('usr-fullname').value = '';
   document.getElementById('usr-password').value = '';
   document.getElementById('usr-email').value = '';
   document.getElementById('usr-department').value = '';
   window.openModal('modal-user');
 }
+
+window.openChangePasswordModal = function(username) {
+  document.getElementById('pwd-username').value = username;
+  document.getElementById('pwd-new').value = '';
+  document.getElementById('pwd-confirm').value = '';
+  document.getElementById('modal-pwd-title').innerText = `CHANGE PASSWORD: ${username}`;
+  window.openModal('modal-change-password');
+};
 
 async function loadUsers() {
   try {
@@ -66,6 +96,9 @@ async function loadUsers() {
         <td>${u.created_at || '-'}</td>
         <td>
           <div class="table-actions">
+            <button class="btn-icon" title="Change Password" onclick="openChangePasswordModal('${u.username}')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+            </button>
             <button class="btn-icon" title="Edit" onclick="editUser('${u.id}')">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
             </button>

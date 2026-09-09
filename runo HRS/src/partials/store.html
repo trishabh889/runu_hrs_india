@@ -1,0 +1,113 @@
+<div class="view-header">
+  <div class="view-title-group">
+    <h1>STORE &amp; INVENTORY CONTROL</h1>
+    <p>BUSY-style warehouse inventory, item master, purchase receipts, material issues, and reorder levels</p>
+  </div>
+  <div class="view-actions">
+    <button class="btn-action-primary" id="btn-add-store-entry">+ NEW ITEM / ENTRY</button>
+    <button class="btn-action-secondary" id="btn-export-store-excel">EXPORT EXCEL</button>
+    <button class="btn-action-secondary" id="btn-export-store-pdf">EXPORT PDF</button>
+  </div>
+</div>
+
+<!-- Department Navigation Tabs (13 Tabs) -->
+<div class="dept-tab-bar" id="store-tab-bar">
+  <button class="dept-tab-btn active" data-tab="DASHBOARD">DASHBOARD</button>
+  <button class="dept-tab-btn" data-tab="ITEM MASTER">ITEM MASTER</button>
+  <button class="dept-tab-btn" data-tab="PURCHASE RECEIPT">PURCHASE RECEIPT</button>
+  <button class="dept-tab-btn" data-tab="MATERIAL ISSUE">MATERIAL ISSUE</button>
+  <button class="dept-tab-btn" data-tab="STOCK IN">STOCK IN</button>
+  <button class="dept-tab-btn" data-tab="STOCK OUT">STOCK OUT</button>
+  <button class="dept-tab-btn" data-tab="STOCK TRANSFER">STOCK TRANSFER</button>
+  <button class="dept-tab-btn" data-tab="STOCK ADJUSTMENT">STOCK ADJUSTMENT</button>
+  <button class="dept-tab-btn" data-tab="OPENING STOCK">OPENING STOCK</button>
+  <button class="dept-tab-btn" data-tab="GODOWN / LOCATION">GODOWN / LOCATION</button>
+  <button class="dept-tab-btn" data-tab="STOCK LEDGER">STOCK LEDGER</button>
+  <button class="dept-tab-btn" data-tab="REORDER LEVEL">REORDER LEVEL</button>
+  <button class="dept-tab-btn" data-tab="REPORTS">REPORTS</button>
+</div>
+
+<!-- Sub-Section 1: Store Dashboard -->
+<div id="store-dashboard-section">
+  <div class="kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 20px;">
+    <div class="kpi-card">
+      <div class="kpi-title">TOTAL ITEMS</div>
+      <div class="kpi-value" id="store-stat-items">0</div>
+      <div class="kpi-subtext">Registered Catalog SKUs</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">TOTAL STOCK</div>
+      <div class="kpi-value" id="store-stat-stock">0</div>
+      <div class="kpi-subtext">Units On Floor</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">LOW STOCK</div>
+      <div class="kpi-value" style="color: #EF4444;" id="store-stat-low">0</div>
+      <div class="kpi-subtext">Below Reorder Threshold</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">STOCK VALUE</div>
+      <div class="kpi-value" style="color: #10B981;" id="store-stat-value">₹ 0</div>
+      <div class="kpi-subtext">Valuation at Cost</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">PURCHASE QTY</div>
+      <div class="kpi-value" id="store-stat-purchase">0</div>
+      <div class="kpi-subtext">Total Units Received</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">ISSUE QTY</div>
+      <div class="kpi-value" id="store-stat-issue">0</div>
+      <div class="kpi-subtext">Issued to Assembly</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">GODOWNS</div>
+      <div class="kpi-value" id="store-stat-godowns">2</div>
+      <div class="kpi-subtext">Storage Warehouses</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">PENDING INDENTS</div>
+      <div class="kpi-value" id="store-stat-indents">0</div>
+      <div class="kpi-subtext">Material Requisitions</div>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-toolbar" style="border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;">
+      <span style="font-weight: 700; color: var(--text-primary); font-size: 13px;">CRITICAL INVENTORY REORDER ALERTS</span>
+    </div>
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ITEM CODE</th>
+            <th>ITEM NAME</th>
+            <th>CURRENT STOCK</th>
+            <th>MIN REORDER LEVEL</th>
+            <th>SHORTAGE</th>
+            <th>STATUS</th>
+          </tr>
+        </thead>
+        <tbody id="store-reorder-summary-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Sub-Section 2: Dynamic Store Table -->
+<div id="store-table-section" class="table-card" style="display: none;">
+  <div class="table-toolbar">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" id="search-store" placeholder="Search by SKU, Material, Godown or Reference...">
+    </div>
+    <div style="font-size: 12px; font-weight: 700; color: var(--brand-orange);" id="store-active-tab-title">ITEMS LIST</div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table" id="store-table">
+      <thead id="store-table-head"></thead>
+      <tbody id="store-table-body"></tbody>
+    </table>
+  </div>
+</div>

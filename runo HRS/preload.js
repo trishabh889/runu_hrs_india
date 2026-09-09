@@ -5,9 +5,13 @@ const path = require('path');
 contextBridge.exposeInMainWorld('api', {
   getPartial: (name) => {
     const file = path.join(__dirname, 'src', 'partials', `${name}.html`);
-    return fs.readFileSync(file, 'utf8');
+    if (fs.existsSync(file)) {
+      return fs.readFileSync(file, 'utf8');
+    }
+    return `<div class="empty-view-state">Partial "${name}" not found.</div>`;
   },
-  // Auth
+
+  // Auth & Profile Management
   login: (username, password) => ipcRenderer.invoke('auth:login', { username, password }),
   register: (userData) => ipcRenderer.invoke('auth:register', userData),
   getCurrentUser: () => ipcRenderer.invoke('auth:getCurrentUser'),
@@ -22,28 +26,49 @@ contextBridge.exposeInMainWorld('api', {
   updateCustomer: (id, data) => ipcRenderer.invoke('customers:update', { id, data }),
   deleteCustomer: (id) => ipcRenderer.invoke('customers:delete', id),
 
-  // Projects
+  // Projects, Sales & Commercial
   getProjects: (filters) => ipcRenderer.invoke('projects:getAll', filters),
   createProject: (data) => ipcRenderer.invoke('projects:create', data),
   updateProject: (id, data) => ipcRenderer.invoke('projects:update', { id, data }),
   deleteProject: (id) => ipcRenderer.invoke('projects:delete', id),
+  updateQuoteStatus: (id, quoteStatus) => ipcRenderer.invoke('projects:updateQuoteStatus', { id, quoteStatus }),
+  updatePO: (id, poReceived) => ipcRenderer.invoke('projects:updatePO', { id, poReceived }),
 
-  // Manufacturing
+  // 2D / 3D Design Workflow
+  getWorkflow: (projectId) => ipcRenderer.invoke('projects:getWorkflow', projectId),
+  setWorkflow: (projectId, step, timestamp) => ipcRenderer.invoke('projects:setWorkflow', { projectId, step, timestamp }),
+
+  // Manufacturing & Approvals
   getManufacturing: (projectId) => ipcRenderer.invoke('manufacturing:getAll', projectId),
   updateManufacturingStage: (projectId, stage, status, notes) => 
     ipcRenderer.invoke('manufacturing:updateStage', { projectId, stage, status, notes }),
-
-  // Approvals
   getApprovals: () => ipcRenderer.invoke('approvals:getAll'),
   updateApproval: (id, status, remarks) => ipcRenderer.invoke('approvals:update', { id, status, remarks }),
 
-  // Users
+  // Accounts (Tally-Style)
+  getAccounts: (tabType, search) => ipcRenderer.invoke('accounts:getAll', { tabType, search }),
+  createAccountEntry: (data) => ipcRenderer.invoke('accounts:create', data),
+  getAccountsStats: () => ipcRenderer.invoke('accounts:getStats'),
+  getAccountsLedger: (search) => ipcRenderer.invoke('accounts:getLedger', search),
+
+  // Store & Inventory (BUSY-Style)
+  getStoreItems: (category, search) => ipcRenderer.invoke('store:getItems', { category, search }),
+  getGodowns: (search) => ipcRenderer.invoke('store:getGodowns', search),
+  createStoreItem: (data) => ipcRenderer.invoke('store:createItem', data),
+  getStoreTransactions: (tabType, search) => ipcRenderer.invoke('store:getTransactions', { tabType, search }),
+  createStoreTransaction: (data) => ipcRenderer.invoke('store:createTransaction', data),
+  getStoreStats: () => ipcRenderer.invoke('store:getStats'),
+  getReorderList: () => ipcRenderer.invoke('store:getReorderList'),
+  getStockLedger: () => ipcRenderer.invoke('store:getStockLedger'),
+
+  // Users & Password
   getUsers: () => ipcRenderer.invoke('users:getAll'),
   createUser: (data) => ipcRenderer.invoke('users:create', data),
   updateUser: (id, data) => ipcRenderer.invoke('users:update', { id, data }),
   deleteUser: (id) => ipcRenderer.invoke('users:delete', id),
+  changePassword: (username, newPassword) => ipcRenderer.invoke('users:changePassword', { username, newPassword }),
 
-  // Export
+  // Data Export
   exportCSV: (type) => ipcRenderer.invoke('data:exportCSV', type),
 
   // Window Controls

@@ -1,0 +1,102 @@
+<div class="view-header">
+  <div class="view-title-group">
+    <h1>COMMERCIAL &amp; COSTING</h1>
+    <p>Hot runner technical specifications, costing, quotations, and commercial dispatch schedules</p>
+  </div>
+  <div class="view-actions">
+    <button class="btn-action-primary" id="btn-commercial-refresh">⟳ REFRESH</button>
+    <button class="btn-action-secondary" id="btn-export-commercial-excel">EXPORT EXCEL</button>
+    <button class="btn-action-secondary" id="btn-export-commercial-pdf">EXPORT PDF</button>
+  </div>
+</div>
+
+<div class="table-card">
+  <!-- Multi-Parameter Filter Toolbar -->
+  <div class="table-toolbar" style="flex-wrap: wrap; gap: 10px; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
+    <div class="search-box" style="flex: 1 1 200px;">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" id="search-commercial" placeholder="Search customer, project, ID...">
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">HRS TYPE:</span>
+      <select id="filter-comm-hrs-type" class="filter-select-compact">
+        <option value="ALL">ALL</option>
+        <option value="HRS">HRS</option>
+        <option value="HRTC">HRTC</option>
+        <option value="SPARE-HRS">SPARE-HRS</option>
+        <option value="SPARE-HRTC">SPARE-HRTC</option>
+      </select>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">QUOTE STATUS:</span>
+      <select id="filter-comm-quote" class="filter-select-compact">
+        <option value="ALL">ALL</option>
+        <option value="Quote Send">Quote Send</option>
+        <option value="Quote Pending">Quote Pending</option>
+        <option value="Order Cancel">Order Cancel</option>
+      </select>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">MONTH:</span>
+      <select id="filter-comm-month" class="filter-select-compact">
+        <option value="ALL">ALL MONTHS</option>
+        <option value="01">JANUARY</option>
+        <option value="02">FEBRUARY</option>
+        <option value="03">MARCH</option>
+        <option value="04">APRIL</option>
+        <option value="05">MAY</option>
+        <option value="06">JUNE</option>
+        <option value="07">JULY</option>
+        <option value="08">AUGUST</option>
+        <option value="09">SEPTEMBER</option>
+        <option value="10">OCTOBER</option>
+        <option value="11">NOVEMBER</option>
+        <option value="12">DECEMBER</option>
+      </select>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">YEAR:</span>
+      <select id="filter-comm-year" class="filter-select-compact">
+        <option value="ALL">ALL YEARS</option>
+        <option value="2026">2026</option>
+        <option value="2027">2027</option>
+        <option value="2028">2028</option>
+        <option value="2029">2029</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table" style="font-size: 11px;">
+      <thead>
+        <tr>
+          <th>MFG DATE</th>
+          <th>CUSTOMER NAME</th>
+          <th>PROJECT CODE</th>
+          <th>ID CARD NO</th>
+          <th>DELIVERY DATE</th>
+          <th>COST</th>
+          <th>HRS TYPE</th>
+          <th>MATERIAL</th>
+          <th>NOZZLE SERIES</th>
+          <th>GATE TYPE</th>
+          <th>CONNECTOR</th>
+          <th>GATE DIA</th>
+          <th>GUIDE DIA</th>
+          <th>QUOTE STATUS</th>
+          <th>REMARK</th>
+        </tr>
+      </thead>
+      <tbody id="commercial-table-body"></tbody>
+    </table>
+  </div>
+
+  <div style="padding: 12px 18px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+    <span style="font-size: 12px; font-weight: 700; color: var(--text-secondary);" id="commercial-total-count">Total Projects: 0</span>
+    <span style="font-size: 11px; color: var(--text-muted);">Click on Quote Status to update in real time</span>
+  </div>
+</div>

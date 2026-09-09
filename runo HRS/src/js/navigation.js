@@ -53,6 +53,12 @@ function switchView(viewName) {
   if (viewName === 'dashboard' && window.loadDashboard) window.loadDashboard();
   else if (viewName === 'customers' && window.loadCustomers) window.loadCustomers();
   else if (viewName === 'projects' && window.loadProjects) window.loadProjects();
+  else if (viewName === 'sales' && window.loadSales) window.loadSales();
+  else if (viewName === 'commercial' && window.loadCommercial) window.loadCommercial();
+  else if (viewName === 'design' && window.loadDesign) window.loadDesign();
+  else if (viewName === 'accounts' && window.loadAccounts) window.loadAccounts();
+  else if (viewName === 'store' && window.loadStore) window.loadStore();
+  else if (viewName === 'purchase' && window.loadPurchase) window.loadPurchase();
   else if (viewName === 'completed-projects' && window.loadCompletedProjects) window.loadCompletedProjects();
   else if (viewName === 'new-project' && window.prepareNewProjectForm) window.prepareNewProjectForm();
   else if (viewName === 'manufacturing' && window.loadManufacturing) window.loadManufacturing();
