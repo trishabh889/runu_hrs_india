@@ -1,0 +1,19 @@
+{
+  "name": "runo-hrs-mis",
+  "productName": "RUNO HRS INDIA - MIS",
+  "version": "1.0.0",
+  "description": "RUNO HRS INDIA Management Information System Desktop Application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:exe": "node build_exe.js"
+  },
+  "keywords": [
+    "runo",
+    "hrs",
+    "mis",
+    "desktop"
+  ],
+  "author": "RUNO HRS INDIA",
+  "license": "ISC"
+}

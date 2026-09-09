@@ -1,0 +1,162 @@
+/* ==========================================================================
+   RUNO HRS INDIA - Core Design Tokens & Theme Variables
+   ========================================================================== */
+
+:root {
+  /* Color Palette */
+  --bg-app: #0d0f12;
+  --bg-surface: #14171f;
+  --bg-card: #1a1e28;
+  --bg-card-hover: #222734;
+  --bg-input: #12151c;
+  --bg-sidebar: #10131a;
+  --bg-sidebar-active: #1e2433;
+  --bg-header: #10131a;
+
+  --bg-content: #0b0d11;
+  --bg-toolbar: #11141c;
+  --bg-input-border: #282f3f;
+  --bg-table-header: #141722;
+  --bg-table-stripe: rgba(255, 255, 255, 0.02);
+  --bg-table-hover: rgba(255, 87, 34, 0.06);
+
+  --sidebar-text: #94A3B8;
+  --sidebar-hover-bg: rgba(255, 255, 255, 0.04);
+  --sidebar-hover-text: #FFFFFF;
+  --sidebar-active-bg: #1e2433;
+  --sidebar-active-text: #FFFFFF;
+  --sidebar-logout-text: #CBD5E1;
+  --sidebar-logout-border: #334155;
+
+  /* Brand Signature Colors */
+  --brand-orange: #FF5722;
+  --brand-orange-light: #FF7A45;
+  --brand-orange-dark: #D84315;
+  --brand-orange-glow: rgba(255, 87, 34, 0.35);
+  --brand-silver: #E2E8F0;
+
+  /* Functional Status Colors */
+  --color-success: #10B981;
+  --color-success-bg: rgba(16, 185, 129, 0.15);
+  --color-warning: #F59E0B;
+  --color-warning-bg: rgba(245, 158, 11, 0.15);
+  --color-danger: #EF4444;
+  --color-danger-bg: rgba(239, 68, 68, 0.15);
+  --color-info: #3B82F6;
+  --color-info-bg: rgba(59, 130, 246, 0.15);
+
+  /* Typography */
+  --text-primary: #FFFFFF;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --text-dark: #0F172A;
+
+  /* Borders & Shadows */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-card: rgba(255, 255, 255, 0.12);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-orange: 0 4px 16px rgba(255, 87, 34, 0.35);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+}
+
+[data-theme="light"] {
+  --bg-app: #F1F5F9;
+  --bg-content: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F8FAFC;
+  --bg-input: #FFFFFF;
+  --bg-input-border: #CBD5E1;
+  --bg-sidebar: #FFFFFF;
+  --bg-sidebar-active: #FFF7ED;
+  --sidebar-text: #64748B;
+  --sidebar-hover-bg: #F1F5F9;
+  --sidebar-hover-text: #0F172A;
+  --sidebar-active-bg: #FFF7ED;
+  --sidebar-active-text: #EA580C;
+  --sidebar-logout-text: #475569;
+  --sidebar-logout-border: #CBD5E1;
+  --bg-header: #FFFFFF;
+  --bg-toolbar: #F8FAFC;
+  --bg-table-header: #F1F5F9;
+  --bg-table-stripe: #F8FAFC;
+  --bg-table-hover: rgba(255, 87, 34, 0.08);
+
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --text-dark: #0F172A;
+
+  --border-subtle: #E2E8F0;
+  --border-card: #CBD5E1;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: #2D3748;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-orange);
+}
+
+/* Theme Switcher Button */
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 5px 12px;
+  border-radius: 20px;
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--brand-orange);
+  background-color: var(--bg-card-hover);
+  color: var(--brand-orange);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-orange);
+}
+

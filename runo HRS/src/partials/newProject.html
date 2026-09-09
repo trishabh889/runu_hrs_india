@@ -1,0 +1,82 @@
+<div class="view-header">
+  <div class="view-title-group">
+    <h1>CREATE NEW PROJECT</h1>
+    <p>Register a new Hot Runner System project with technical specifications</p>
+  </div>
+</div>
+
+<div class="form-card">
+  <form id="form-create-project" onsubmit="return false;">
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">PROJECT CODE</label>
+        <input type="text" id="newproj-code" class="form-input" placeholder="e.g. RUNO-2026-002 (or leave blank for auto)">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">CUSTOMER *</label>
+        <select id="newproj-customer" class="form-select" required></select>
+      </div>
+
+      <div class="form-group span-2">
+        <label class="form-label">MOULD / COMPONENT DESCRIPTION *</label>
+        <input type="text" id="newproj-desc" class="form-input" placeholder="e.g. 4-Drop Prewired Hot Half for Automotive Rear Lamp" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">NUMBER OF NOZZLE DROPS *</label>
+        <input type="number" id="newproj-drops" class="form-input" value="4" min="1" max="64" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">NOZZLE TYPE</label>
+        <input type="text" id="newproj-nozzle-type" class="form-input" placeholder="e.g. Valve Gate Pneumatic / Open Torpedo">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">MANIFOLD TYPE</label>
+        <input type="text" id="newproj-manifold" class="form-input" placeholder="e.g. H13 Fully Balanced X-Manifold">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">RUNNER DIAMETER</label>
+        <input type="text" id="newproj-runner-dia" class="form-input" placeholder="e.g. 12 mm / 16 mm">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">RESIN / PLASTIC MATERIAL</label>
+        <input type="text" id="newproj-material" class="form-input" placeholder="e.g. Polypropylene (PP), PA66, ABS">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">TARGET DELIVERY DATE *</label>
+        <input type="date" id="newproj-date" class="form-input" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">PRIORITY</label>
+        <select id="newproj-priority" class="form-select">
+          <option value="MEDIUM">MEDIUM</option>
+          <option value="HIGH">HIGH (EXPEDITE)</option>
+          <option value="CRITICAL">CRITICAL</option>
+          <option value="LOW">LOW</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">ESTIMATED COMMERCIAL VALUE</label>
+        <input type="text" id="newproj-value" class="form-input" placeholder="e.g. ₹ 5,50,000">
+      </div>
+
+      <div class="form-group span-2">
+        <label class="form-label">TECHNICAL SPECIFICATIONS & SPECIAL NOTES</label>
+        <textarea id="newproj-notes" class="form-textarea" placeholder="Include special thermocouple type, connector pinouts, manifold heater specs..."></textarea>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-action-secondary" id="btn-cancel-new-project">CANCEL</button>
+      <button type="submit" id="btn-submit-project" class="btn-action-primary">CREATE PROJECT</button>
+    </div>
+  </form>
+</div>

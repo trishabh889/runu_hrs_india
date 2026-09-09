@@ -1,0 +1,80 @@
+<div class="login-container">
+  <!-- Left Brand Showcase -->
+  <div class="login-brand-panel">
+    <img src="assets/icon.png" alt="RUNO HRS INDIA" class="login-logo-img" style="max-width: 280px; border-radius: 50%; box-shadow: 0 0 40px rgba(255, 87, 34, 0.4);">
+    <div style="margin-top: 20px; text-align: center; z-index: 2;">
+      <div style="font-size: 26px; font-weight: 900; letter-spacing: 3px; color: #FFFFFF;">RUNO <span style="color: #FF5722;">HRS INDIA</span></div>
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 4px; color: #94A3B8; margin-top: 6px;">RELIABLE PRECISION</div>
+    </div>
+  </div>
+
+
+  <!-- Right Form Panel -->
+  <div class="login-form-panel">
+    <div class="login-header-group">
+      <h1 class="login-system-title">RUNO HRS INDIA</h1>
+      <p class="login-system-subtitle">Management Information System</p>
+    </div>
+
+    <!-- Auth Switch Tabs -->
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab-btn active" id="tab-btn-login">LOGIN</button>
+      <button type="button" class="auth-tab-btn" id="tab-btn-register">REGISTER</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <form id="form-login" onsubmit="return false;">
+      <div class="login-form-group">
+        <label for="login-username">USERNAME</label>
+        <input type="text" id="login-username" class="login-input" placeholder="Enter username" autocomplete="off" required>
+      </div>
+
+      <div class="login-form-group">
+        <label for="login-password">PASSWORD</label>
+        <input type="password" id="login-password" class="login-input" placeholder="Enter password" required>
+      </div>
+
+      <button type="submit" id="btn-submit-login" class="btn-login">LOGIN</button>
+      <div id="login-error" class="login-error-msg"></div>
+
+      <p class="login-hint-text">ADMIN: ANAND / ADMIN</p>
+      <p style="text-align: center; margin-top: 14px; font-size: 12px; color: #94A3B8;">
+        New user? <span class="auth-toggle-link" id="link-to-register">Register account here</span>
+      </p>
+    </form>
+
+    <!-- REGISTRATION FORM -->
+    <form id="form-register" style="display: none;" onsubmit="return false;">
+      <div class="login-form-group">
+        <label for="reg-username">USERNAME *</label>
+        <input type="text" id="reg-username" class="login-input" placeholder="e.g. AMIT" autocomplete="off" required>
+      </div>
+
+      <div class="login-form-group">
+        <label for="reg-name">FULL NAME</label>
+        <input type="text" id="reg-name" class="login-input" placeholder="e.g. Amit Kumar">
+      </div>
+
+      <div class="login-form-group">
+        <label for="reg-role">ROLE / DESIGNATION</label>
+        <select id="reg-role" class="login-input" style="cursor: pointer;">
+          <option value="ENGINEER">DESIGN ENGINEER</option>
+          <option value="OPERATOR">CNC / TOOLING OPERATOR</option>
+          <option value="ADMIN">ADMINISTRATOR</option>
+        </select>
+      </div>
+
+      <div class="login-form-group">
+        <label for="reg-password">CREATE PASSWORD *</label>
+        <input type="password" id="reg-password" class="login-input" placeholder="Enter password" required>
+      </div>
+
+      <button type="submit" id="btn-submit-register" class="btn-login">REGISTER & LOGIN</button>
+      <div id="register-error" class="login-error-msg"></div>
+
+      <p style="text-align: center; margin-top: 16px; font-size: 12px; color: #94A3B8;">
+        Already registered? <span class="auth-toggle-link" id="link-to-login">Back to Login</span>
+      </p>
+    </form>
+  </div>
+</div>

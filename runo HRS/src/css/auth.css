@@ -1,0 +1,196 @@
+/* ==========================================================================
+   RUNO HRS INDIA - Login & Registration Styles
+   ========================================================================== */
+
+#view-login {
+  width: 100vw;
+  height: 100vh;
+  background: #0a0c0f;
+}
+
+.login-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.login-brand-panel {
+  flex: 1.1;
+  background: radial-gradient(circle at 40% 45%, #181d27 0%, #0c0e14 70%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 48px;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.login-brand-panel::before {
+  content: '';
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(255, 87, 34, 0.12) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.login-logo-img {
+  max-width: 460px;
+  width: 85%;
+  height: auto;
+  z-index: 1;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.7));
+}
+
+.login-form-panel {
+  flex: 0.9;
+  background-color: #0d0f14;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 50px 70px;
+  max-width: 580px;
+  overflow-y: auto;
+}
+
+.login-header-group {
+  margin-bottom: 24px;
+}
+
+.login-system-title {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #FFFFFF;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.login-system-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+/* Auth Tabs */
+.auth-tabs {
+  display: flex;
+  background-color: #141722;
+  border-radius: 6px;
+  padding: 4px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.auth-tab-btn {
+  flex: 1;
+  padding: 9px 0;
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.auth-tab-btn.active {
+  background: linear-gradient(90deg, #E64A19, #FF5722);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(255, 87, 34, 0.35);
+}
+
+.auth-toggle-link {
+  color: var(--brand-orange);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.auth-toggle-link:hover {
+  color: #FF7A45;
+}
+
+.login-form-group {
+  margin-bottom: 18px;
+}
+
+.login-form-group label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.login-input {
+  width: 100%;
+  height: 44px;
+  background-color: #141720;
+  border: 1px solid #282f3f;
+  border-radius: 4px;
+  padding: 0 14px;
+  font-size: 14px;
+  color: #FFFFFF;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.login-input:focus {
+  border-color: var(--brand-orange);
+  box-shadow: 0 0 0 2px var(--brand-orange-glow);
+  background-color: #181d28;
+}
+
+.btn-login {
+  width: 100%;
+  height: 46px;
+  background: linear-gradient(90deg, #E64A19 0%, #FF5722 50%, #F4511E 100%);
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: var(--shadow-orange);
+  transition: all var(--transition-normal);
+  margin-top: 10px;
+}
+
+.btn-login:hover {
+  box-shadow: 0 6px 20px rgba(255, 87, 34, 0.5);
+  transform: translateY(-1px);
+}
+
+.login-hint-text {
+  margin-top: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: #64748B;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.login-error-msg {
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: var(--color-danger-bg);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #F87171;
+  font-size: 13px;
+  border-radius: 4px;
+  display: none;
+}

@@ -1,0 +1,123 @@
+// ==========================================================================
+// RUNO HRS INDIA - User Management View Controller
+// ==========================================================================
+
+function initUsers() {
+  const btnAdd = document.getElementById('btn-add-user-modal');
+  if (btnAdd) btnAdd.addEventListener('click', openAddUserModal);
+
+  const form = document.getElementById('form-user');
+  if (form) {
+    form.addEventListener('submit', async () => {
+      const id = document.getElementById('usr-id').value;
+      const data = {
+        username: document.getElementById('usr-username').value.trim(),
+        role: document.getElementById('usr-role').value,
+        name: document.getElementById('usr-fullname').value.trim(),
+        password: document.getElementById('usr-password').value.trim(),
+        email: document.getElementById('usr-email').value.trim(),
+        department: document.getElementById('usr-department').value.trim()
+      };
+
+      if (id) {
+        const res = await window.api.updateUser(id, data);
+        if (res.success) window.showToast('User updated', 'success');
+        else window.showToast(res.message, 'error');
+      } else {
+        const res = await window.api.createUser(data);
+        if (res.success) window.showToast('User created', 'success');
+        else window.showToast(res.message, 'error');
+      }
+      window.closeModal('modal-user');
+      loadUsers();
+    });
+  }
+}
+
+function openAddUserModal() {
+  document.getElementById('modal-user-title').innerText = 'ADD SYSTEM USER';
+  document.getElementById('usr-id').value = '';
+  document.getElementById('usr-username').value = '';
+  document.getElementById('usr-username').disabled = false;
+  document.getElementById('usr-role').value = 'ENGINEER';
+  document.getElementById('usr-fullname').value = '';
+  document.getElementById('usr-password').value = '';
+  document.getElementById('usr-email').value = '';
+  document.getElementById('usr-department').value = '';
+  window.openModal('modal-user');
+}
+
+async function loadUsers() {
+  try {
+    const list = await window.api.getUsers();
+    window.AppState.users = list;
+    const tbody = document.getElementById('users-table-body');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    list.forEach(u => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="font-weight: 700; color: var(--text-primary);">${u.username}</td>
+        <td>${u.name || '-'}</td>
+        <td><span class="badge ${u.role === 'ADMIN' ? 'badge-admin' : 'badge-active'}">${u.role}</span></td>
+        <td>${u.email || '-'}</td>
+        <td>${u.department || '-'}</td>
+        <td>${u.created_at || '-'}</td>
+        <td>
+          <div class="table-actions">
+            <button class="btn-icon" title="Edit" onclick="editUser('${u.id}')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+            </button>
+            ${u.username !== 'ANAND' ? `
+              <button class="btn-icon danger" title="Delete" onclick="deleteUser('${u.id}')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+              </button>
+            ` : ''}
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  } catch (err) {
+    console.error('Failed to load users:', err);
+  }
+}
+
+window.editUser = function(id) {
+  const u = window.AppState.users.find(item => item.id === id);
+  if (!u) return;
+  document.getElementById('modal-user-title').innerText = 'EDIT USER';
+  document.getElementById('usr-id').value = u.id;
+  document.getElementById('usr-username').value = u.username;
+  document.getElementById('usr-username').disabled = (u.username === 'ANAND');
+  document.getElementById('usr-role').value = u.role;
+  document.getElementById('usr-fullname').value = u.name || '';
+  document.getElementById('usr-password').value = '';
+  document.getElementById('usr-email').value = u.email || '';
+  document.getElementById('usr-department').value = u.department || '';
+  window.openModal('modal-user');
+};
+
+window.deleteUser = async function(id) {
+  const confirmed = await window.showConfirmDialog({
+    title: 'DELETE SYSTEM USER',
+    message: 'Are you sure you want to delete this user account?',
+    subtext: 'This action will revoke access and remove their system role.',
+    confirmText: 'DELETE USER',
+    cancelText: 'KEEP USER',
+    danger: true
+  });
+  if (!confirmed) return;
+
+  const res = await window.api.deleteUser(id);
+  if (res.success) {
+    window.showToast('User account deleted successfully', 'info');
+    loadUsers();
+  } else {
+    window.showToast(res.message || 'Cannot delete user', 'error');
+  }
+};
+
+window.initUsers = initUsers;
+window.loadUsers = loadUsers;

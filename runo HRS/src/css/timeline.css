@@ -1,0 +1,109 @@
+/* ==========================================================================
+   RUNO HRS INDIA - Manufacturing Stages Timeline
+   ========================================================================== */
+
+.mfg-project-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 22px;
+  margin-bottom: 22px;
+}
+
+.mfg-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.mfg-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.mfg-progress-wrapper {
+  margin-bottom: 20px;
+}
+
+.progress-bar-bg {
+  height: 8px;
+  background-color: var(--border-subtle);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FF5722, #10B981);
+  transition: width 0.4s ease;
+}
+
+.stages-track {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.stage-step {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 10px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.stage-step:hover {
+  border-color: var(--brand-orange);
+  background: var(--bg-card-hover);
+}
+
+.stage-step.completed {
+  border-color: #10B981;
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.stage-step.in_progress {
+  border-color: #FF5722;
+  background: rgba(255, 87, 34, 0.12);
+  box-shadow: 0 0 10px rgba(255, 87, 34, 0.2);
+}
+
+.stage-step-icon {
+  width: 22px;
+  height: 22px;
+  margin: 0 auto 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.stage-step.completed .stage-step-icon {
+  background-color: #10B981;
+  color: #FFFFFF;
+}
+
+.stage-step.in_progress .stage-step-icon {
+  background-color: #FF5722;
+  color: #FFFFFF;
+}
+
+.stage-step.pending .stage-step-icon {
+  background-color: #334155;
+  color: #94A3B8;
+}
+
+.stage-step-name {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}

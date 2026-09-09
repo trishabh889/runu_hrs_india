@@ -1,0 +1,47 @@
+{
+  "name": "runo-hrs-mis",
+  "productName": "RUNO HRS INDIA - MIS",
+  "version": "1.0.0",
+  "description": "RUNO HRS INDIA Management Information System Desktop Application",
+  "main": "runo HRS/main.js",
+  "scripts": {
+    "start": "electron \"runo HRS\"",
+    "build:exe": "electron-builder --win portable",
+    "build:installer": "electron-builder --win nsis"
+  },
+  "keywords": [
+    "runo",
+    "hrs",
+    "mis",
+    "desktop"
+  ],
+  "author": "RUNO HRS INDIA",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^44.3.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.runohrs.mis",
+    "productName": "RUNO HRS INDIA - MIS",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "icon": "src/assets/icon.png"
+    },
+    "portable": {
+      "artifactName": "RUNO_HRS_INDIA_MIS.exe"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "db.js",
+      "src/**/*"
+    ]
+  }
+}

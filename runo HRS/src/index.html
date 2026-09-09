@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RUNO HRS INDIA - MIS</title>
+  <!-- Scoped Modular Stylesheets (< 140 lines each) -->
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/kpi.css">
+  <link rel="stylesheet" href="css/tables.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/timeline.css">
+  <link rel="stylesheet" href="css/modals.css">
+</head>
+<body>
+  <div id="app">
+    <!-- View 1: Login & Registration View (Mounted dynamically) -->
+    <div id="view-login" class="view active"></div>
+
+    <!-- View 2: Main Application Workspace -->
+    <div id="view-main" class="view">
+      <header class="app-header">
+        <div class="header-branding">
+          <img src="assets/icon.png" alt="RUNO" class="header-logo-mini" style="height: 32px; width: 32px; border-radius: 50%; box-shadow: 0 0 10px rgba(255, 87, 34, 0.45); object-fit: cover;">
+          <span class="header-title">RUNO HRS - MG V5 | <span>RUNO BRANDED</span> | 1920 X 1080</span>
+        </div>
+
+        <div class="header-user-badge">
+          <button id="btn-theme-toggle" class="theme-toggle-btn" title="Toggle Light / Dark Mode">
+            <span id="theme-icon">🌙</span>
+            <span id="theme-text">DARK</span>
+          </button>
+          <span class="user-status-indicator"></span>
+          <span id="display-user-info">LOGGED IN: ANAND | ADMIN</span>
+        </div>
+      </header>
+
+      <div class="app-body">
+        <aside class="app-sidebar">
+          <ul class="sidebar-nav">
+            <li class="nav-item active" data-view="dashboard">
+              <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+              <span>DASHBOARD</span>
+            </li>
+            <li class="nav-item" data-view="customers">
+              <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+              <span>CUSTOMERS</span>
+            </li>
+            <li class="nav-item" data-view="projects">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+              <span>PROJECTS</span>
+            </li>
+            <li class="nav-item" data-view="completed-projects">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              <span>COMPLETED PROJECTS</span>
+            </li>
+            <li class="nav-item" data-view="new-project">
+              <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+              <span>NEW PROJECT</span>
+            </li>
+            <li class="nav-item" data-view="users">
+              <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              <span>USER MANAGEMENT</span>
+            </li>
+            <li class="nav-item" data-view="manufacturing">
+              <svg viewBox="0 0 24 24"><path d="M22 13.5V11c0-.55-.45-1-1-1h-2.1c-.2-.73-.5-1.42-.9-2.05l1.5-1.5c.39-.39.39-1.02 0-1.41l-1.44-1.44c-.39-.39-1.02-.39-1.41 0l-1.5 1.5c-.63-.4-1.32-.7-2.05-.9V2c0-.55-.45-1-1-1h-2.5c-.55 0-1 .45-1 1v2.1c-.73.2-1.42.5-2.05.9l-1.5-1.5c-.39-.39-1.02-.39-1.41 0L3.65 4.94c-.39.39-.39 1.02 0 1.41l1.5 1.5c-.4.63-.7 1.32-.9 2.05H2c-.55 0-1 .45-1 1v2.5c0 .55.45 1 1 1h2.1c.2.73.5 1.42.9 2.05l-1.5 1.5c-.39.39-.39 1.02 0 1.41l1.44 1.44c.39.39 1.02.39 1.41 0l1.5-1.5c.63.4 1.32.7 2.05.9V22c0 .55.45 1 1 1h2.5c.55 0 1-.45 1-1v-2.1c.73-.2 1.42-.5 2.05-.9l1.5 1.5c.39.39 1.02.39 1.41 0l1.44-1.44c.39-.39.39-1.02 0-1.41l-1.5-1.5c.4-.63.7-1.32.9-2.05H21c.55 0 1-.45 1-1zm-10 1.5c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/></svg>
+              <span>MANUFACTURING DATA</span>
+            </li>
+            <li class="nav-item" data-view="approvals">
+              <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              <span>PROJECT APPROVALS</span>
+            </li>
+          </ul>
+
+          <div class="sidebar-bottom">
+            <button id="btn-logout" class="btn-logout">LOGOUT</button>
+          </div>
+        </aside>
+
+        <main class="app-content">
+          <section id="subview-dashboard" class="sub-view active"></section>
+          <section id="subview-customers" class="sub-view"></section>
+          <section id="subview-projects" class="sub-view"></section>
+          <section id="subview-completed-projects" class="sub-view"></section>
+          <section id="subview-new-project" class="sub-view"></section>
+          <section id="subview-users" class="sub-view"></section>
+          <section id="subview-manufacturing" class="sub-view"></section>
+          <section id="subview-approvals" class="sub-view"></section>
+        </main>
+      </div>
+    </div>
+
+    <!-- Modals Mount Point -->
+    <div id="mount-modals"></div>
+  </div>
+
+  <!-- Modular Scripts (< 140 lines each) -->
+  <script src="js/state.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/views/dashboardView.js"></script>
+  <script src="js/views/customersView.js"></script>
+  <script src="js/views/projectsView.js"></script>
+  <script src="js/views/completedView.js"></script>
+  <script src="js/views/newProjectView.js"></script>
+  <script src="js/views/mfgView.js"></script>
+  <script src="js/views/approvalsView.js"></script>
+  <script src="js/views/usersView.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

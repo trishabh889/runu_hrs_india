@@ -1,0 +1,72 @@
+<div class="view-header">
+  <div class="view-title-group">
+    <h1>PROJECT APPROVALS QUEUE</h1>
+    <p>Technical drawing sign-offs and production release gate approvals</p>
+  </div>
+</div>
+
+<div class="table-card">
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>PROJECT CODE</th>
+          <th>APPROVAL TITLE</th>
+          <th>TYPE</th>
+          <th>REQUESTED BY</th>
+          <th>DATE</th>
+          <th>STATUS</th>
+          <th>REMARKS</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody id="approvals-table-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- In-App Approval Review & Sign-off Modal -->
+<div id="modal-approval-action" class="modal-overlay">
+  <div class="modal-box" style="max-width: 540px;">
+    <div class="modal-header">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div id="approval-modal-icon-badge" style="width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center;"></div>
+        <div>
+          <h3 id="approval-modal-title" style="margin: 0; font-size: 14px; font-weight: 800; letter-spacing: 0.8px;">APPROVAL DECISION</h3>
+          <p id="approval-modal-subtitle" style="margin: 2px 0 0 0; font-size: 11px; color: var(--text-muted); font-weight: 500;">Production gate review and engineering sign-off</p>
+        </div>
+      </div>
+      <button class="btn-close-modal" onclick="closeModal('modal-approval-action')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="approval-action-id">
+      <input type="hidden" id="approval-action-status">
+      
+      <div id="approval-modal-meta" style="margin-bottom: 16px; padding: 14px 16px; background: var(--bg-hover); border-radius: 8px; border: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px;">PROJECT CODE</span>
+          <span id="approval-meta-code" style="font-size: 13px; font-weight: 800; color: var(--brand-orange);"></span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px;">APPROVAL TITLE</span>
+          <span id="approval-meta-title" style="font-size: 13px; font-weight: 600; color: var(--text-primary); text-align: right; max-width: 320px;"></span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px;">REQUESTED BY</span>
+          <span id="approval-meta-requester" style="font-size: 12px; font-weight: 600; color: var(--text-secondary);"></span>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 20px;">
+        <label class="form-label" style="font-weight: 700; letter-spacing: 0.5px;">ENGINEERING REMARKS / SIGNOFF NOTES *</label>
+        <textarea id="approval-remarks-input" class="form-textarea" rows="3" placeholder="Enter review feedback, technical verification notes, or revision reasons..." required style="min-height: 75px;"></textarea>
+      </div>
+
+      <div class="form-actions" style="display: flex; justify-content: flex-end; gap: 12px;">
+        <button type="button" class="btn-action-secondary" onclick="closeModal('modal-approval-action')">CANCEL</button>
+        <button type="button" id="btn-submit-approval" class="btn-action-primary">CONFIRM DECISION</button>
+      </div>
+    </div>
+  </div>
+</div>
+

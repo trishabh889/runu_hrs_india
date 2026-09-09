@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 220" width="100%" height="100%">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="60%" stop-color="#E0E6ED" />
+      <stop offset="100%" stop-color="#9BA8B7" />
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF7A18" />
+      <stop offset="50%" stop-color="#FF5100" />
+      <stop offset="100%" stop-color="#D63300" />
+    </linearGradient>
+    <linearGradient id="nozzleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E2E8F0" />
+      <stop offset="50%" stop-color="#94A3B8" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+    <linearGradient id="tipGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFB703" />
+      <stop offset="100%" stop-color="#FB8500" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#FF5100" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Background is transparent so it can sit on dark panels -->
+
+  <!-- Brand Wordmark: RUN -->
+  <g font-family="'Segoe UI', 'Montserrat', Arial, sans-serif" font-weight="900" font-size="108" fill="url(#silverGrad)" letter-spacing="2">
+    <text x="15" y="105">RUN</text>
+  </g>
+
+  <!-- Hot Runner 'O' Emblem with stylized Nozzle -->
+  <g transform="translate(325, 68)" filter="url(#glow)">
+    <!-- Outer Orange Ring -->
+    <circle cx="0" cy="0" r="46" fill="url(#orangeGrad)" />
+    <!-- Inner Dark Core -->
+    <circle cx="0" cy="0" r="28" fill="#14171E" />
+
+    <!-- Hot Runner Nozzle Graphics in the center of 'O' -->
+    <g transform="translate(0, -2)">
+      <!-- Nozzle Body -->
+      <path d="M -10 -18 L 10 -18 L 10 2 L 6 10 L -6 10 L -10 2 Z" fill="url(#nozzleGrad)" stroke="#CBD5E1" stroke-width="0.8"/>
+      <!-- Hot Tip -->
+      <polygon points="0,19 -5,10 5,10" fill="url(#tipGrad)"/>
+      <!-- Center flow orifice -->
+      <circle cx="0" cy="19" r="1.2" fill="#FFFFFF" />
+      <!-- Nozzle heater coils indicator -->
+      <line x1="-8" y1="-8" x2="8" y2="-8" stroke="#FF5100" stroke-width="1.8" />
+      <line x1="-8" y1="-2" x2="8" y2="-2" stroke="#FF5100" stroke-width="1.8" />
+      <line x1="-8" y1="4" x2="8" y2="4" stroke="#FF5100" stroke-width="1.8" />
+    </g>
+  </g>
+
+  <!-- Middle Subtitle: - HRS INDIA - -->
+  <g transform="translate(0, 142)">
+    <!-- Left Accent Line -->
+    <line x1="45" y1="0" x2="160" y2="0" stroke="url(#orangeGrad)" stroke-width="4.5" stroke-linecap="round"/>
+    
+    <!-- Central Text -->
+    <text x="178" y="7" font-family="'Segoe UI', Arial, sans-serif" font-weight="800" font-size="25" fill="#FFFFFF" letter-spacing="4.5">
+      HRS INDIA
+    </text>
+
+    <!-- Right Accent Line -->
+    <line x1="365" y1="0" x2="480" y2="0" stroke="url(#orangeGrad)" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Bottom Tagline: RELIABLE PRECISION -->
+  <g transform="translate(0, 178)">
+    <text x="120" y="0" font-family="'Segoe UI', Arial, sans-serif" font-weight="700" font-size="19" fill="#FF5E1E" letter-spacing="5">
+      RELIABLE PRECISION
+    </text>
+  </g>
+</svg>

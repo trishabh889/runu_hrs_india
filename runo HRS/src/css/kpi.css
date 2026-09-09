@@ -1,0 +1,159 @@
+/* ==========================================================================
+   RUNO HRS INDIA - KPI Cards & Hero Branding Section
+   ========================================================================== */
+
+/* Top View Header */
+.view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 16px;
+}
+
+.view-title-group h1 {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.view-title-group p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.view-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* KPI Stat Cards Grid */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.kpi-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 110px;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  color: var(--text-primary);
+  border-top: 3px solid var(--brand-orange);
+  position: relative;
+}
+
+.kpi-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--brand-orange);
+  box-shadow: var(--shadow-md);
+}
+
+.kpi-value {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+
+.kpi-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+.kpi-card.completed-card {
+  border-top-color: #10B981;
+}
+
+[data-theme="light"] .kpi-card {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+  border-top-color: var(--brand-orange);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .kpi-card.completed-card {
+  border-top-color: #10B981;
+  background: #F8FAFC;
+}
+
+.btn-open-completed {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background-color: #16A34A;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-open-completed:hover {
+  background-color: #15803D;
+}
+
+/* Center Hero Section */
+.dashboard-hero-section {
+  background: radial-gradient(circle at center, #171c26 0%, #0c0e14 85%);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 44px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-logo-img {
+  max-width: 460px;
+  width: 70%;
+  height: auto;
+  margin-bottom: 18px;
+}
+
+.hero-system-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.hero-system-desc {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  color: var(--brand-orange);
+  text-transform: uppercase;
+}
+
+[data-theme="light"] .dashboard-hero-section {
+  background: radial-gradient(circle at center, #FFFFFF 0%, #F1F5F9 85%);
+}

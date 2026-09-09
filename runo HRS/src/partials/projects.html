@@ -1,0 +1,61 @@
+<div class="view-header">
+  <div class="view-title-group">
+    <h1>PROJECTS REPOSITORY</h1>
+    <p>Hot runner systems specifications, execution status, and delivery schedules</p>
+  </div>
+  <div class="view-actions">
+    <div class="filter-group">
+      <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.8px;">FILTER</span>
+      <div class="custom-dropdown" id="dropdown-projects-filter">
+        <button type="button" class="custom-dropdown-btn">
+          <span class="custom-dropdown-label">ALL PROJECTS</span>
+          <svg class="custom-dropdown-arrow" width="12" height="12" viewBox="0 0 24 24"><path fill="currentColor" d="M7 10l5 5 5-5z"/></svg>
+        </button>
+        <div class="custom-dropdown-menu">
+          <div class="custom-dropdown-item active" data-value="ALL">
+            <span>ALL PROJECTS</span>
+            <svg class="check-icon" width="13" height="13" viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          </div>
+          <div class="custom-dropdown-item" data-value="ACTIVE">
+            <span>ACTIVE ONLY</span>
+            <svg class="check-icon" width="13" height="13" viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          </div>
+          <div class="custom-dropdown-item" data-value="COMPLETED">
+            <span>COMPLETED ONLY</span>
+            <svg class="check-icon" width="13" height="13" viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          </div>
+        </div>
+        <input type="hidden" id="select-projects-filter" value="ALL">
+      </div>
+    </div>
+
+    <button class="btn-action-primary" id="btn-nav-new-proj">+ NEW PROJECT</button>
+    <button class="btn-action-secondary" id="btn-export-projects">EXPORT CSV</button>
+  </div>
+</div>
+
+<div class="table-card">
+  <div class="table-toolbar">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" id="search-projects" placeholder="Search by Code, Customer or Mould...">
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>PROJECT CODE</th>
+          <th>CUSTOMER</th>
+          <th>MOULD DESCRIPTION</th>
+          <th>DROPS</th>
+          <th>TARGET DATE</th>
+          <th>STATUS</th>
+          <th>PRIORITY</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody id="projects-table-body"></tbody>
+    </table>
+  </div>
+</div>
