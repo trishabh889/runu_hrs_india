@@ -2,20 +2,27 @@
 
 A modern, high-performance Windows desktop application engineered for **RUNO HRS INDIA (Hot Runner Systems)**.
 
-![RUNO App Icon](src/assets/icon.png)
+[![Download Windows App](https://img.shields.io/badge/Download-RUNO_HRS_MIS_v1.0.0_(Windows_x64)-FF5722?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/trishabh889/runu_hrs_india/releases/download/v1.0.0/RUNO_HRS_INDIA_MIS_Windows_x64.zip)
+[![Release](https://img.shields.io/badge/Release-v1.0.0-10B981?style=for-the-badge)](https://github.com/trishabh889/runu_hrs_india/releases/tag/v1.0.0)
+[![Platform](https://img.shields.io/badge/Platform-Windows_10_%7C_11_64--bit-0078D6?style=for-the-badge&logo=windows)](https://github.com/trishabh889/runu_hrs_india/releases/download/v1.0.0/RUNO_HRS_INDIA_MIS_Windows_x64.zip)
+
+<p align="center">
+  <img src="runo%20HRS/src/assets/icon.png" width="180" alt="RUNO App Icon" />
+</p>
 
 ---
 
-## 🚀 Quick Start (How to Run)
+## ⚡ 1-Click Download (For Any Windows PC)
 
-### Option 1: Direct `.exe` (No installation needed)
-You can directly run the pre-built desktop application:
-1. Double-click [`Run_RUNO_MIS.cmd`](file:///c:/Users/Rishabh.Tripathi/Documents/Desktop%20application/Run_RUNO_MIS.cmd) in the project root, **OR**
-2. Open [`dist/RUNO_HRS_INDIA_MIS/RUNO_HRS_INDIA_MIS.exe`](file:///c:/Users/Rishabh.Tripathi/Documents/Desktop%20application/dist/RUNO_HRS_INDIA_MIS/RUNO_HRS_INDIA_MIS.exe).
+> **No installation or coding software (Node.js/Python) required.** The package is completely portable and self-contained.
 
-### Option 2: Portable ZIP Distribution
-A single standalone zip package is available for distribution to any Windows PC:
-- [`dist/RUNO_HRS_INDIA_MIS_Windows_x64.zip`](file:///c:/Users/Rishabh.Tripathi/Documents/Desktop%20application/dist/RUNO_HRS_INDIA_MIS_Windows_x64.zip)
+### 📥 [Click Here to Download `RUNO_HRS_INDIA_MIS_Windows_x64.zip` (v1.0.0)](https://github.com/trishabh889/runu_hrs_india/releases/download/v1.0.0/RUNO_HRS_INDIA_MIS_Windows_x64.zip)
+
+### 🛠️ Quick Start (2 Steps):
+1. **Unzip**: Right-click the downloaded zip file and select **"Extract All..."**.
+2. **Run**:
+   - Double-click **`RUNO_HRS_INDIA_MIS.exe`** to launch the application immediately.
+   - Or double-click **`Install_Desktop_Shortcut.cmd`** to create official Desktop and Start Menu shortcuts.
 
 ---
 
