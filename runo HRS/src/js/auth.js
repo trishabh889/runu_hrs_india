@@ -127,7 +127,7 @@ function applyRBAC(role) {
     'ACCOUNTS': ['dashboard', 'accounts', 'customers', 'projects'],
     'STORE': ['dashboard', 'store', 'purchase'],
     'PURCHASE': ['dashboard', 'purchase', 'store'],
-    'ENGINEER': ['dashboard', 'projects', 'design', 'manufacturing', 'completed-projects', 'new-project'],
+    'ENGINEER': ['dashboard', 'projects', 'customers', 'sales', 'commercial', 'design', 'manufacturing', 'approvals', 'completed-projects', 'new-project'],
     'OPERATOR': ['dashboard', 'manufacturing']
   };
 

@@ -1,47 +1,59 @@
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 console.log('--- Packaging Modular RUNO HRS INDIA Desktop Application ---');
 
 const projectRoot = __dirname;
 const electronDist = path.join(projectRoot, '..', 'node_modules', 'electron', 'dist');
 const outputDir = path.join(projectRoot, 'dist', 'RUNO_HRS_INDIA_MIS');
+const outputDirX64 = path.join(projectRoot, 'dist', 'RUNO_HRS_INDIA_MIS_Windows_x64');
 
 if (!fs.existsSync(electronDist)) {
   console.error('Electron binaries not found at:', electronDist);
   process.exit(1);
 }
 
-// Clean output directory
-if (fs.existsSync(outputDir)) {
-  fs.rmSync(outputDir, { recursive: true, force: true });
-}
+// Ensure running instances are terminated so files are not locked
+try {
+  const killCmd = process.platform === 'win32' ? 'C:\\Windows\\System32\\taskkill.exe' : 'killall';
+  execSync(`"${killCmd}" /F /IM RUNO_HRS_INDIA_MIS.exe /T`, { stdio: 'ignore' });
+} catch (e) {}
+Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 700);
+
 fs.mkdirSync(outputDir, { recursive: true });
 
-function copyRecursive(src, dest) {
+function copyRecursive(src, dest, overwrite = true) {
   const stat = fs.statSync(src);
   if (stat.isDirectory()) {
     if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
     for (const file of fs.readdirSync(src)) {
       if (file === 'default_app.asar') continue;
       if (file === 'electron.exe') {
-        fs.copyFileSync(path.join(src, file), path.join(dest, 'RUNO_HRS_INDIA_MIS.exe'));
-        console.log('Created binary: RUNO_HRS_INDIA_MIS.exe');
+        const destExe = path.join(dest, 'RUNO_HRS_INDIA_MIS.exe');
+        if (!fs.existsSync(destExe) || overwrite) {
+          try { fs.copyFileSync(path.join(src, file), destExe); } catch (e) {}
+        }
       } else {
-        copyRecursive(path.join(src, file), path.join(dest, file));
+        copyRecursive(path.join(src, file), path.join(dest, file), overwrite);
       }
     }
   } else {
-    fs.copyFileSync(src, dest);
+    if (!fs.existsSync(dest) || overwrite) {
+      try { fs.copyFileSync(src, dest); } catch (e) {}
+    }
   }
 }
 
-console.log('Copying Electron runtime binaries...');
-copyRecursive(electronDist, outputDir);
+console.log('Ensuring Electron runtime binaries...');
+copyRecursive(electronDist, outputDir, false);
 const targetExe = path.join(outputDir, 'RUNO_HRS_INDIA_MIS.exe');
 
-// Copy application files to resources/app
+// Clean and copy fresh application files to resources/app
 const appDir = path.join(outputDir, 'resources', 'app');
+if (fs.existsSync(appDir)) {
+  try { fs.rmSync(appDir, { recursive: true, force: true }); } catch (e) {}
+}
 fs.mkdirSync(appDir, { recursive: true });
 
 console.log('Copying modular application source files...');
@@ -60,7 +72,6 @@ const icoSrc = path.join(projectRoot, 'src', 'assets', 'app.ico');
 if (fs.existsSync(icoSrc)) fs.copyFileSync(icoSrc, path.join(outputDir, 'app.ico'));
 
 // Embed RUNO icon directly into PE executable binary
-const { execSync } = require('child_process');
 const rceditExe = path.join(projectRoot, '..', 'node_modules', 'electron-winstaller', 'vendor', 'rcedit.exe');
 if (fs.existsSync(rceditExe) && fs.existsSync(icoSrc)) {
   let embedded = false;
@@ -77,6 +88,14 @@ if (fs.existsSync(rceditExe) && fs.existsSync(icoSrc)) {
   if (!embedded) console.warn('Note: rcedit deferred icon lock.');
 }
 
+// Sync to RUNO_HRS_INDIA_MIS_Windows_x64 distribution folder
+console.log('Syncing x64 distribution package...');
+if (fs.existsSync(outputDirX64)) {
+  try {
+    fs.rmSync(outputDirX64, { recursive: true, force: true });
+  } catch (e) {}
+}
+copyRecursive(outputDir, outputDirX64);
 
 console.log('✅ Standalone Modular Desktop Application successfully built at:');
 console.log(targetExe);
