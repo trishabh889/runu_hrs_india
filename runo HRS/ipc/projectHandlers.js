@@ -40,11 +40,6 @@ function registerProjectHandlers() {
   ipcMain.handle('projects:setWorkflow', (event, { projectId, step, timestamp }) => {
     return db.projects.setWorkflow(projectId, step, timestamp);
   });
-
-  // Data Export
-  ipcMain.handle('data:exportCSV', (event, type) => {
-    return db.exportCSV(type);
-  });
 }
 
 module.exports = registerProjectHandlers;
