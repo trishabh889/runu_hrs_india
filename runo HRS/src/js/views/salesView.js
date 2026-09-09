@@ -149,7 +149,14 @@ window.openSalesQuoteModal = function(id) {
 };
 
 window.deleteSalesProject = async function(id) {
-  if (confirm('Are you sure you want to delete this project order?')) {
+  const confirmed = await window.showConfirmDialog({
+    title: 'Delete Project Order',
+    message: 'Are you sure you want to delete this project order?',
+    subtext: 'This action cannot be undone.',
+    confirmText: 'Delete',
+    danger: true
+  });
+  if (confirmed) {
     const res = await window.api.deleteProject(id);
     if (res.success) {
       window.showToast('Project deleted', 'success');
