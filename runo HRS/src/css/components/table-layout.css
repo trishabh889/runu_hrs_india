@@ -220,10 +220,11 @@
 .btn-page-num.active,
 .mfg-page-btn.active,
 .pr-page-num {
-  background: #D97706 !important;
-  border-color: #F59E0B !important;
+  background: #2563EB !important;
+  border-color: #3B82F6 !important;
   color: #FFFFFF !important;
   font-weight: 800 !important;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.4) !important;
 }
 
 .pagination-ellipsis {
@@ -235,17 +236,28 @@
 }
 
 .page-size-wrap {
-  display: flex !important;
+  display: inline-flex !important;
   align-items: center !important;
   gap: 6px !important;
-  margin-left: 10px !important;
+  margin-left: 8px !important;
   font-size: 11px !important;
   color: #8B9BB4 !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+.page-size-wrap span {
+  white-space: nowrap !important;
+  font-size: 11px !important;
+  color: #8B9BB4 !important;
+  line-height: 28px !important;
 }
 
 .page-size-select {
   height: 28px !important;
-  padding: 0 6px !important;
+  width: 58px !important;
+  min-width: 58px !important;
+  padding: 0 4px 0 6px !important;
   background: #111827 !important;
   border: 1px solid #1F2937 !important;
   color: #E2E8F0 !important;
@@ -254,5 +266,6 @@
   font-weight: 700 !important;
   cursor: pointer !important;
   outline: none !important;
+  line-height: 26px !important;
 }
 

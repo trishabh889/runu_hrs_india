@@ -239,34 +239,32 @@ async function loadProjects() {
       else if (pQuote === 'APPROVED') stage = 'QUOTATION';
 
       tr.innerHTML = `
-        <td style="font-weight: 700; color: var(--text-muted);">${idx + 1}</td>
+        <td style="text-align: center; font-weight: 700; color: var(--text-muted);">${idx + 1}</td>
         <td style="font-weight: 700; color: var(--text-primary); cursor: pointer;" onclick="viewProjectDetails('${p.id}')">
           <div style="color: var(--brand-orange); font-size: 13px; font-weight: 800;">${p.mould_description || p.project_code}</div>
           <div style="font-size: 11px; color: var(--text-muted); font-family: var(--font-primary);">${p.project_code}</div>
         </td>
         <td style="font-weight: 700; color: var(--text-primary);">${p.customer_name || 'N/A'}</td>
-        <td>
-          <span class="badge badge-category">
-            ${pCat}
-          </span>
+        <td style="text-align: center; font-weight: 700; font-size: 11.5px; color: #CBD5E1; letter-spacing: 0.3px;">
+          ${pCat}
         </td>
-        <td>
+        <td style="text-align: center;">
           <span class="badge badge-${pQuote === 'APPROVED' ? 'completed' : (pQuote === 'SENT' ? 'active' : 'pending')}">
             ${pQuote}
           </span>
         </td>
-        <td>
+        <td style="text-align: center;">
           <span class="badge badge-${isPoReceived ? 'completed' : 'pending'}">
             ${isPoReceived ? 'RECEIVED' : 'PENDING'}
           </span>
         </td>
-        <td>
+        <td style="text-align: center;">
           <span style="font-weight: 700; font-size: 11px; color: ${isCompleted ? '#10B981' : (stage === 'PRODUCTION' ? '#8B5CF6' : '#94A3B8')};">
             ${stage}
           </span>
         </td>
-        <td style="color: var(--text-secondary); font-size: 12px; font-family: var(--font-primary);">${p.target_date || p.order_date || 'N/A'}</td>
-        <td>
+        <td style="text-align: center; color: var(--text-secondary); font-size: 12px; font-family: var(--font-primary);">${p.target_date || p.order_date || 'N/A'}</td>
+        <td style="text-align: center;">
           <span class="badge badge-${(p.status || 'ACTIVE').toLowerCase().replace(/\s+/g, '-')}">${p.status}</span>
         </td>
         <td style="text-align: center;">
