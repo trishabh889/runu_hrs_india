@@ -66,58 +66,96 @@
   </div>
 
   <!-- TABLE 1: HRS + SPARE HRS -->
-  <div id="container-comm-hrs" class="table-responsive">
+  <div id="container-comm-hrs">
     <div style="padding: 10px 14px 6px; font-size: 12px; font-weight: 800; color: var(--brand-orange); letter-spacing: 0.8px;">
       HRS + SPARE HRS
     </div>
-    <table class="data-table" style="font-size: 11px; min-width: 1750px;">
-      <thead>
-        <tr>
-          <th style="width: 45px;">SR</th>
-          <th style="width: 95px;">DATE</th>
-          <th style="width: 220px;">PROJECT DESCRIPTION</th>
-          <th style="width: 90px;">NO OF DROP</th>
-          <th style="width: 100px;">HRS TYPE</th>
-          <th style="width: 130px;">MATERIAL</th>
-          <th style="width: 125px; color: #60A5FA;">MANIFOLD SIZE</th>
-          <th style="width: 115px; color: #60A5FA;">NOZZLE</th>
-          <th style="width: 110px; color: #60A5FA;">CYLINDER</th>
-          <th style="width: 125px; color: #60A5FA;">SOLENOID VALVE</th>
-          <th style="width: 125px; color: #60A5FA;">CONNECTER BOX</th>
-          <th style="width: 110px; color: #34D399;">UNIT PRICE</th>
-          <th style="width: 95px; color: #34D399;">DISCOUNT</th>
-          <th style="width: 115px; color: #34D399;">FINAL PRICE</th>
-          <th style="width: 140px;">REMARK</th>
-          <th style="width: 140px; color: #FBBF24;">STATUS (SCROLL)</th>
-          <th style="width: 140px; color: #FBBF24;">PO STATUS</th>
-        </tr>
-      </thead>
-      <tbody id="commercial-table-hrs-body"></tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="data-table" style="font-size: 11px; min-width: 1750px;">
+        <thead>
+          <tr>
+            <th style="width: 45px;">SR</th>
+            <th style="width: 95px;">DATE</th>
+            <th style="width: 220px;">PROJECT DESCRIPTION</th>
+            <th style="width: 90px;">NO OF DROP</th>
+            <th style="width: 100px;">HRS TYPE</th>
+            <th style="width: 130px;">MATERIAL</th>
+            <th style="width: 125px; color: #60A5FA;">MANIFOLD SIZE</th>
+            <th style="width: 115px; color: #60A5FA;">NOZZLE</th>
+            <th style="width: 110px; color: #60A5FA;">CYLINDER</th>
+            <th style="width: 125px; color: #60A5FA;">SOLENOID VALVE</th>
+            <th style="width: 125px; color: #60A5FA;">CONNECTER BOX</th>
+            <th style="width: 110px; color: #34D399;">UNIT PRICE</th>
+            <th style="width: 95px; color: #34D399;">DISCOUNT</th>
+            <th style="width: 115px; color: #34D399;">FINAL PRICE</th>
+            <th style="width: 140px;">REMARK</th>
+            <th style="width: 140px; color: #FBBF24;">STATUS (SCROLL)</th>
+            <th style="width: 140px; color: #FBBF24;">PO STATUS</th>
+          </tr>
+        </thead>
+        <tbody id="commercial-table-hrs-body"></tbody>
+      </table>
+    </div>
+    <div class="table-pagination-footer" id="commercial-hrs-pagination-footer">
+      <div class="pagination-info" id="commercial-hrs-pagination-info">Showing 1 to 10 of 0 entries</div>
+      <div class="pagination-controls" id="commercial-hrs-pagination-controls">
+        <button type="button" class="btn-page-nav" id="btn-commercial-hrs-prev">Previous</button>
+        <div id="commercial-hrs-page-numbers" class="page-numbers"></div>
+        <button type="button" class="btn-page-nav" id="btn-commercial-hrs-next">Next</button>
+        <div class="page-size-wrap">
+          <select id="commercial-hrs-page-size" class="page-size-select no-tomselect">
+            <option value="10" selected>10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          <span>entries per page</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- TABLE 2: HRTC + SPARE HRTC -->
-  <div id="container-comm-hrtc" class="table-responsive" style="display: none;">
+  <div id="container-comm-hrtc" style="display: none;">
     <div style="padding: 10px 14px 6px; font-size: 12px; font-weight: 800; color: #38BDF8; letter-spacing: 0.8px;">
       HRTC + SPARE HRTC
     </div>
-    <table class="data-table" style="font-size: 11px; min-width: 1250px;">
-      <thead>
-        <tr>
-          <th style="width: 45px;">SR</th>
-          <th style="width: 105px;">DATE</th>
-          <th style="width: 260px;">PROJECT DESCRIPTION</th>
-          <th style="width: 110px;">NO OF ZONE</th>
-          <th style="width: 140px;">CONNECTER TYPE</th>
-          <th style="width: 140px;">HRTC TYPE</th>
-          <th style="width: 130px;">CABLE LENGTH</th>
-          <th style="width: 160px;">REMARK</th>
-          <th style="width: 145px; color: #FBBF24;">STATUS (SCROLL)</th>
-          <th style="width: 145px; color: #FBBF24;">PO STATUS</th>
-        </tr>
-      </thead>
-      <tbody id="commercial-table-hrtc-body"></tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="data-table" style="font-size: 11px; min-width: 1250px;">
+        <thead>
+          <tr>
+            <th style="width: 45px;">SR</th>
+            <th style="width: 105px;">DATE</th>
+            <th style="width: 260px;">PROJECT DESCRIPTION</th>
+            <th style="width: 110px;">NO OF ZONE</th>
+            <th style="width: 140px;">CONNECTER TYPE</th>
+            <th style="width: 140px;">HRTC TYPE</th>
+            <th style="width: 130px;">CABLE LENGTH</th>
+            <th style="width: 160px;">REMARK</th>
+            <th style="width: 145px; color: #FBBF24;">STATUS (SCROLL)</th>
+            <th style="width: 145px; color: #FBBF24;">PO STATUS</th>
+          </tr>
+        </thead>
+        <tbody id="commercial-table-hrtc-body"></tbody>
+      </table>
+    </div>
+    <div class="table-pagination-footer" id="commercial-hrtc-pagination-footer">
+      <div class="pagination-info" id="commercial-hrtc-pagination-info">Showing 1 to 10 of 0 entries</div>
+      <div class="pagination-controls" id="commercial-hrtc-pagination-controls">
+        <button type="button" class="btn-page-nav" id="btn-commercial-hrtc-prev">Previous</button>
+        <div id="commercial-hrtc-page-numbers" class="page-numbers"></div>
+        <button type="button" class="btn-page-nav" id="btn-commercial-hrtc-next">Next</button>
+        <div class="page-size-wrap">
+          <select id="commercial-hrtc-page-size" class="page-size-select no-tomselect">
+            <option value="10" selected>10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          <span>entries per page</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Status Color Coding Legend Bar -->

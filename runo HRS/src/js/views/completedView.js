@@ -2,11 +2,19 @@
 // RUNO HRS INDIA - Completed Projects Archive View Controller
 // ==========================================================================
 
+let completedState = {
+  currentPage: 1,
+  pageSize: 10
+};
+
 function initCompletedProjects() {
   const monthFilter = document.getElementById('filter-completed-month');
   const yearFilter = document.getElementById('filter-completed-year');
 
-  const trigger = () => loadCompletedProjects();
+  const trigger = () => {
+    completedState.currentPage = 1;
+    loadCompletedProjects();
+  };
   if (monthFilter) monthFilter.addEventListener('change', trigger);
   if (yearFilter) yearFilter.addEventListener('change', trigger);
 
@@ -66,19 +74,42 @@ async function loadCompletedProjects() {
       });
     }
 
-    const footerCount = document.getElementById('completed-footer-count');
-    if (footerCount) footerCount.innerText = `Total Projects: ${list.length}`;
-
     const tbody = document.getElementById('completed-projects-table-body');
     if (!tbody) return;
     tbody.innerHTML = '';
 
     if (list.length === 0) {
       tbody.innerHTML = '<tr><td colspan="15" style="text-align: center; color: var(--text-muted); padding: 24px;">No completed project records found matching filters.</td></tr>';
+      if (window.renderTablePagination) {
+        window.renderTablePagination({
+          infoId: 'completed-pagination-info',
+          numbersId: 'completed-page-numbers',
+          prevBtnId: 'btn-completed-prev',
+          nextBtnId: 'btn-completed-next',
+          sizeSelectId: 'completed-page-size',
+          totalEntries: 0,
+          totalPages: 1,
+          currentPage: 1,
+          startIdx: 0,
+          endIdx: 0,
+          pageSize: completedState.pageSize,
+          onPageChange: () => {},
+          onPageSizeChange: (newSize) => {
+            completedState.pageSize = newSize;
+            completedState.currentPage = 1;
+            loadCompletedProjects();
+          }
+        });
+      }
       return;
     }
 
-    list.forEach(p => {
+    const { pageItems, totalEntries, totalPages, validPage, startIdx, endIdx } = (window.paginateArray
+      ? window.paginateArray(list, completedState.currentPage, completedState.pageSize)
+      : { pageItems: list, totalEntries: list.length, totalPages: 1, validPage: 1, startIdx: 0, endIdx: list.length });
+    completedState.currentPage = validPage;
+
+    pageItems.forEach(p => {
       const custName = p.customer_name || p.customer || '';
       const projName = p.mould_description || p.project_name || p.project_code || '';
       const mr = mfgRecords.find(x => 
@@ -123,6 +154,31 @@ async function loadCompletedProjects() {
       `;
       tbody.appendChild(tr);
     });
+
+    if (window.renderTablePagination) {
+      window.renderTablePagination({
+        infoId: 'completed-pagination-info',
+        numbersId: 'completed-page-numbers',
+        prevBtnId: 'btn-completed-prev',
+        nextBtnId: 'btn-completed-next',
+        sizeSelectId: 'completed-page-size',
+        totalEntries,
+        totalPages,
+        currentPage: validPage,
+        startIdx,
+        endIdx,
+        pageSize: completedState.pageSize,
+        onPageChange: (newPage) => {
+          completedState.currentPage = newPage;
+          loadCompletedProjects();
+        },
+        onPageSizeChange: (newSize) => {
+          completedState.pageSize = newSize;
+          completedState.currentPage = 1;
+          loadCompletedProjects();
+        }
+      });
+    }
   } catch (e) {
     console.error('Failed to load completed projects:', e);
   }
@@ -130,3 +186,4 @@ async function loadCompletedProjects() {
 
 window.initCompletedProjects = initCompletedProjects;
 window.loadCompletedProjects = loadCompletedProjects;
+

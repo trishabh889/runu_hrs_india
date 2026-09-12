@@ -4,35 +4,46 @@
 // 10 Table Columns, Design Check, Gmail Quote, and PDF/Excel Exports
 // ==========================================================================
 
+let projectsState = {
+  currentPage: 1,
+  pageSize: 10
+};
+
 function initProjects() {
   if (window.initCustomDropdowns) window.initCustomDropdowns();
 
+  const resetPageAndLoad = () => {
+    projectsState.currentPage = 1;
+    loadProjects();
+  };
+
   const searchInput = document.getElementById('search-projects');
-  if (searchInput) searchInput.addEventListener('input', () => loadProjects());
+  if (searchInput) searchInput.addEventListener('input', resetPageAndLoad);
 
   const sectionSelect = document.getElementById('select-projects-section');
-  if (sectionSelect) sectionSelect.addEventListener('change', () => loadProjects());
+  if (sectionSelect) sectionSelect.addEventListener('change', resetPageAndLoad);
 
   const filterSelect = document.getElementById('select-projects-filter');
-  if (filterSelect) filterSelect.addEventListener('change', () => loadProjects());
+  if (filterSelect) filterSelect.addEventListener('change', resetPageAndLoad);
 
   const projStartDate = document.getElementById('filter-projects-start');
   const projEndDate = document.getElementById('filter-projects-end');
   const btnProjReset = document.getElementById('btn-projects-filter-reset');
 
   if (projStartDate) {
-    projStartDate.addEventListener('input', () => loadProjects());
-    projStartDate.addEventListener('change', () => loadProjects());
+    projStartDate.addEventListener('input', resetPageAndLoad);
+    projStartDate.addEventListener('change', resetPageAndLoad);
   }
   if (projEndDate) {
-    projEndDate.addEventListener('input', () => loadProjects());
-    projEndDate.addEventListener('change', () => loadProjects());
+    projEndDate.addEventListener('input', resetPageAndLoad);
+    projEndDate.addEventListener('change', resetPageAndLoad);
   }
   if (btnProjReset) {
     btnProjReset.addEventListener('click', () => {
       if (projStartDate) projStartDate.value = '';
       if (projEndDate) projEndDate.value = '';
       if (searchInput) searchInput.value = '';
+      projectsState.currentPage = 1;
       loadProjects();
     });
   }
@@ -185,10 +196,37 @@ async function loadProjects() {
 
     if (filtered.length === 0) {
       tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 28px;">No projects match current filters.</td></tr>';
+      if (window.renderTablePagination) {
+        window.renderTablePagination({
+          infoId: 'projects-pagination-info',
+          numbersId: 'projects-page-numbers',
+          prevBtnId: 'btn-projects-prev',
+          nextBtnId: 'btn-projects-next',
+          sizeSelectId: 'projects-page-size',
+          totalEntries: 0,
+          totalPages: 1,
+          currentPage: 1,
+          startIdx: 0,
+          endIdx: 0,
+          pageSize: projectsState.pageSize,
+          onPageChange: () => {},
+          onPageSizeChange: (newSize) => {
+            projectsState.pageSize = newSize;
+            projectsState.currentPage = 1;
+            loadProjects();
+          }
+        });
+      }
       return;
     }
 
-    filtered.forEach((p, idx) => {
+    const { pageItems, totalEntries, totalPages, validPage, startIdx, endIdx } = (window.paginateArray
+      ? window.paginateArray(filtered, projectsState.currentPage, projectsState.pageSize)
+      : { pageItems: filtered, totalEntries: filtered.length, totalPages: 1, validPage: 1, startIdx: 0, endIdx: filtered.length });
+    projectsState.currentPage = validPage;
+
+    pageItems.forEach((p, i) => {
+      const idx = startIdx + i;
       const tr = document.createElement('tr');
       const pCat = (p.category || 'HRS').toUpperCase();
       const pQuote = (p.quote_status || 'PENDING').toUpperCase();
@@ -250,6 +288,31 @@ async function loadProjects() {
       `;
       tbody.appendChild(tr);
     });
+
+    if (window.renderTablePagination) {
+      window.renderTablePagination({
+        infoId: 'projects-pagination-info',
+        numbersId: 'projects-page-numbers',
+        prevBtnId: 'btn-projects-prev',
+        nextBtnId: 'btn-projects-next',
+        sizeSelectId: 'projects-page-size',
+        totalEntries,
+        totalPages,
+        currentPage: validPage,
+        startIdx,
+        endIdx,
+        pageSize: projectsState.pageSize,
+        onPageChange: (newPage) => {
+          projectsState.currentPage = newPage;
+          loadProjects();
+        },
+        onPageSizeChange: (newSize) => {
+          projectsState.pageSize = newSize;
+          projectsState.currentPage = 1;
+          loadProjects();
+        }
+      });
+    }
   } catch (err) {
     console.error('Failed to load projects:', err);
   }

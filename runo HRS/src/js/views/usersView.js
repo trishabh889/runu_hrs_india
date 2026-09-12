@@ -84,15 +84,51 @@ window.openChangePasswordModal = function(username) {
   window.openModal('modal-change-password');
 };
 
+let usersState = {
+  currentPage: 1,
+  pageSize: 10
+};
+
 async function loadUsers() {
   try {
-    const list = await window.api.getUsers();
+    const list = await window.api.getUsers() || [];
     window.AppState.users = list;
     const tbody = document.getElementById('users-table-body');
     if (!tbody) return;
     tbody.innerHTML = '';
 
-    list.forEach(u => {
+    if (list.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">No registered users found.</td></tr>';
+      if (window.renderTablePagination) {
+        window.renderTablePagination({
+          infoId: 'users-pagination-info',
+          numbersId: 'users-page-numbers',
+          prevBtnId: 'btn-users-prev',
+          nextBtnId: 'btn-users-next',
+          sizeSelectId: 'users-page-size',
+          totalEntries: 0,
+          totalPages: 1,
+          currentPage: 1,
+          startIdx: 0,
+          endIdx: 0,
+          pageSize: usersState.pageSize,
+          onPageChange: () => {},
+          onPageSizeChange: (newSize) => {
+            usersState.pageSize = newSize;
+            usersState.currentPage = 1;
+            loadUsers();
+          }
+        });
+      }
+      return;
+    }
+
+    const { pageItems, totalEntries, totalPages, validPage, startIdx, endIdx } = (window.paginateArray
+      ? window.paginateArray(list, usersState.currentPage, usersState.pageSize)
+      : { pageItems: list, totalEntries: list.length, totalPages: 1, validPage: 1, startIdx: 0, endIdx: list.length });
+    usersState.currentPage = validPage;
+
+    pageItems.forEach(u => {
       const isApproved = u.status === 'APPROVED' || u.is_approved === true || u.username === 'ANAND';
       const statusBadge = isApproved
         ? `<span class="badge badge-completed">APPROVED</span>`
@@ -134,6 +170,31 @@ async function loadUsers() {
       `;
       tbody.appendChild(tr);
     });
+
+    if (window.renderTablePagination) {
+      window.renderTablePagination({
+        infoId: 'users-pagination-info',
+        numbersId: 'users-page-numbers',
+        prevBtnId: 'btn-users-prev',
+        nextBtnId: 'btn-users-next',
+        sizeSelectId: 'users-page-size',
+        totalEntries,
+        totalPages,
+        currentPage: validPage,
+        startIdx,
+        endIdx,
+        pageSize: usersState.pageSize,
+        onPageChange: (newPage) => {
+          usersState.currentPage = newPage;
+          loadUsers();
+        },
+        onPageSizeChange: (newSize) => {
+          usersState.pageSize = newSize;
+          usersState.currentPage = 1;
+          loadUsers();
+        }
+      });
+    }
   } catch (err) {
     console.error('Failed to load users:', err);
   }

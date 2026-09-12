@@ -100,44 +100,46 @@ window.isDateInRange = function(dateVal, startVal, endVal) {
   return true;
 };
 
-window.initCustomDropdowns = function() {
-  document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
-    if (dropdown.dataset.initialized) return;
-    dropdown.dataset.initialized = 'true';
+if (!window.initCustomDropdowns) {
+  window.initCustomDropdowns = function() {
+    document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
+      if (dropdown.dataset.initialized) return;
+      dropdown.dataset.initialized = 'true';
 
-    const btn = dropdown.querySelector('.custom-dropdown-btn');
-    const label = dropdown.querySelector('.custom-dropdown-label');
-    const hiddenInput = dropdown.querySelector('input[type="hidden"]');
-    const items = dropdown.querySelectorAll('.custom-dropdown-item');
-    if (!btn) return;
+      const btn = dropdown.querySelector('.custom-dropdown-btn');
+      const label = dropdown.querySelector('.custom-dropdown-label');
+      const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+      const items = dropdown.querySelectorAll('.custom-dropdown-item');
+      if (!btn) return;
 
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      document.querySelectorAll('.custom-dropdown.open').forEach(d => {
-        if (d !== dropdown) d.classList.remove('open');
-      });
-      dropdown.classList.toggle('open');
-    });
-
-    items.forEach(item => {
-      item.addEventListener('click', e => {
+      btn.addEventListener('click', e => {
         e.stopPropagation();
-        const val = item.dataset.value;
-        const text = item.querySelector('span') ? item.querySelector('span').innerText : item.innerText;
+        document.querySelectorAll('.custom-dropdown.open').forEach(d => {
+          if (d !== dropdown) d.classList.remove('open');
+        });
+        dropdown.classList.toggle('open');
+      });
 
-        items.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
+      items.forEach(item => {
+        item.addEventListener('click', e => {
+          e.stopPropagation();
+          const val = item.dataset.value;
+          const text = item.querySelector('span') ? item.querySelector('span').innerText : item.innerText;
 
-        if (label) label.innerText = text;
-        if (hiddenInput) {
-          hiddenInput.value = val;
-          hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
-        }
-        dropdown.classList.remove('open');
+          items.forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+
+          if (label) label.innerText = text;
+          if (hiddenInput) {
+            hiddenInput.value = val;
+            hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+          dropdown.classList.remove('open');
+        });
       });
     });
-  });
-};
+  };
+}
 
 document.addEventListener('click', () => {
   document.querySelectorAll('.custom-dropdown.open').forEach(d => d.classList.remove('open'));

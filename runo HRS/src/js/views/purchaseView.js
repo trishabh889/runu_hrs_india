@@ -6,43 +6,55 @@
 
 let prItemCounter = 0;
 let currentViewingPR = null;
+let purchaseState = {
+  currentPage: 1,
+  pageSize: 10
+};
 
 function initPurchase() {
   const searchInput = document.getElementById('search-purchase-requests');
   if (searchInput) {
-    searchInput.addEventListener('input', () => loadPurchase());
+    searchInput.addEventListener('input', () => {
+      purchaseState.currentPage = 1;
+      loadPurchase();
+    });
   }
+
+  const triggerPrFilter = () => {
+    purchaseState.currentPage = 1;
+    loadPurchase();
+  };
 
   const projectFilter = document.getElementById('filter-pr-project');
   if (projectFilter) {
-    projectFilter.addEventListener('change', () => loadPurchase());
+    projectFilter.addEventListener('change', triggerPrFilter);
   }
 
   const statusFilter = document.getElementById('filter-pr-status');
   if (statusFilter) {
-    statusFilter.addEventListener('change', () => loadPurchase());
+    statusFilter.addEventListener('change', triggerPrFilter);
   }
 
   const vendorFilter = document.getElementById('filter-pr-vendor');
   if (vendorFilter) {
-    vendorFilter.addEventListener('change', () => loadPurchase());
+    vendorFilter.addEventListener('change', triggerPrFilter);
   }
 
   const prDateStart = document.getElementById('filter-pr-start');
   if (prDateStart) {
-    prDateStart.addEventListener('change', () => loadPurchase());
-    prDateStart.addEventListener('input', () => loadPurchase());
+    prDateStart.addEventListener('change', triggerPrFilter);
+    prDateStart.addEventListener('input', triggerPrFilter);
   }
 
   const prDateEnd = document.getElementById('filter-pr-end');
   if (prDateEnd) {
-    prDateEnd.addEventListener('change', () => loadPurchase());
-    prDateEnd.addEventListener('input', () => loadPurchase());
+    prDateEnd.addEventListener('change', triggerPrFilter);
+    prDateEnd.addEventListener('input', triggerPrFilter);
   }
 
   const btnApply = document.getElementById('btn-pr-filter-apply');
   if (btnApply) {
-    btnApply.addEventListener('click', () => loadPurchase());
+    btnApply.addEventListener('click', triggerPrFilter);
   }
 
   const btnReset = document.getElementById('btn-pr-filter-reset');
@@ -54,6 +66,7 @@ function initPurchase() {
       if (searchInput) searchInput.value = '';
       if (prDateStart) prDateStart.value = '';
       if (prDateEnd) prDateEnd.value = '';
+      purchaseState.currentPage = 1;
       loadPurchase();
     });
   }
@@ -212,9 +225,13 @@ async function loadPurchase() {
       return;
     }
 
-    tbody.innerHTML = prs.map((pr, idx) => {
+    const { pageItems, totalEntries, totalPages, validPage, startIdx, endIdx } = (window.paginateArray ? window.paginateArray(prs, purchaseState.currentPage, purchaseState.pageSize) : { pageItems: prs, totalEntries: prs.length, totalPages: 1, validPage: 1, startIdx: 0, endIdx: prs.length });
+    purchaseState.currentPage = validPage;
+
+    tbody.innerHTML = pageItems.map((pr, idx) => {
       const badgeClass = getPRStatusBadgeClass(pr.status);
-      const prNo = pr.pr_no || `PR-2026-${String(idx + 1).padStart(3, '0')}`;
+      const srNo = startIdx + idx + 1;
+      const prNo = pr.pr_no || `PR-2026-${String(srNo).padStart(3, '0')}`;
       const projCode = pr.project_code || '-';
       const date = pr.date || '-';
       const projDesc = pr.project_desc || 'Hot Runner Tooling';
@@ -229,7 +246,7 @@ async function loadPurchase() {
 
       return `
         <tr data-pr-id="${pr.id}">
-          <td style="text-align: center; font-weight: 700; color: #8A9CB5;">${pr.sr || (idx + 1)}</td>
+          <td style="text-align: center; font-weight: 700; color: #8A9CB5;">${srNo}</td>
           <td>
             <a href="javascript:void(0)" onclick="window.viewPurchaseRequest('${pr.id}')" class="pr-highlight-code" style="text-decoration: none;">
               ${prNo}
@@ -270,6 +287,31 @@ async function loadPurchase() {
         </tr>
       `;
     }).join('');
+
+    if (window.renderTablePagination) {
+      window.renderTablePagination({
+        infoId: 'purchase-pagination-info',
+        numbersId: 'purchase-page-numbers',
+        prevBtnId: 'btn-purchase-prev',
+        nextBtnId: 'btn-purchase-next',
+        sizeSelectId: 'purchase-page-size',
+        totalEntries,
+        totalPages,
+        currentPage: validPage,
+        startIdx,
+        endIdx,
+        pageSize: purchaseState.pageSize,
+        onPageChange: (newPage) => {
+          purchaseState.currentPage = newPage;
+          loadPurchase();
+        },
+        onPageSizeChange: (newSize) => {
+          purchaseState.pageSize = newSize;
+          purchaseState.currentPage = 1;
+          loadPurchase();
+        }
+      });
+    }
 
   } catch (err) {
     console.error('Failed to load purchase requests:', err);

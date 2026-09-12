@@ -580,7 +580,7 @@ if (!designProjects || designProjects.length === 0 || storedVersion !== DESIGN_S
 
 let designState = {
   currentPage: 1,
-  pageSize: 15,
+  pageSize: 10,
   filters: {
     customer: 'ALL',
     hrsType: 'ALL',
@@ -708,7 +708,7 @@ function initDesign() {
   });
 
   document.getElementById('design-page-size')?.addEventListener('change', (e) => {
-    designState.pageSize = parseInt(e.target.value) || 15;
+    designState.pageSize = parseInt(e.target.value) || 10;
     designState.currentPage = 1;
     renderDesignView();
   });

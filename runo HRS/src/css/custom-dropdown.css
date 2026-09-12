@@ -1,0 +1,264 @@
+/* ==========================================================================
+   RUNO HRS INDIA - Unified Custom Dropdown Component
+   Exact Match to Dashboard Overview FY Dropdown (media_1789247801060.png)
+   ========================================================================== */
+
+/* 1. Hide Native Select completely when upgraded */
+select.custom-dropdown-native-hidden,
+select[data-custom-dropdown-hidden] {
+  display: none !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  outline: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -9999 !important;
+}
+
+/* 2. Custom Dropdown Wrapper */
+.custom-dropdown {
+  position: relative !important;
+  display: inline-block !important;
+  user-select: none !important;
+  vertical-align: middle !important;
+  box-sizing: border-box !important;
+  font-family: var(--font-primary, 'Segoe UI', -apple-system, sans-serif) !important;
+}
+
+/* 3. Custom Dropdown Button */
+.custom-dropdown-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  background-color: var(--bg-surface, #081121) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: var(--text-primary, #E2E8F0) !important;
+  padding: 0 12px !important;
+  height: var(--filter-height, 36px) !important;
+  min-height: var(--filter-height, 36px) !important;
+  max-height: var(--filter-height, 36px) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  border-radius: var(--control-radius, 6px) !important;
+  cursor: pointer !important;
+  outline: none !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+  transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+}
+
+.custom-dropdown-btn:hover,
+.custom-dropdown.open .custom-dropdown-btn {
+  border-color: var(--brand-orange, #FF5722) !important;
+  color: var(--brand-orange, #FF5722) !important;
+  box-shadow: 0 0 0 1px rgba(255, 87, 34, 0.35) !important;
+}
+
+.custom-dropdown-label {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  flex: 1 1 auto !important;
+  text-align: left !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  letter-spacing: inherit !important;
+  text-transform: inherit !important;
+  color: inherit !important;
+}
+
+.custom-dropdown-arrow {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  flex-shrink: 0 !important;
+  color: inherit !important;
+}
+
+.custom-dropdown.open .custom-dropdown-arrow {
+  transform: rotate(180deg) !important;
+}
+
+/* 4. Dropdown Menu (Pop-up Options) */
+.custom-dropdown-menu {
+  position: absolute !important;
+  top: calc(100% + 5px) !important;
+  left: 0 !important;
+  min-width: 100% !important;
+  width: max-content !important;
+  max-width: 320px !important;
+  background: linear-gradient(160deg, #1c2030 0%, #14171f 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 87, 34, 0.08) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  padding: 6px !important;
+  z-index: 99999 !important;
+  display: none !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  box-sizing: border-box !important;
+  animation: dropdownFadeIn 0.16s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transform-origin: top center !important;
+}
+
+.custom-dropdown.open .custom-dropdown-menu {
+  display: flex !important;
+}
+
+/* Flip upward if overflowing near bottom of viewport */
+.custom-dropdown.dropdown-flip-up .custom-dropdown-menu {
+  top: auto !important;
+  bottom: calc(100% + 5px) !important;
+  transform-origin: bottom center !important;
+}
+
+/* Items Scroll Container */
+.custom-dropdown-items-container {
+  max-height: 250px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  padding-right: 2px !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(255, 87, 34, 0.4) #14171f !important;
+}
+
+.custom-dropdown-items-container::-webkit-scrollbar {
+  width: 5px !important;
+}
+.custom-dropdown-items-container::-webkit-scrollbar-track {
+  background: #14171f !important;
+  border-radius: 4px !important;
+}
+.custom-dropdown-items-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 87, 34, 0.4) !important;
+  border-radius: 4px !important;
+}
+.custom-dropdown-items-container::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-orange, #FF5722) !important;
+}
+
+/* Search Box inside Menu */
+.custom-dropdown-search-box {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 6px 8px !important;
+  margin-bottom: 4px !important;
+  background: rgba(11, 16, 27, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 5px !important;
+  box-sizing: border-box !important;
+}
+.custom-dropdown-search-box:focus-within {
+  border-color: var(--brand-orange, #FF5722) !important;
+}
+.custom-dropdown-search-input {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  color: #F1F5F9 !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+.custom-dropdown-search-input::placeholder {
+  color: #64748B !important;
+}
+
+/* 5. Dropdown Item */
+.custom-dropdown-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  padding: 8px 12px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: var(--text-secondary, #94A3B8) !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+}
+
+.custom-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: var(--text-primary, #FFFFFF) !important;
+}
+
+/* Active / Selected Item */
+.custom-dropdown-item.active {
+  background: rgba(255, 87, 34, 0.12) !important;
+  color: var(--brand-orange, #FF5722) !important;
+  font-weight: 700 !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 87, 34, 0.2) !important;
+}
+
+.custom-dropdown-item .check-icon {
+  display: none !important;
+  color: var(--brand-orange, #FF5722) !important;
+  flex-shrink: 0 !important;
+}
+
+.custom-dropdown-item.active .check-icon {
+  display: inline-block !important;
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 6. Context-Specific Layout Sizing */
+/* Inside Filter Bars & Toolbars */
+.sub-view :is(.table-toolbar, .purchase-filter-bar, .design-filter-bar, .mfg-toolbar, .filter-bar, .view-actions) .custom-dropdown,
+.sub-view .filter-group .custom-dropdown,
+.custom-dropdown.custom-dropdown-filter {
+  width: var(--filter-select-width, 180px) !important;
+  min-width: var(--filter-select-width, 180px) !important;
+  max-width: var(--filter-select-width, 180px) !important;
+  flex: 0 0 var(--filter-select-width, 180px) !important;
+}
+
+/* Pagination compact select */
+.custom-dropdown.custom-dropdown-page-size {
+  width: 75px !important;
+  min-width: 75px !important;
+  max-width: 75px !important;
+  flex: 0 0 75px !important;
+}
+
+/* Form Modals & Form Rows */
+.modal-card .custom-dropdown,
+.modal-body .custom-dropdown,
+.form-group .custom-dropdown,
+.mfg-field-row .custom-dropdown,
+.form-row .custom-dropdown,
+#view-modals .custom-dropdown,
+#new-project-view .custom-dropdown,
+#subview-new-project .custom-dropdown {
+  width: 100% !important;
+  display: block !important;
+}
+
+/* Prevent parent cards/modals from clipping opened custom dropdowns */
+:is(.table-card, .table-toolbar, .modal-card, .modal-body, .view-actions):has(.custom-dropdown.open) {
+  overflow: visible !important;
+}
+

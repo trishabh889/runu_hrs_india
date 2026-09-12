@@ -2,9 +2,14 @@
 // RUNO HRS INDIA - Project Approvals View Controller
 // ==========================================================================
 
+let approvalsState = {
+  currentPage: 1,
+  pageSize: 10
+};
+
 async function loadApprovals() {
   try {
-    const list = await window.api.getApprovals();
+    const list = await window.api.getApprovals() || [];
     window.AppState.approvals = list;
     const tbody = document.getElementById('approvals-table-body');
     if (!tbody) return;
@@ -12,10 +17,36 @@ async function loadApprovals() {
 
     if (list.length === 0) {
       tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: #64748B;">No approval requests pending.</td></tr>';
+      if (window.renderTablePagination) {
+        window.renderTablePagination({
+          infoId: 'approvals-pagination-info',
+          numbersId: 'approvals-page-numbers',
+          prevBtnId: 'btn-approvals-prev',
+          nextBtnId: 'btn-approvals-next',
+          sizeSelectId: 'approvals-page-size',
+          totalEntries: 0,
+          totalPages: 1,
+          currentPage: 1,
+          startIdx: 0,
+          endIdx: 0,
+          pageSize: approvalsState.pageSize,
+          onPageChange: () => {},
+          onPageSizeChange: (newSize) => {
+            approvalsState.pageSize = newSize;
+            approvalsState.currentPage = 1;
+            loadApprovals();
+          }
+        });
+      }
       return;
     }
 
-    list.forEach(a => {
+    const { pageItems, totalEntries, totalPages, validPage, startIdx, endIdx } = (window.paginateArray
+      ? window.paginateArray(list, approvalsState.currentPage, approvalsState.pageSize)
+      : { pageItems: list, totalEntries: list.length, totalPages: 1, validPage: 1, startIdx: 0, endIdx: list.length });
+    approvalsState.currentPage = validPage;
+
+    pageItems.forEach(a => {
       const tr = document.createElement('tr');
       const badgeClass = a.status === 'APPROVED' ? 'completed' : (a.status === 'REJECTED' ? 'danger' : 'pending');
       tr.innerHTML = `
@@ -37,6 +68,31 @@ async function loadApprovals() {
       `;
       tbody.appendChild(tr);
     });
+
+    if (window.renderTablePagination) {
+      window.renderTablePagination({
+        infoId: 'approvals-pagination-info',
+        numbersId: 'approvals-page-numbers',
+        prevBtnId: 'btn-approvals-prev',
+        nextBtnId: 'btn-approvals-next',
+        sizeSelectId: 'approvals-page-size',
+        totalEntries,
+        totalPages,
+        currentPage: validPage,
+        startIdx,
+        endIdx,
+        pageSize: approvalsState.pageSize,
+        onPageChange: (newPage) => {
+          approvalsState.currentPage = newPage;
+          loadApprovals();
+        },
+        onPageSizeChange: (newSize) => {
+          approvalsState.pageSize = newSize;
+          approvalsState.currentPage = 1;
+          loadApprovals();
+        }
+      });
+    }
   } catch (err) {
     console.error('Failed to load approvals:', err);
   }

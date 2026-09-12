@@ -4,6 +4,11 @@
 
 let selectedSalesProjectId = null;
 
+let salesState = {
+  currentPage: 1,
+  pageSize: 10
+};
+
 function initSales() {
   const searchInput = document.getElementById('search-sales');
   const catFilter = document.getElementById('filter-sales-category');
@@ -12,7 +17,10 @@ function initSales() {
   const endDateInput = document.getElementById('filter-sales-end');
   const btnReset = document.getElementById('btn-sales-filter-reset');
 
-  const trigger = () => loadSales();
+  const trigger = () => {
+    salesState.currentPage = 1;
+    loadSales();
+  };
 
   if (searchInput) searchInput.addEventListener('input', trigger);
   if (catFilter) catFilter.addEventListener('change', trigger);
@@ -33,6 +41,7 @@ function initSales() {
       if (fyFilter) fyFilter.value = 'ALL';
       if (startDateInput) startDateInput.value = '';
       if (endDateInput) endDateInput.value = '';
+      salesState.currentPage = 1;
       loadSales();
     });
   }
@@ -122,10 +131,36 @@ async function loadSales() {
 
     if (list.length === 0) {
       tbody.innerHTML = '<tr><td colspan="13" style="text-align: center; color: var(--text-muted); padding: 24px;">No sales projects match the selected filters.</td></tr>';
+      if (window.renderTablePagination) {
+        window.renderTablePagination({
+          infoId: 'sales-pagination-info',
+          numbersId: 'sales-page-numbers',
+          prevBtnId: 'btn-sales-prev',
+          nextBtnId: 'btn-sales-next',
+          sizeSelectId: 'sales-page-size',
+          totalEntries: 0,
+          totalPages: 1,
+          currentPage: 1,
+          startIdx: 0,
+          endIdx: 0,
+          pageSize: salesState.pageSize,
+          onPageChange: () => {},
+          onPageSizeChange: (newSize) => {
+            salesState.pageSize = newSize;
+            salesState.currentPage = 1;
+            loadSales();
+          }
+        });
+      }
       return;
     }
 
-    for (const p of list) {
+    const { pageItems, totalEntries, totalPages, validPage, startIdx, endIdx } = (window.paginateArray
+      ? window.paginateArray(list, salesState.currentPage, salesState.pageSize)
+      : { pageItems: list, totalEntries: list.length, totalPages: 1, validPage: 1, startIdx: 0, endIdx: list.length });
+    salesState.currentPage = validPage;
+
+    for (const p of pageItems) {
       const wf = await window.api.getWorkflow(p.id);
       const isSelected = p.id === selectedSalesProjectId;
       const tr = document.createElement('tr');
@@ -169,6 +204,31 @@ async function loadSales() {
         </td>
       `;
       tbody.appendChild(tr);
+    }
+
+    if (window.renderTablePagination) {
+      window.renderTablePagination({
+        infoId: 'sales-pagination-info',
+        numbersId: 'sales-page-numbers',
+        prevBtnId: 'btn-sales-prev',
+        nextBtnId: 'btn-sales-next',
+        sizeSelectId: 'sales-page-size',
+        totalEntries,
+        totalPages,
+        currentPage: validPage,
+        startIdx,
+        endIdx,
+        pageSize: salesState.pageSize,
+        onPageChange: (newPage) => {
+          salesState.currentPage = newPage;
+          loadSales();
+        },
+        onPageSizeChange: (newSize) => {
+          salesState.pageSize = newSize;
+          salesState.currentPage = 1;
+          loadSales();
+        }
+      });
     }
   } catch (err) {
     console.error('Failed to load sales pipeline:', err);

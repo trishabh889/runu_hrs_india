@@ -4,6 +4,11 @@
 
 let activeStoreTab = 'DASHBOARD';
 
+let storeState = {
+  currentPage: 1,
+  pageSize: 10
+};
+
 function initStore() {
   const tabButtons = document.querySelectorAll('#store-tab-bar .dept-tab-btn');
   tabButtons.forEach(btn => {
@@ -11,6 +16,7 @@ function initStore() {
       tabButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       activeStoreTab = btn.getAttribute('data-tab');
+      storeState.currentPage = 1;
       renderStoreTab(activeStoreTab);
     });
   });
@@ -18,6 +24,7 @@ function initStore() {
   const searchInput = document.getElementById('search-store');
   if (searchInput) {
     searchInput.addEventListener('input', () => {
+      storeState.currentPage = 1;
       renderStoreTable(activeStoreTab, searchInput.value.trim());
     });
   }
@@ -179,7 +186,12 @@ async function renderStoreTable(tab, search = '') {
 
   tbody.innerHTML = '';
 
+  let dataset = [];
+  let colSpan = 8;
+  let renderRow = null;
+
   if (tab === 'ITEM MASTER') {
+    colSpan = 8;
     thead.innerHTML = `
       <tr>
         <th>SKU CODE</th>
@@ -192,14 +204,9 @@ async function renderStoreTable(tab, search = '') {
         <th>ACTIVE</th>
       </tr>
     `;
-    const items = await window.api.getStoreItems('ALL', search);
-    if (items.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">No inventory items registered.</td></tr>';
-      return;
-    }
-    items.forEach(i => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
+    dataset = await window.api.getStoreItems('ALL', search);
+    renderRow = (i) => `
+      <tr>
         <td><span style="font-family: var(--font-primary); font-weight: 700; color: var(--brand-orange);">${i.code}</span></td>
         <td style="font-weight: 600;">${i.name}</td>
         <td><span class="badge badge-active">${i.category}</span></td>
@@ -208,10 +215,10 @@ async function renderStoreTable(tab, search = '') {
         <td>${i.maxStock}</td>
         <td>${i.location || '-'}</td>
         <td><span class="badge badge-completed">${i.active}</span></td>
-      `;
-      tbody.appendChild(tr);
-    });
+      </tr>
+    `;
   } else if (tab === 'GODOWN / LOCATION') {
+    colSpan = 5;
     thead.innerHTML = `
       <tr>
         <th>LOCATION CODE</th>
@@ -221,23 +228,18 @@ async function renderStoreTable(tab, search = '') {
         <th>STATUS</th>
       </tr>
     `;
-    const godowns = await window.api.getGodowns(search);
-    if (godowns.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 24px;">No godown locations registered.</td></tr>';
-      return;
-    }
-    godowns.forEach(g => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
+    dataset = await window.api.getGodowns(search);
+    renderRow = (g) => `
+      <tr>
         <td><span style="font-family: var(--font-primary); font-weight: 700; color: var(--brand-orange);">${g.code}</span></td>
         <td style="font-weight: 700;">${g.name}</td>
         <td>${g.minStock || '-'}</td>
         <td>${g.location || '-'}</td>
         <td><span class="badge badge-completed">${g.active}</span></td>
-      `;
-      tbody.appendChild(tr);
-    });
+      </tr>
+    `;
   } else if (tab === 'REORDER LEVEL') {
+    colSpan = 6;
     thead.innerHTML = `
       <tr>
         <th>SKU CODE</th>
@@ -248,20 +250,19 @@ async function renderStoreTable(tab, search = '') {
         <th>STATUS</th>
       </tr>
     `;
-    const list = await window.api.getReorderList();
-    list.forEach(r => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
+    dataset = await window.api.getReorderList();
+    renderRow = (r) => `
+      <tr>
         <td><span style="font-family: var(--font-primary); font-weight: 700; color: var(--brand-orange);">${r.code}</span></td>
         <td style="font-weight: 600;">${r.name}</td>
         <td style="font-weight: 700;">${r.currentStock} ${r.unit}</td>
         <td>${r.reorderLevel} ${r.unit}</td>
         <td style="font-weight: 700; color: ${r.shortage > 0 ? '#EF4444' : '#10B981'};">${r.shortage > 0 ? `-${r.shortage}` : '0'} ${r.unit}</td>
         <td><span class="badge ${r.status === 'REORDER' ? 'badge-review' : 'badge-completed'}">${r.status}</span></td>
-      `;
-      tbody.appendChild(tr);
-    });
+      </tr>
+    `;
   } else if (tab === 'STOCK LEDGER') {
+    colSpan = 8;
     thead.innerHTML = `
       <tr>
         <th>DATE</th>
@@ -274,10 +275,9 @@ async function renderStoreTable(tab, search = '') {
         <th>RUNNING BALANCE</th>
       </tr>
     `;
-    const ledger = await window.api.getStockLedger();
-    ledger.forEach(row => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
+    dataset = await window.api.getStockLedger();
+    renderRow = (row) => `
+      <tr>
         <td>${row.date}</td>
         <td><span style="font-family: var(--font-primary); font-weight: 700; color: var(--brand-orange);">${row.itemCode}</span></td>
         <td style="font-weight: 600;">${row.itemName}</td>
@@ -286,10 +286,10 @@ async function renderStoreTable(tab, search = '') {
         <td style="font-weight: 700; color: #10B981;">${row.inQty > 0 ? `+${row.inQty}` : '-'}</td>
         <td style="font-weight: 700; color: #EF4444;">${row.outQty > 0 ? `-${row.outQty}` : '-'}</td>
         <td style="font-weight: 700; color: var(--text-primary); font-size: 13px;">${row.balance} ${row.unit}</td>
-      `;
-      tbody.appendChild(tr);
-    });
+      </tr>
+    `;
   } else {
+    colSpan = 8;
     thead.innerHTML = `
       <tr>
         <th>DATE</th>
@@ -302,14 +302,9 @@ async function renderStoreTable(tab, search = '') {
         <th>STATUS</th>
       </tr>
     `;
-    const txs = await window.api.getStoreTransactions(tab, search);
-    if (txs.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">No transactions recorded for ${tab}.</td></tr>`;
-      return;
-    }
-    txs.forEach(t => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
+    dataset = await window.api.getStoreTransactions(tab, search);
+    renderRow = (t) => `
+      <tr>
         <td>${t.date}</td>
         <td><span style="font-family: var(--font-primary); font-size: 11px;">${t.refNo}</span></td>
         <td><span style="font-family: var(--font-primary); font-weight: 700; color: var(--brand-orange);">${t.itemCode}</span></td>
@@ -318,11 +313,69 @@ async function renderStoreTable(tab, search = '') {
         <td style="font-weight: 700;">${t.qty} ${t.unit}</td>
         <td>${t.location || '-'}</td>
         <td><span class="badge badge-completed">${t.status}</span></td>
-      `;
-      tbody.appendChild(tr);
+      </tr>
+    `;
+  }
+
+  dataset = dataset || [];
+
+  if (dataset.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="${colSpan}" style="text-align: center; color: var(--text-muted); padding: 24px;">No records found for ${tab}.</td></tr>`;
+    if (window.renderTablePagination) {
+      window.renderTablePagination({
+        infoId: 'store-pagination-info',
+        numbersId: 'store-page-numbers',
+        prevBtnId: 'btn-store-prev',
+        nextBtnId: 'btn-store-next',
+        sizeSelectId: 'store-page-size',
+        totalEntries: 0,
+        totalPages: 1,
+        currentPage: 1,
+        startIdx: 0,
+        endIdx: 0,
+        pageSize: storeState.pageSize,
+        onPageChange: () => {},
+        onPageSizeChange: (newSize) => {
+          storeState.pageSize = newSize;
+          storeState.currentPage = 1;
+          renderStoreTable(tab, search);
+        }
+      });
+    }
+    return;
+  }
+
+  const { pageItems, totalEntries, totalPages, validPage, startIdx, endIdx } = (window.paginateArray
+    ? window.paginateArray(dataset, storeState.currentPage, storeState.pageSize)
+    : { pageItems: dataset, totalEntries: dataset.length, totalPages: 1, validPage: 1, startIdx: 0, endIdx: dataset.length });
+  storeState.currentPage = validPage;
+
+  tbody.innerHTML = pageItems.map(item => renderRow(item)).join('');
+
+  if (window.renderTablePagination) {
+    window.renderTablePagination({
+      infoId: 'store-pagination-info',
+      numbersId: 'store-page-numbers',
+      prevBtnId: 'btn-store-prev',
+      nextBtnId: 'btn-store-next',
+      sizeSelectId: 'store-page-size',
+      totalEntries,
+      totalPages,
+      currentPage: validPage,
+      startIdx,
+      endIdx,
+      pageSize: storeState.pageSize,
+      onPageChange: (newPage) => {
+        storeState.currentPage = newPage;
+        renderStoreTable(tab, search);
+      },
+      onPageSizeChange: (newSize) => {
+        storeState.pageSize = newSize;
+        storeState.currentPage = 1;
+        renderStoreTable(tab, search);
+      }
     });
   }
-}
 
 window.initStore = initStore;
 window.loadStore = loadStore;

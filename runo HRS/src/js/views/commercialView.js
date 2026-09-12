@@ -4,8 +4,22 @@
 
 let activeCommercialTab = 'hrs';
 
+let commercialHrsState = {
+  currentPage: 1,
+  pageSize: 10
+};
+
+let commercialHrtcState = {
+  currentPage: 1,
+  pageSize: 10
+};
+
 function initCommercial() {
-  const trigger = () => loadCommercial();
+  const trigger = () => {
+    commercialHrsState.currentPage = 1;
+    commercialHrtcState.currentPage = 1;
+    loadCommercial();
+  };
   ['search-commercial', 'filter-comm-quote', 'filter-comm-po', 'filter-comm-date-start', 'filter-comm-date-end'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener(el.tagName === 'INPUT' ? 'input' : 'change', trigger);
@@ -20,6 +34,8 @@ function initCommercial() {
       ['filter-comm-quote', 'filter-comm-po'].forEach(id => {
         const el = document.getElementById(id); if (el) el.value = 'ALL';
       });
+      commercialHrsState.currentPage = 1;
+      commercialHrtcState.currentPage = 1;
       loadCommercial();
     });
   }
@@ -92,11 +108,39 @@ function renderHrsTable(list, role) {
   if (!tbody) return;
   if (list.length === 0) {
     tbody.innerHTML = '<tr><td colspan="17" style="text-align: center; color: var(--text-muted); padding: 24px;">No HRS projects found.</td></tr>';
+    if (window.renderTablePagination) {
+      window.renderTablePagination({
+        infoId: 'commercial-hrs-pagination-info',
+        numbersId: 'commercial-hrs-page-numbers',
+        prevBtnId: 'btn-commercial-hrs-prev',
+        nextBtnId: 'btn-commercial-hrs-next',
+        sizeSelectId: 'commercial-hrs-page-size',
+        totalEntries: 0,
+        totalPages: 1,
+        currentPage: 1,
+        startIdx: 0,
+        endIdx: 0,
+        pageSize: commercialHrsState.pageSize,
+        onPageChange: () => {},
+        onPageSizeChange: (newSize) => {
+          commercialHrsState.pageSize = newSize;
+          commercialHrsState.currentPage = 1;
+          loadCommercial();
+        }
+      });
+    }
     return;
   }
   const canDesign = ['DESIGN', 'ADMIN'].includes(role), canAdmin = role === 'ADMIN', canComm = ['COMMERCIAL', 'ADMIN'].includes(role);
 
-  tbody.innerHTML = list.map((p, idx) => `
+  const { pageItems, totalEntries, totalPages, validPage, startIdx, endIdx } = (window.paginateArray
+    ? window.paginateArray(list, commercialHrsState.currentPage, commercialHrsState.pageSize)
+    : { pageItems: list, totalEntries: list.length, totalPages: 1, validPage: 1, startIdx: 0, endIdx: list.length });
+  commercialHrsState.currentPage = validPage;
+
+  tbody.innerHTML = pageItems.map((p, i) => {
+    const idx = startIdx + i;
+    return `
     <tr>
       <td>${idx + 1}</td>
       <td style="white-space: nowrap;">${p.order_date || '2026-02-01'}</td>
@@ -116,7 +160,33 @@ function renderHrsTable(list, role) {
       <td>${makeQuoteSelect(p, canComm)}</td>
       <td>${makePoSelect(p, canComm)}</td>
     </tr>
-  `).join('');
+  `;
+  }).join('');
+
+  if (window.renderTablePagination) {
+    window.renderTablePagination({
+      infoId: 'commercial-hrs-pagination-info',
+      numbersId: 'commercial-hrs-page-numbers',
+      prevBtnId: 'btn-commercial-hrs-prev',
+      nextBtnId: 'btn-commercial-hrs-next',
+      sizeSelectId: 'commercial-hrs-page-size',
+      totalEntries,
+      totalPages,
+      currentPage: validPage,
+      startIdx,
+      endIdx,
+      pageSize: commercialHrsState.pageSize,
+      onPageChange: (newPage) => {
+        commercialHrsState.currentPage = newPage;
+        loadCommercial();
+      },
+      onPageSizeChange: (newSize) => {
+        commercialHrsState.pageSize = newSize;
+        commercialHrsState.currentPage = 1;
+        loadCommercial();
+      }
+    });
+  }
 }
 
 function renderHrtcTable(list, role) {
@@ -124,11 +194,39 @@ function renderHrtcTable(list, role) {
   if (!tbody) return;
   if (list.length === 0) {
     tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 24px;">No HRTC projects found.</td></tr>';
+    if (window.renderTablePagination) {
+      window.renderTablePagination({
+        infoId: 'commercial-hrtc-pagination-info',
+        numbersId: 'commercial-hrtc-page-numbers',
+        prevBtnId: 'btn-commercial-hrtc-prev',
+        nextBtnId: 'btn-commercial-hrtc-next',
+        sizeSelectId: 'commercial-hrtc-page-size',
+        totalEntries: 0,
+        totalPages: 1,
+        currentPage: 1,
+        startIdx: 0,
+        endIdx: 0,
+        pageSize: commercialHrtcState.pageSize,
+        onPageChange: () => {},
+        onPageSizeChange: (newSize) => {
+          commercialHrtcState.pageSize = newSize;
+          commercialHrtcState.currentPage = 1;
+          loadCommercial();
+        }
+      });
+    }
     return;
   }
   const canComm = ['COMMERCIAL', 'ADMIN'].includes(role);
 
-  tbody.innerHTML = list.map((p, idx) => `
+  const { pageItems, totalEntries, totalPages, validPage, startIdx, endIdx } = (window.paginateArray
+    ? window.paginateArray(list, commercialHrtcState.currentPage, commercialHrtcState.pageSize)
+    : { pageItems: list, totalEntries: list.length, totalPages: 1, validPage: 1, startIdx: 0, endIdx: list.length });
+  commercialHrtcState.currentPage = validPage;
+
+  tbody.innerHTML = pageItems.map((p, i) => {
+    const idx = startIdx + i;
+    return `
     <tr>
       <td>${idx + 1}</td>
       <td style="white-space: nowrap;">${p.order_date || '2026-02-15'}</td>
@@ -141,7 +239,33 @@ function renderHrtcTable(list, role) {
       <td>${makeQuoteSelect(p, canComm)}</td>
       <td>${makePoSelect(p, canComm)}</td>
     </tr>
-  `).join('');
+  `;
+  }).join('');
+
+  if (window.renderTablePagination) {
+    window.renderTablePagination({
+      infoId: 'commercial-hrtc-pagination-info',
+      numbersId: 'commercial-hrtc-page-numbers',
+      prevBtnId: 'btn-commercial-hrtc-prev',
+      nextBtnId: 'btn-commercial-hrtc-next',
+      sizeSelectId: 'commercial-hrtc-page-size',
+      totalEntries,
+      totalPages,
+      currentPage: validPage,
+      startIdx,
+      endIdx,
+      pageSize: commercialHrtcState.pageSize,
+      onPageChange: (newPage) => {
+        commercialHrtcState.currentPage = newPage;
+        loadCommercial();
+      },
+      onPageSizeChange: (newSize) => {
+        commercialHrtcState.pageSize = newSize;
+        commercialHrtcState.currentPage = 1;
+        loadCommercial();
+      }
+    });
+  }
 }
 
 function makeEditable(id, field, value, canEdit) {

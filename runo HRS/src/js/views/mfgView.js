@@ -23,6 +23,12 @@ const defaultManufacturingData = [
   { sr: 15, project_code: 'RUNO-2026-015', project_desc: 'Air Vent', customer: 'TVS Motors', category: 'SPARE - HRS', vendor: 'CoorsTek', planned_start: '08-04-26', planned_end: '26-04-26', actual_end: '-', status: 'IN PROGRESS', progress: 35, priority: 'Normal', mfg_type: 'New', qty: '3 Sets', incharge: 'Vikram Singh', machine: 'EDM Wirecut 01', remarks: 'Vent slit EDM erosion 35% done.' }
 ];
 
+let mfgList = [];
+const mfgState = {
+  currentPage: 1,
+  pageSize: 10
+};
+
 const mfgTabsOrder = ['basic', 'plan', 'process', 'resources', 'attachments', 'remarks'];
 let currentMfgTab = 'basic';
 
@@ -51,18 +57,24 @@ function switchMfgTab(tabName) {
     }
   });
 
-  // Update footer button states
+  // Footer is hidden on Basic tab (since Basic tab has Cancel & Save & Next directly in Col 4)
+  const footer = document.getElementById('mfg-modal-footer');
+  if (footer) {
+    footer.style.display = (tabName === 'basic') ? 'none' : 'flex';
+  }
+
+  // Update footer button states for secondary tabs
   const prevBtn = document.getElementById('btn-prev-mfg-tab');
   const nextBtn = document.getElementById('btn-next-mfg-tab');
-  const saveBtn = document.getElementById('btn-save-mfg-modal');
+  const footerSaveBtn = document.getElementById('btn-footer-save-mfg');
 
-  if (prevBtn) prevBtn.style.display = currentIdx > 0 ? 'inline-flex' : 'none';
+  if (prevBtn) prevBtn.style.display = currentIdx > 1 ? 'inline-flex' : (currentIdx === 1 ? 'inline-flex' : 'none');
   if (currentIdx === mfgTabsOrder.length - 1) {
     if (nextBtn) nextBtn.style.display = 'none';
-    if (saveBtn) saveBtn.style.display = 'inline-flex';
+    if (footerSaveBtn) footerSaveBtn.style.display = 'inline-flex';
   } else {
     if (nextBtn) nextBtn.style.display = 'inline-flex';
-    if (saveBtn) saveBtn.style.display = 'none';
+    if (footerSaveBtn) footerSaveBtn.style.display = 'none';
   }
 }
 
@@ -73,7 +85,7 @@ function initManufacturing() {
     btnOpenModal.addEventListener('click', () => openNewMfgModal());
   }
 
-  // Hook close modal button & cancel
+  // Hook close modal button & cancels
   const btnCloseModal = document.getElementById('btn-close-mfg-modal');
   if (btnCloseModal) {
     btnCloseModal.addEventListener('click', () => closeNewMfgModal());
@@ -81,6 +93,20 @@ function initManufacturing() {
   const btnCancelModal = document.getElementById('btn-cancel-mfg-modal');
   if (btnCancelModal) {
     btnCancelModal.addEventListener('click', () => closeNewMfgModal());
+  }
+  const btnFooterCancel = document.getElementById('btn-footer-cancel-mfg');
+  if (btnFooterCancel) {
+    btnFooterCancel.addEventListener('click', () => closeNewMfgModal());
+  }
+
+  // Hook Save buttons (Tab 1 Column 4 and Secondary footer)
+  const btnSaveCol4 = document.getElementById('btn-save-mfg-modal');
+  if (btnSaveCol4) {
+    btnSaveCol4.addEventListener('click', () => handleSaveMfgEntry());
+  }
+  const btnFooterSave = document.getElementById('btn-footer-save-mfg');
+  if (btnFooterSave) {
+    btnFooterSave.addEventListener('click', () => handleSaveMfgEntry());
   }
 
   // Hook Modal Tabs & Navigation
@@ -152,7 +178,15 @@ function initManufacturing() {
 
   const btnResetFilter = document.getElementById('btn-mfg-reset-filter');
 
-  const triggerFilter = () => renderMfgTable();
+let mfgState = {
+  currentPage: 1,
+  pageSize: 10
+};
+
+  const triggerFilter = () => {
+    mfgState.currentPage = 1;
+    renderMfgTable();
+  };
   if (filterProj) filterProj.addEventListener('change', triggerFilter);
   if (filterCat) filterCat.addEventListener('change', triggerFilter);
   if (filterStat) filterStat.addEventListener('change', triggerFilter);
@@ -184,11 +218,13 @@ function initManufacturing() {
     codeSelect.addEventListener('change', () => {
       const pCode = codeSelect.value;
       const descInput = document.getElementById('mfg-form-project-desc');
+      const custCodeInput = document.getElementById('mfg-form-customer-code');
       const custInput = document.getElementById('mfg-form-customer');
       const catSelect = document.getElementById('mfg-form-category');
 
       if (!pCode) {
         if (descInput) descInput.value = '';
+        if (custCodeInput) custCodeInput.value = '';
         if (custInput) custInput.value = '';
         return;
       }
@@ -196,10 +232,12 @@ function initManufacturing() {
       // Check projects in AppState or default data
       const allProjects = window.AppState?.projects || [];
       const matched = allProjects.find(p => (p.project_code || '').toUpperCase() === pCode.toUpperCase()) ||
+                      mfgList.find(d => (d.project_code || '').toUpperCase() === pCode.toUpperCase()) ||
                       defaultManufacturingData.find(d => d.project_code.toUpperCase() === pCode.toUpperCase());
 
       if (matched) {
         if (descInput) descInput.value = matched.mould_description || matched.project_desc || '';
+        if (custCodeInput) custCodeInput.value = matched.customer_code || matched.customer_id || (matched.customer ? 'CUST-' + matched.customer.slice(0,4).toUpperCase() : '') || 'RUNO-CUST-001';
         if (custInput) custInput.value = matched.customer_name || matched.customer || '';
         if (catSelect && (matched.category || matched.hrs_type)) {
           catSelect.value = matched.category || matched.hrs_type;
@@ -316,17 +354,21 @@ function renderMfgTable() {
     return true;
   });
 
+  const { pageItems, totalEntries, totalPages, validPage, startIdx, endIdx } = (window.paginateArray ? window.paginateArray(filtered, mfgState.currentPage, mfgState.pageSize) : { pageItems: filtered, totalEntries: filtered.length, totalPages: 1, validPage: 1, startIdx: 0, endIdx: filtered.length });
+  mfgState.currentPage = validPage;
+
   tbody.innerHTML = '';
-  if (filtered.length === 0) {
+  if (pageItems.length === 0) {
     tbody.innerHTML = `<tr><td colspan="12" style="text-align: center; color: #94A3B8; padding: 24px;">No matching manufacturing jobs found.</td></tr>`;
   } else {
-    filtered.forEach((item, index) => {
+    pageItems.forEach((item, index) => {
       const tr = document.createElement('tr');
       const statusClass = item.status.toLowerCase().replace(/\s+/g, '-');
       const progressNum = parseInt(item.progress) || 0;
+      const srNo = startIdx + index + 1;
 
       tr.innerHTML = `
-        <td style="text-align: center; color: #64748B; font-weight: 700;">${index + 1}</td>
+        <td style="text-align: center; color: #64748B; font-weight: 700;">${srNo}</td>
         <td><span class="mfg-code">${item.project_code}</span></td>
         <td style="color: #E2E8F0; font-weight: 600; max-width: 130px; overflow: hidden; text-overflow: ellipsis;">${item.project_desc}</td>
         <td style="color: #CBD5E1; max-width: 110px; overflow: hidden; text-overflow: ellipsis;">${item.customer}</td>
@@ -361,10 +403,30 @@ function renderMfgTable() {
     });
   }
 
-  // Update Showing X to Y of Z entries
-  const entriesCount = document.getElementById('mfg-showing-entries');
-  if (entriesCount) {
-    entriesCount.innerText = `Showing 1 to ${filtered.length} of ${filtered.length} entries`;
+  // Render pagination
+  if (window.renderTablePagination) {
+    window.renderTablePagination({
+      infoId: 'mfg-showing-entries',
+      numbersId: 'mfg-page-numbers',
+      prevBtnId: 'btn-mfg-prev',
+      nextBtnId: 'btn-mfg-next',
+      sizeSelectId: 'mfg-page-size',
+      totalEntries,
+      totalPages,
+      currentPage: validPage,
+      startIdx,
+      endIdx,
+      pageSize: mfgState.pageSize,
+      onPageChange: (newPage) => {
+        mfgState.currentPage = newPage;
+        renderMfgTable();
+      },
+      onPageSizeChange: (newSize) => {
+        mfgState.pageSize = newSize;
+        mfgState.currentPage = 1;
+        renderMfgTable();
+      }
+    });
   }
 }
 
@@ -375,14 +437,20 @@ function openNewMfgModal() {
   const form = document.getElementById('form-new-manufacturing');
   if (form) form.reset();
 
-  document.getElementById('mfg-entry-id').value = '';
+  const entryId = document.getElementById('mfg-entry-id');
+  if (entryId) entryId.value = '';
 
   // Populate Project Code dropdown from all projects & current data
   const codeSelect = document.getElementById('mfg-form-project-code');
   if (codeSelect) {
     codeSelect.innerHTML = '<option value="">Select Project</option>';
-    const codes = [...new Set(mfgList.map(item => item.project_code))];
-    codes.forEach(c => {
+    const allCodes = new Set();
+    const appProjects = (window.AppState && window.AppState.projects) ? window.AppState.projects : [];
+    appProjects.forEach(p => { if (p.project_code) allCodes.add(p.project_code); });
+    mfgList.forEach(item => { if (item.project_code) allCodes.add(item.project_code); });
+    defaultManufacturingData.forEach(d => { if (d.project_code) allCodes.add(d.project_code); });
+
+    Array.from(allCodes).sort().forEach(c => {
       const opt = document.createElement('option');
       opt.value = c;
       opt.innerText = c;
@@ -390,15 +458,29 @@ function openNewMfgModal() {
     });
   }
 
-  // Default dates
-  const today = new Date().toISOString().split('T')[0];
-  const nextWeek = new Date();
-  nextWeek.setDate(nextWeek.getDate() + 10);
+  // Clear auto-fills
+  const descInput = document.getElementById('mfg-form-project-desc');
+  if (descInput) descInput.value = '';
+  const custCodeInput = document.getElementById('mfg-form-customer-code');
+  if (custCodeInput) custCodeInput.value = '';
+  const custInput = document.getElementById('mfg-form-customer');
+  if (custInput) custInput.value = '';
+  const catSelect = document.getElementById('mfg-form-category');
+  if (catSelect) catSelect.value = '';
+  const vendorSelect = document.getElementById('mfg-form-vendor');
+  if (vendorSelect) vendorSelect.value = '';
 
+  // Reset dates to empty placeholder "Select date" as in screenshot
   const startInput = document.getElementById('mfg-form-start-date');
-  if (startInput) startInput.value = today;
+  if (startInput) {
+    startInput.value = '';
+    if (startInput._flatpickr) startInput._flatpickr.clear();
+  }
   const endInput = document.getElementById('mfg-form-end-date');
-  if (endInput) endInput.value = nextWeek.toISOString().split('T')[0];
+  if (endInput) {
+    endInput.value = '';
+    if (endInput._flatpickr) endInput._flatpickr.clear();
+  }
 
   switchMfgTab('basic');
   modal.classList.add('active');

@@ -118,3 +118,141 @@
   width: 8px;
   height: 8px;
 }
+
+/* ==========================================================================
+   Universal Table Pagination Footer
+   ========================================================================== */
+.table-pagination-footer,
+.purchase-pagination-bar,
+.mfg-table-footer {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  padding: 10px 18px !important;
+  background: #0C121F !important;
+  border-top: 1px solid #1A2436 !important;
+  font-size: 12px !important;
+  color: #8B9BB4 !important;
+  border-radius: 0 0 var(--table-radius) var(--table-radius);
+  box-sizing: border-box !important;
+}
+
+.pagination-info,
+.pr-entries-text,
+#mfg-showing-entries {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #8B9BB4 !important;
+}
+
+.pagination-controls,
+.pr-pagination-controls,
+.mfg-pagination {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex-wrap: wrap !important;
+}
+
+.page-numbers {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+.btn-page-nav,
+.pr-page-link,
+.mfg-page-btn {
+  background: #111827 !important;
+  border: 1px solid #1F2937 !important;
+  color: #9CA3AF !important;
+  padding: 5px 12px !important;
+  border-radius: 4px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  line-height: 16px !important;
+}
+
+.btn-page-nav:hover:not(:disabled),
+.pr-page-link:hover:not(.disabled):not(:disabled),
+.mfg-page-btn:hover:not(:disabled) {
+  background: #1F2937 !important;
+  color: #FFFFFF !important;
+}
+
+.btn-page-nav:disabled,
+.btn-page-nav.disabled,
+.pr-page-link.disabled,
+.pr-page-link:disabled,
+.mfg-page-btn:disabled,
+.mfg-page-btn.disabled {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+.btn-page-num {
+  min-width: 28px !important;
+  height: 28px !important;
+  padding: 0 6px !important;
+  background: #111827 !important;
+  border: 1px solid #1F2937 !important;
+  color: #9CA3AF !important;
+  border-radius: 4px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.15s ease !important;
+}
+
+.btn-page-num:hover:not(.active) {
+  background: #1F2937 !important;
+  color: #FFFFFF !important;
+}
+
+.btn-page-num.active,
+.mfg-page-btn.active,
+.pr-page-num {
+  background: #D97706 !important;
+  border-color: #F59E0B !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+}
+
+.pagination-ellipsis {
+  color: #64748B;
+  padding: 0 4px;
+  font-size: 12px;
+  font-weight: 700;
+  user-select: none;
+}
+
+.page-size-wrap {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-left: 10px !important;
+  font-size: 11px !important;
+  color: #8B9BB4 !important;
+}
+
+.page-size-select {
+  height: 28px !important;
+  padding: 0 6px !important;
+  background: #111827 !important;
+  border: 1px solid #1F2937 !important;
+  color: #E2E8F0 !important;
+  border-radius: 4px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  outline: none !important;
+}
+

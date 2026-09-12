@@ -82,13 +82,21 @@ function getCustomerMatchingProjects(customer, allProjects, category) {
   });
 }
 
+let customersState = {
+  currentPage: 1,
+  pageSize: 10
+};
+
 function initCustomers() {
   const searchInput = document.getElementById('search-customers');
   const cityFilter = document.getElementById('filter-cust-city');
   const stateFilter = document.getElementById('filter-cust-state');
   const categoryFilter = document.getElementById('filter-cust-project-category');
 
-  const trigger = () => loadCustomers();
+  const trigger = () => {
+    customersState.currentPage = 1;
+    loadCustomers();
+  };
 
   if (searchInput) searchInput.addEventListener('input', trigger);
   if (cityFilter) cityFilter.addEventListener('change', trigger);
@@ -248,10 +256,36 @@ async function loadCustomers() {
 
     if (filtered.length === 0) {
       tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 28px;">No customer records found matching the selected filters.</td></tr>';
+      if (window.renderTablePagination) {
+        window.renderTablePagination({
+          infoId: 'customers-pagination-info',
+          numbersId: 'customers-page-numbers',
+          prevBtnId: 'btn-customers-prev',
+          nextBtnId: 'btn-customers-next',
+          sizeSelectId: 'customers-page-size',
+          totalEntries: 0,
+          totalPages: 1,
+          currentPage: 1,
+          startIdx: 0,
+          endIdx: 0,
+          pageSize: customersState.pageSize,
+          onPageChange: () => {},
+          onPageSizeChange: (newSize) => {
+            customersState.pageSize = newSize;
+            customersState.currentPage = 1;
+            loadCustomers();
+          }
+        });
+      }
       return;
     }
 
-    filtered.forEach(c => {
+    const { pageItems, totalEntries, totalPages, validPage, startIdx, endIdx } = (window.paginateArray
+      ? window.paginateArray(filtered, customersState.currentPage, customersState.pageSize)
+      : { pageItems: filtered, totalEntries: filtered.length, totalPages: 1, validPage: 1, startIdx: 0, endIdx: filtered.length });
+    customersState.currentPage = validPage;
+
+    pageItems.forEach(c => {
       const cs = extractCityState(c);
       const cityStateText = (cs.city && cs.state && cs.city !== 'Other')
         ? `${cs.city}, ${cs.state}`
@@ -299,6 +333,31 @@ async function loadCustomers() {
       `;
       tbody.appendChild(tr);
     });
+
+    if (window.renderTablePagination) {
+      window.renderTablePagination({
+        infoId: 'customers-pagination-info',
+        numbersId: 'customers-page-numbers',
+        prevBtnId: 'btn-customers-prev',
+        nextBtnId: 'btn-customers-next',
+        sizeSelectId: 'customers-page-size',
+        totalEntries,
+        totalPages,
+        currentPage: validPage,
+        startIdx,
+        endIdx,
+        pageSize: customersState.pageSize,
+        onPageChange: (newPage) => {
+          customersState.currentPage = newPage;
+          loadCustomers();
+        },
+        onPageSizeChange: (newSize) => {
+          customersState.pageSize = newSize;
+          customersState.currentPage = 1;
+          loadCustomers();
+        }
+      });
+    }
   } catch (e) {
     console.error('Failed to load customers:', e);
   }

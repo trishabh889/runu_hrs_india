@@ -4,6 +4,11 @@
 
 let activeAccountsTab = 'DASHBOARD';
 
+let accountsState = {
+  currentPage: 1,
+  pageSize: 10
+};
+
 function initAccounts() {
   // Tab Bar handling
   const tabButtons = document.querySelectorAll('#accounts-tab-bar .dept-tab-btn');
@@ -12,6 +17,7 @@ function initAccounts() {
       tabButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       activeAccountsTab = btn.getAttribute('data-tab');
+      accountsState.currentPage = 1;
       renderAccountsTab(activeAccountsTab);
     });
   });
@@ -20,6 +26,7 @@ function initAccounts() {
   const searchInput = document.getElementById('search-accounts');
   if (searchInput) {
     searchInput.addEventListener('input', () => {
+      accountsState.currentPage = 1;
       renderAccountsTable(activeAccountsTab, searchInput.value.trim());
     });
   }
@@ -165,10 +172,36 @@ async function renderAccountsTable(tab, search = '') {
     const ledger = await window.api.getAccountsLedger(search);
     if (ledger.length === 0) {
       tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">No ledger entries found.</td></tr>';
+      if (window.renderTablePagination) {
+        window.renderTablePagination({
+          infoId: 'accounts-pagination-info',
+          numbersId: 'accounts-page-numbers',
+          prevBtnId: 'btn-accounts-prev',
+          nextBtnId: 'btn-accounts-next',
+          sizeSelectId: 'accounts-page-size',
+          totalEntries: 0,
+          totalPages: 1,
+          currentPage: 1,
+          startIdx: 0,
+          endIdx: 0,
+          pageSize: accountsState.pageSize,
+          onPageChange: () => {},
+          onPageSizeChange: (newSize) => {
+            accountsState.pageSize = newSize;
+            accountsState.currentPage = 1;
+            renderAccountsTable(tab, search);
+          }
+        });
+      }
       return;
     }
 
-    ledger.forEach(row => {
+    const { pageItems, totalEntries, totalPages, validPage, startIdx, endIdx } = (window.paginateArray
+      ? window.paginateArray(ledger, accountsState.currentPage, accountsState.pageSize)
+      : { pageItems: ledger, totalEntries: ledger.length, totalPages: 1, validPage: 1, startIdx: 0, endIdx: ledger.length });
+    accountsState.currentPage = validPage;
+
+    pageItems.forEach(row => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${row.date}</td>
@@ -181,6 +214,31 @@ async function renderAccountsTable(tab, search = '') {
       `;
       tbody.appendChild(tr);
     });
+
+    if (window.renderTablePagination) {
+      window.renderTablePagination({
+        infoId: 'accounts-pagination-info',
+        numbersId: 'accounts-page-numbers',
+        prevBtnId: 'btn-accounts-prev',
+        nextBtnId: 'btn-accounts-next',
+        sizeSelectId: 'accounts-page-size',
+        totalEntries,
+        totalPages,
+        currentPage: validPage,
+        startIdx,
+        endIdx,
+        pageSize: accountsState.pageSize,
+        onPageChange: (newPage) => {
+          accountsState.currentPage = newPage;
+          renderAccountsTable(tab, search);
+        },
+        onPageSizeChange: (newSize) => {
+          accountsState.pageSize = newSize;
+          accountsState.currentPage = 1;
+          renderAccountsTable(tab, search);
+        }
+      });
+    }
   } else {
     thead.innerHTML = `
       <tr>
@@ -196,10 +254,36 @@ async function renderAccountsTable(tab, search = '') {
     const entries = await window.api.getAccounts(tab, search);
     if (entries.length === 0) {
       tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">No vouchers recorded for ${tab}. Click "+ NEW ENTRY" to post one.</td></tr>`;
+      if (window.renderTablePagination) {
+        window.renderTablePagination({
+          infoId: 'accounts-pagination-info',
+          numbersId: 'accounts-page-numbers',
+          prevBtnId: 'btn-accounts-prev',
+          nextBtnId: 'btn-accounts-next',
+          sizeSelectId: 'accounts-page-size',
+          totalEntries: 0,
+          totalPages: 1,
+          currentPage: 1,
+          startIdx: 0,
+          endIdx: 0,
+          pageSize: accountsState.pageSize,
+          onPageChange: () => {},
+          onPageSizeChange: (newSize) => {
+            accountsState.pageSize = newSize;
+            accountsState.currentPage = 1;
+            renderAccountsTable(tab, search);
+          }
+        });
+      }
       return;
     }
 
-    entries.forEach(e => {
+    const { pageItems, totalEntries, totalPages, validPage, startIdx, endIdx } = (window.paginateArray
+      ? window.paginateArray(entries, accountsState.currentPage, accountsState.pageSize)
+      : { pageItems: entries, totalEntries: entries.length, totalPages: 1, validPage: 1, startIdx: 0, endIdx: entries.length });
+    accountsState.currentPage = validPage;
+
+    pageItems.forEach(e => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${e.date}</td>
@@ -211,8 +295,34 @@ async function renderAccountsTable(tab, search = '') {
       `;
       tbody.appendChild(tr);
     });
+
+    if (window.renderTablePagination) {
+      window.renderTablePagination({
+        infoId: 'accounts-pagination-info',
+        numbersId: 'accounts-page-numbers',
+        prevBtnId: 'btn-accounts-prev',
+        nextBtnId: 'btn-accounts-next',
+        sizeSelectId: 'accounts-page-size',
+        totalEntries,
+        totalPages,
+        currentPage: validPage,
+        startIdx,
+        endIdx,
+        pageSize: accountsState.pageSize,
+        onPageChange: (newPage) => {
+          accountsState.currentPage = newPage;
+          renderAccountsTable(tab, search);
+        },
+        onPageSizeChange: (newSize) => {
+          accountsState.pageSize = newSize;
+          accountsState.currentPage = 1;
+          renderAccountsTable(tab, search);
+        }
+      });
+    }
   }
 }
 
 window.initAccounts = initAccounts;
 window.loadAccounts = loadAccounts;
+

@@ -1,5 +1,6 @@
 /* Semantic color pairs. Existing labels, badge geometry and status logic are preserved. */
-:is(.badge-pending, .badge-comm-pending, .badge-status-pending, .access-badge-yellow) {
+:is(.badge-pending, .badge-comm-pending, .badge-status-pending, .access-badge-yellow,
+    .badge-in-progress, .mfg-badge.in-progress) {
   background: var(--status-pending) !important;
   color: var(--text-on-bright) !important;
   border-color: #fde047 !important;
@@ -10,9 +11,9 @@
   color: var(--text-on-solid) !important;
   border-color: #ff9f64 !important;
 }
-:is(.badge-active, .badge-in-design, .badge-in-progress, .badge-approved,
+:is(.badge-active, .badge-in-design, .badge-approved,
     .badge-status-approved,
-    .mfg-badge.in-progress, .mfg-badge.in-design) {
+    .mfg-badge.in-design) {
   background: var(--status-approved) !important;
   color: var(--text-on-solid) !important;
   border-color: #78b7ff !important;

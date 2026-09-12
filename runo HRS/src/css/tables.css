@@ -142,11 +142,16 @@
 }
 
 .badge-active,
-.badge-in-design,
-.badge-in-progress {
+.badge-in-design {
   background: #2563EB;
   color: #FFFFFF;
   border: 1px solid #3B82F6;
+}
+
+.badge-in-progress {
+  background: #EAB308;
+  color: #0F172A;
+  border: 1px solid #FDE047;
 }
 
 .badge-completed,
