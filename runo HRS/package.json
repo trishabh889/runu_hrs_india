@@ -15,5 +15,8 @@
     "desktop"
   ],
   "author": "RUNO HRS INDIA",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "flatpickr": "^4.6.13"
+  }
 }

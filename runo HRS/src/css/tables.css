@@ -88,7 +88,7 @@
 }
 
 .data-table th {
-  background: var(--bg-table-header, #040e18);
+  background: var(--bg-table-header, #14334a);
   color: #CBD5E1;
   font-weight: 700;
   font-size: 11px;

@@ -100,7 +100,7 @@ function renderHrsTable(list, role) {
     <tr>
       <td>${idx + 1}</td>
       <td style="white-space: nowrap;">${p.order_date || '2026-02-01'}</td>
-      <td style="font-weight: 700; color: #F1F5F9; max-width: 200px;" title="${p.mould_description || p.project_code}">${p.mould_description || p.project_code}</td>
+      <td style="font-weight: 700; color: #F1F5F9; white-space: normal; word-break: break-word;" title="${p.mould_description || p.project_code}">${p.mould_description || p.project_code}</td>
       <td style="text-align: center;"><span class="badge badge-active">${p.nozzle_count || p.drops || 1} Drops</span></td>
       <td><span style="color: var(--brand-orange); font-weight: 700;">${p.category || p.hrs_type || 'HRS'}</span></td>
       <td>${p.material || 'Polycarbonate (PC)'}</td>
@@ -132,7 +132,7 @@ function renderHrtcTable(list, role) {
     <tr>
       <td>${idx + 1}</td>
       <td style="white-space: nowrap;">${p.order_date || '2026-02-15'}</td>
-      <td style="font-weight: 700; color: #F1F5F9; max-width: 240px;" title="${p.mould_description || p.project_code}">${p.mould_description || p.project_code}</td>
+      <td style="font-weight: 700; color: #F1F5F9; white-space: normal; word-break: break-word;" title="${p.mould_description || p.project_code}">${p.mould_description || p.project_code}</td>
       <td style="text-align: center;"><span class="badge badge-active">${p.no_of_zone || (p.nozzle_count ? p.nozzle_count + ' Zones' : '8 Zones')}</span></td>
       <td>${p.connector || '24-Pin Harting'}</td>
       <td><span style="color: #38BDF8; font-weight: 700;">${p.hrtc_type || 'Microprocessor Dual'}</span></td>
@@ -145,8 +145,7 @@ function renderHrtcTable(list, role) {
 }
 
 function makeEditable(id, field, value, canEdit) {
-  if (!canEdit) return `<span style="color: #CBD5E1;">${value || '-'}</span>`;
-  return `<input type="text" class="comm-inline-input" value="${value || ''}" onchange="window.saveCommField('${id}', '${field}', this.value)" />`;
+  return `<span style="color: #CBD5E1;">${value || '-'}</span>`;
 }
 
 function getCommQuote(p) {
