@@ -537,12 +537,12 @@
 }
 
 .btn-action-icon.icon-purple {
-  color: #FFFFFF;
+  color: #8B5CF6;
 }
 
 .btn-action-icon.icon-purple:hover {
-  color: #FFFFFF;
-  background: rgba(168, 85, 247, 0.25);
+  color: #A78BFA;
+  background: rgba(139, 92, 246, 0.2);
 }
 
 .btn-action-icon svg {
@@ -552,10 +552,19 @@
   color: #FFFFFF;
 }
 
-.btn-action-icon:hover svg,
-.btn-action-icon.icon-purple svg {
+.btn-action-icon:hover svg {
   fill: #FFFFFF;
   color: #FFFFFF;
+}
+
+.btn-action-icon.icon-purple svg {
+  fill: #8B5CF6;
+  color: #8B5CF6;
+}
+
+.btn-action-icon.icon-purple:hover svg {
+  fill: #A78BFA;
+  color: #A78BFA;
 }
 
 /* Table Footer / Pagination Bar */

@@ -145,12 +145,12 @@ textarea::placeholder {
   color: #e4edf6;
 }
 
-:is(.btn-icon, .btn-action-icon, .pr-action-btn) {
+:is(.btn-icon, .btn-action-icon:not(.icon-purple), .pr-action-btn) {
   border-color: rgba(139, 184, 219, 0.34);
   color: #ffffff !important;
 }
 
-:is(.btn-icon, .btn-action-icon, .pr-action-btn) svg {
+:is(.btn-icon, .btn-action-icon:not(.icon-purple), .pr-action-btn) svg {
   fill: #ffffff !important;
   color: #ffffff !important;
 }

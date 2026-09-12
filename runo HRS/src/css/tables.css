@@ -68,15 +68,18 @@
   height: 8px;
   width: 8px;
 }
+
 .table-responsive::-webkit-scrollbar-track {
   background: #060d1a;
   border-radius: 4px;
 }
+
 .table-responsive::-webkit-scrollbar-thumb {
   background: #193155;
   border-radius: 4px;
   border: 1px solid rgba(59, 130, 246, 0.2);
 }
+
 .table-responsive::-webkit-scrollbar-thumb:hover {
   background: #2563EB;
 }
@@ -215,26 +218,31 @@
   color: #FFFFFF;
   border: 1px solid #F97316;
 }
+
 .badge-pr-approved {
   background: #2563EB;
   color: #FFFFFF;
   border: 1px solid #3B82F6;
 }
+
 .badge-pr-po-released {
   background: #059669;
   color: #FFFFFF;
   border: 1px solid #10B981;
 }
+
 .badge-pr-in-transit {
   background: #8B5CF6;
   color: #FFFFFF;
   border: 1px solid #A855F7;
 }
+
 .badge-pr-received {
   background: #059669;
   color: #FFFFFF;
   border: 1px solid #10B981;
 }
+
 .badge-pr-cancelled {
   background: #DC2626;
   color: #FFFFFF;
@@ -403,10 +411,12 @@
   background-size: 12px;
   transition: border-color 0.2s ease;
 }
+
 .filter-select-compact option {
   background-color: #0B172C;
   color: #CBD5E1;
 }
+
 .filter-select-compact:focus {
   border-color: #3B82F6;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
@@ -431,10 +441,12 @@
   background-position: right 6px center;
   background-size: 11px;
 }
+
 .quote-inline-select option {
   background-color: #0B172C;
   color: #CBD5E1;
 }
+
 .quote-inline-select:focus {
   border-color: #3B82F6;
 }
@@ -443,6 +455,7 @@
 .table-row-selected td {
   background: rgba(37, 99, 235, 0.25) !important;
 }
+
 .table-row-selected {
   box-shadow: inset 3px 0 0 #3B82F6 !important;
 }
@@ -463,12 +476,14 @@
   align-items: center;
   gap: 6px;
 }
+
 .btn-workflow-step:hover:not(:disabled) {
   background: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-orange-dark) 100%);
   color: #FFFFFF;
   border-color: var(--brand-orange);
   box-shadow: 0 0 12px rgba(255, 87, 34, 0.35);
 }
+
 .btn-workflow-step:disabled {
   opacity: 0.35;
   cursor: not-allowed;
@@ -482,6 +497,7 @@
   font-weight: 700;
   box-shadow: 0 0 8px rgba(239, 68, 68, 0.1);
 }
+
 .badge-cr {
   background: rgba(16, 185, 129, 0.12);
   color: #10B981;
@@ -489,12 +505,14 @@
   font-weight: 700;
   box-shadow: 0 0 8px rgba(16, 185, 129, 0.1);
 }
+
 .badge-warning {
   background: rgba(245, 158, 11, 0.12);
   color: #F59E0B;
   border: 1px solid rgba(245, 158, 11, 0.3);
   box-shadow: 0 0 8px rgba(245, 158, 11, 0.1);
 }
+
 .badge-info {
   background: rgba(59, 130, 246, 0.12);
   color: #3B82F6;

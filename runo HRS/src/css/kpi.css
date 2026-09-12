@@ -231,3 +231,67 @@
   filter: drop-shadow(0 0 48px rgba(255, 87, 34, 0.5));
 }
 
+/* ── Accounts & Finance KPI Cards ────────────────────────────────────────── */
+.accounts-kpi-grid,
+#accounts-dashboard-section .kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 1350px) {
+  .accounts-kpi-grid,
+  #accounts-dashboard-section .kpi-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+}
+
+@media (max-width: 850px) {
+  .accounts-kpi-grid,
+  #accounts-dashboard-section .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+#accounts-dashboard-section .kpi-card {
+  padding: 14px 16px;
+  min-height: 104px;
+  justify-content: center;
+  gap: 4px;
+}
+
+#accounts-dashboard-section .kpi-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: #94A3B8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+#accounts-dashboard-section .kpi-value {
+  font-size: clamp(16px, 1.45vw, 21px) !important;
+  font-weight: 800 !important;
+  color: #FFFFFF;
+  line-height: 1.25 !important;
+  letter-spacing: -0.3px !important;
+  white-space: nowrap !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 2px 0 !important;
+}
+
+#accounts-dashboard-section .kpi-subtext {
+  font-size: 11px;
+  color: #64748B;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.25;
+}
+
+

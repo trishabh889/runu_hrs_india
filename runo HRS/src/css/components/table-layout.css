@@ -60,7 +60,7 @@
   font-size: 10.5px;
 }
 :is(.data-table, .pr-data-table, .design-master-table, .mfg-table)
-    :is(.btn-icon, .pr-action-btn, .btn-action-icon) {
+    :is(.btn-icon, .pr-action-btn, .btn-action-icon:not(.icon-purple)) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -71,9 +71,36 @@
   color: #FFFFFF !important;
 }
 :is(.data-table, .pr-data-table, .design-master-table, .mfg-table)
-    :is(.btn-icon, .pr-action-btn, .btn-action-icon) svg {
+    .btn-action-icon.icon-purple {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  flex: 0 0 30px;
+  background: transparent !important;
+  border: none !important;
+  color: #8B5CF6 !important;
+}
+:is(.data-table, .pr-data-table, .design-master-table, .mfg-table)
+    :is(.btn-icon, .pr-action-btn, .btn-action-icon:not(.icon-purple)) svg {
   fill: #FFFFFF !important;
   color: #FFFFFF !important;
+}
+:is(.data-table, .pr-data-table, .design-master-table, .mfg-table)
+    .btn-action-icon.icon-purple svg {
+  fill: #8B5CF6 !important;
+  color: #8B5CF6 !important;
+}
+:is(.data-table, .pr-data-table, .design-master-table, .mfg-table)
+    .btn-action-icon.icon-purple:hover {
+  background: rgba(139, 92, 246, 0.15) !important;
+}
+:is(.data-table, .pr-data-table, .design-master-table, .mfg-table)
+    .btn-action-icon.icon-purple:hover svg {
+  fill: #A78BFA !important;
+  color: #A78BFA !important;
 }
 :is(.table-actions, .pr-action-group) { align-items: center; gap: 6px; }
 :is(.table-responsive, .design-table-wrapper)::-webkit-scrollbar {

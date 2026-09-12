@@ -142,6 +142,8 @@ function switchView(viewName) {
   else if (viewName === 'manufacturing' && window.loadManufacturing) window.loadManufacturing();
   else if (viewName === 'approvals' && window.loadApprovals) window.loadApprovals();
   else if (viewName === 'users' && window.loadUsers) window.loadUsers();
+
+  if (window.initFlatpickrDates) window.initFlatpickrDates();
 }
 
 window.initNavigation = initNavigation;

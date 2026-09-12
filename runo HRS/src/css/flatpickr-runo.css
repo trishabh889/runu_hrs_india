@@ -1,0 +1,227 @@
+/* ==========================================================================
+   RUNO HRS INDIA - Custom Flatpickr Bluish Dark Theme
+   Matches:
+   - Header: #0D213F
+   - Backgrounds: #060d1a to #0a1324
+   - Borders: rgba(59, 130, 246, 0.25)
+   - Active/Accent: #3B82F6 & #F59E0B
+   ========================================================================== */
+
+/* Pop-up Container */
+.flatpickr-calendar {
+  background: #081121 !important;
+  background: linear-gradient(180deg, #0a1324 0%, #060d1a 100%) !important;
+  border: 1px solid rgba(59, 130, 246, 0.35) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(59, 130, 246, 0.18) !important;
+  border-radius: 8px !important;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  z-index: 99999 !important;
+  color: #E2E8F0 !important;
+  overflow: hidden !important;
+}
+
+/* Tooltip Arrow */
+.flatpickr-calendar.arrowTop:before {
+  border-bottom-color: rgba(59, 130, 246, 0.35) !important;
+}
+.flatpickr-calendar.arrowTop:after {
+  border-bottom-color: #0D213F !important;
+}
+.flatpickr-calendar.arrowBottom:before {
+  border-top-color: rgba(59, 130, 246, 0.35) !important;
+}
+.flatpickr-calendar.arrowBottom:after {
+  border-top-color: #060d1a !important;
+}
+
+/* Calendar Header (Exact #0D213F Theme Match) */
+.flatpickr-months {
+  background: #0D213F !important;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.25) !important;
+  padding: 4px 0 !important;
+}
+.flatpickr-months .flatpickr-month {
+  background: #0D213F !important;
+  color: #F1F5F9 !important;
+  fill: #F1F5F9 !important;
+  height: 38px !important;
+}
+
+/* Current Month & Year Display */
+.flatpickr-current-month {
+  padding-top: 6px !important;
+  color: #F1F5F9 !important;
+  font-size: 105% !important;
+}
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+  background: #0D213F !important;
+  color: #F1F5F9 !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(59, 130, 246, 0.25) !important;
+  border-radius: 4px !important;
+  padding: 2px 6px !important;
+  cursor: pointer !important;
+}
+.flatpickr-current-month .flatpickr-monthDropdown-months:hover {
+  background: #12294f !important;
+}
+.flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month {
+  background-color: #0D213F !important;
+  color: #F1F5F9 !important;
+}
+.flatpickr-current-month input.cur-year {
+  color: #F1F5F9 !important;
+  font-weight: 700 !important;
+  cursor: text !important;
+}
+.flatpickr-current-month .numInputWrapper span.arrowUp:after {
+  border-bottom-color: #60A5FA !important;
+}
+.flatpickr-current-month .numInputWrapper span.arrowDown:after {
+  border-top-color: #60A5FA !important;
+}
+
+/* Prev/Next Month Arrows */
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+  color: #94A3B8 !important;
+  fill: #94A3B8 !important;
+  padding: 8px 10px !important;
+}
+.flatpickr-months .flatpickr-prev-month:hover svg,
+.flatpickr-months .flatpickr-next-month:hover svg {
+  fill: #38BDF8 !important;
+}
+
+/* Weekdays Row */
+.flatpickr-weekdays {
+  background: #081121 !important;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.15) !important;
+  height: 30px !important;
+}
+span.flatpickr-weekday {
+  background: transparent !important;
+  color: #60A5FA !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Days Container */
+.flatpickr-days {
+  background: #060d1a !important;
+}
+.dayContainer {
+  background: #060d1a !important;
+  padding: 4px !important;
+}
+
+/* Individual Day Cell */
+.flatpickr-day {
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 6px !important;
+  color: #CBD5E1 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  height: 34px !important;
+  line-height: 34px !important;
+  margin: 1px 0 !important;
+  transition: all 0.15s ease !important;
+}
+
+/* Hover Day */
+.flatpickr-day:hover,
+.flatpickr-day:focus {
+  background: rgba(30, 64, 120, 0.55) !important;
+  border-color: #3B82F6 !important;
+  color: #FFFFFF !important;
+}
+
+/* Today Day */
+.flatpickr-day.today {
+  border: 1px solid #F59E0B !important;
+  color: #FBBF24 !important;
+  font-weight: 700 !important;
+}
+.flatpickr-day.today:hover {
+  background: rgba(245, 158, 11, 0.22) !important;
+  border-color: #F59E0B !important;
+  color: #FCD34D !important;
+}
+
+/* Selected / Start & End of Range */
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+  background: #3B82F6 !important;
+  border-color: #2563EB !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.45) !important;
+}
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange:hover,
+.flatpickr-day.endRange:hover {
+  background: #2563EB !important;
+  border-color: #1D4ED8 !important;
+  color: #FFFFFF !important;
+}
+
+/* In Range (Selection span) */
+.flatpickr-day.inRange {
+  background: rgba(59, 130, 246, 0.18) !important;
+  border-color: rgba(59, 130, 246, 0.28) !important;
+  color: #93C5FD !important;
+}
+
+/* Other Months Days */
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay {
+  color: #334155 !important;
+  background: transparent !important;
+  border-color: transparent !important;
+}
+.flatpickr-day.prevMonthDay:hover,
+.flatpickr-day.nextMonthDay:hover {
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: #64748B !important;
+}
+
+/* Disabled Days */
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.flatpickr-disabled:hover {
+  color: #1E293B !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  cursor: not-allowed !important;
+}
+
+/* Trigger Inputs Styling */
+.runo-date-input {
+  background: #081121 !important;
+  border: 1px solid rgba(59, 130, 246, 0.28) !important;
+  border-radius: 6px !important;
+  color: #E2E8F0 !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  padding: 5px 10px !important;
+  cursor: pointer !important;
+  min-width: 120px !important;
+  transition: all 0.2s ease !important;
+  outline: none !important;
+}
+.runo-date-input::placeholder {
+  color: #64748B !important;
+  font-weight: 500 !important;
+}
+.runo-date-input:hover {
+  border-color: rgba(59, 130, 246, 0.65) !important;
+  background: #0c1830 !important;
+}
+.runo-date-input:focus {
+  border-color: #3B82F6 !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+  background: #0c1830 !important;
+}
+

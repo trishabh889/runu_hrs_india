@@ -105,9 +105,9 @@
 
   <div class="mfg-date-range">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
-    <input type="text" id="mfg-filter-start" placeholder="Start Date" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'">
+    <input type="text" id="mfg-filter-start" class="runo-date-input" placeholder="📅 Start Date" readonly>
     <span style="color: #64748B;">-</span>
-    <input type="text" id="mfg-filter-end" placeholder="End Date" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'">
+    <input type="text" id="mfg-filter-end" class="runo-date-input" placeholder="📅 End Date" readonly>
   </div>
 
   <div class="mfg-search-container">
@@ -274,19 +274,19 @@
             <div class="mfg-field-row">
               <label class="mfg-field-lbl required">Planned Start Date</label>
               <div class="mfg-field-date-wrap">
-                <input type="date" id="mfg-form-start-date" required>
+                <input type="text" id="mfg-form-start-date" class="runo-date-input" placeholder="📅 Start Date" required readonly>
               </div>
             </div>
             <div class="mfg-field-row">
               <label class="mfg-field-lbl required">Planned End Date</label>
               <div class="mfg-field-date-wrap">
-                <input type="date" id="mfg-form-end-date" required>
+                <input type="text" id="mfg-form-end-date" class="runo-date-input" placeholder="📅 End Date" required readonly>
               </div>
             </div>
             <div class="mfg-field-row">
               <label class="mfg-field-lbl">Target Dispatch Date</label>
               <div class="mfg-field-date-wrap">
-                <input type="date" id="mfg-form-target-date">
+                <input type="text" id="mfg-form-target-date" class="runo-date-input" placeholder="📅 Target Date" readonly>
               </div>
             </div>
             <div class="mfg-field-row">

@@ -94,8 +94,8 @@
   gap: 8px !important;
   flex: 0 0 auto;
 }
-.sub-view :is(.table-toolbar input[type="date"], .pr-date-range-box input,
-    .filter-date-box input, .mfg-date-range input) {
+.sub-view :is(.table-toolbar input[type="date"], .table-toolbar input.runo-date-input:not([type="hidden"]), .pr-date-range-box input:not([type="hidden"]),
+    .filter-date-box input:not([type="hidden"]), .mfg-date-range input:not([type="hidden"])) {
   width: var(--filter-date-width) !important;
   min-width: var(--filter-date-width) !important;
   max-width: var(--filter-date-width) !important;
@@ -109,6 +109,13 @@
   font-family: var(--font-primary);
   font-size: 12px !important;
   font-weight: 400 !important;
+}
+input.flatpickr-input[type="hidden"] {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 .sub-view :is(.table-toolbar, .purchase-filter-bar, .design-filter-bar, .mfg-toolbar)
     :is(.btn-action-secondary, .btn-pr-filter-btn, .btn-filter-action, .btn-mfg-filter) {

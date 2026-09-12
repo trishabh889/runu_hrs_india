@@ -955,7 +955,7 @@ function renderDesignView() {
         </td>
         <td>
           <button class="btn-action-icon icon-purple" title="Send Design to Customer" onclick="openSendToCustomerModal('${p.id}')">
-            <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            <svg viewBox="0 0 512 512" width="16" height="16" fill="currentColor"><path d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480V392c0-2.5 .6-4.9 1.6-7.2L358 136.6c4.6-5.8 4-14.1-1.5-19.1s-14.1-4-19.1 1.5L127.3 328.7 16.7 282.8C6.6 278.6 .3 268.7 0 257.8s6-20.9 15.7-25.1l448-192c10.7-4.6 23.1-2.8 32.1 4.3z"/></svg>
           </button>
         </td>
       `;

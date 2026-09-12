@@ -4,7 +4,10 @@
 
 window.openModal = function(modalId) {
   const modal = document.getElementById(modalId);
-  if (modal) modal.classList.add('active');
+  if (modal) {
+    modal.classList.add('active');
+    if (window.initFlatpickrDates) window.initFlatpickrDates();
+  }
 };
 
 window.closeModal = function(modalId) {
