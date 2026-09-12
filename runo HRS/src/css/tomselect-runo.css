@@ -1,0 +1,296 @@
+/* ==========================================================================
+   RUNO HRS INDIA - Custom Tom Select Bluish Dark Theme
+   ==========================================================================
+   Matches:
+   - Header & Bar: #0D213F
+   - Backgrounds: #081121 & #060d1a
+   - Borders: rgba(59, 130, 246, 0.3)
+   - Active/Hover: #3B82F6 & rgba(30, 64, 120, 0.55)
+   - Smooth Transitions & Slide-down Animations
+   ========================================================================== */
+
+/* 1. Completely Hide Original Native Select Elements Replaced by Tom Select */
+select.tomselected,
+select.ts-hidden-accessible,
+.sub-view select.tomselected,
+.sub-view select.ts-hidden-accessible,
+:is(.sub-view, body, #app) select:is(.tomselected, .ts-hidden-accessible),
+select[data-tomselected] {
+  display: none !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  outline: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  z-index: -9999 !important;
+}
+
+/* 2. Outer Wrapper Reset & Base Layout */
+.ts-wrapper,
+div.ts-wrapper,
+.sub-view div.ts-wrapper,
+div.ts-wrapper:is(.filter-item-select, .pr-filter-select, .mfg-select-filter, .filter-select-compact, .form-select) {
+  position: relative !important;
+  display: inline-block !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  font-family: var(--font-primary, 'Segoe UI', -apple-system, sans-serif);
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+/* 3. Control Box (The visible dropdown button) */
+.ts-control,
+.full .ts-control,
+.ts-wrapper.single .ts-control,
+.ts-wrapper.single.input-active .ts-control,
+.ts-wrapper.single.full .ts-control,
+.focus .ts-control {
+  background: #081121 !important;
+  background-color: #081121 !important;
+  background-image: none !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  border-radius: 6px !important;
+  color: #E2E8F0 !important;
+  font-family: var(--font-primary, 'Segoe UI', -apple-system, sans-serif) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  height: var(--filter-height, 36px) !important;
+  min-height: var(--filter-height, 36px) !important;
+  max-height: var(--filter-height, 36px) !important;
+  line-height: calc(var(--filter-height, 36px) - 2px) !important;
+  padding: 0 32px 0 12px !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+  width: 100% !important;
+}
+
+/* Hide Tom Select's default CSS arrow triangle */
+.ts-wrapper.single .ts-control:after,
+.ts-wrapper.single.dropdown-active .ts-control:after {
+  display: none !important;
+  content: none !important;
+  border: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* 4. Text Input & Selected Item */
+.ts-control input {
+  color: #F1F5F9 !important;
+  font-family: inherit !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  max-width: 100% !important;
+}
+
+.ts-control input::placeholder {
+  color: #64748B !important;
+  font-weight: 400 !important;
+}
+
+.ts-control .item {
+  color: #E2E8F0 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: calc(100% - 14px) !important;
+  line-height: normal !important;
+}
+
+/* 5. Hover & Focus States */
+.ts-control:hover,
+.ts-wrapper.single:hover .ts-control {
+  border-color: rgba(59, 130, 246, 0.65) !important;
+  background: #0c1830 !important;
+  background-color: #0c1830 !important;
+}
+
+.ts-wrapper.focus .ts-control,
+.ts-wrapper.dropdown-active .ts-control {
+  border-color: #3B82F6 !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25) !important;
+  background: #0c1830 !important;
+  background-color: #0c1830 !important;
+}
+
+/* 6. RUNO Blue SVG Down Arrow */
+.ts-wrapper::after {
+  content: '' !important;
+  position: absolute !important;
+  right: 12px !important;
+  top: 50% !important;
+  width: 14px !important;
+  height: 14px !important;
+  margin-top: -7px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2360A5FA'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  pointer-events: none !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  z-index: 5 !important;
+}
+
+.ts-wrapper.dropdown-active::after {
+  transform: rotate(180deg) !important;
+}
+
+/* 7. Dropdown Menu (Pop-up Options) */
+.ts-dropdown,
+.ts-dropdown.single {
+  background: linear-gradient(180deg, #0a1324 0%, #060d1a 100%) !important;
+  background-color: #0a1324 !important;
+  background-image: linear-gradient(180deg, #0a1324 0%, #060d1a 100%) !important;
+  border: 1px solid rgba(59, 130, 246, 0.38) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(59, 130, 246, 0.18) !important;
+  margin-top: 5px !important;
+  padding: 4px 0 !important;
+  z-index: 99999 !important;
+  color: #CBD5E1 !important;
+  font-size: 12px !important;
+  overflow: hidden !important;
+  animation: tsFadeSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  transform-origin: top center;
+}
+
+@keyframes tsFadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.ts-dropdown .ts-dropdown-content {
+  max-height: 240px !important;
+  padding: 2px 0 !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.4) #060d1a;
+}
+
+.ts-dropdown .ts-dropdown-content::-webkit-scrollbar {
+  width: 6px;
+}
+.ts-dropdown .ts-dropdown-content::-webkit-scrollbar-track {
+  background: #060d1a;
+}
+.ts-dropdown .ts-dropdown-content::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.35);
+  border-radius: 3px;
+}
+.ts-dropdown .ts-dropdown-content::-webkit-scrollbar-thumb:hover {
+  background: #3B82F6;
+}
+
+/* Individual Option Item */
+.ts-dropdown .option {
+  padding: 8px 14px !important;
+  color: #CBD5E1 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  background: transparent !important;
+  transition: all 0.15s ease !important;
+  border-left: 3px solid transparent !important;
+}
+
+.ts-dropdown .option:hover,
+.ts-dropdown .option.active {
+  background: rgba(30, 64, 120, 0.55) !important;
+  color: #FFFFFF !important;
+  border-left-color: #3B82F6 !important;
+  padding-left: 16px !important;
+}
+
+.ts-dropdown .option.selected {
+  color: #38BDF8 !important;
+  font-weight: 700 !important;
+  background: rgba(59, 130, 246, 0.15) !important;
+  border-left-color: #38BDF8 !important;
+}
+
+.ts-dropdown .no-results {
+  color: #64748B !important;
+  padding: 12px !important;
+  text-align: center !important;
+  font-size: 11.5px !important;
+}
+
+.ts-dropdown .optgroup-header {
+  color: #60A5FA !important;
+  background: #0D213F !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.6px !important;
+  padding: 6px 12px !important;
+  border-top: 0 !important;
+}
+
+/* 8. Sizing inside Table Toolbars & Filter Bars */
+.sub-view :is(.table-toolbar, .purchase-filter-bar, .design-filter-bar, .mfg-toolbar, .filter-bar) .ts-wrapper,
+.design-filter-bar .ts-wrapper,
+.purchase-filter-bar .ts-wrapper,
+.mfg-toolbar .ts-wrapper {
+  width: var(--filter-select-width, 180px) !important;
+  min-width: var(--filter-select-width, 180px) !important;
+  max-width: var(--filter-select-width, 180px) !important;
+  flex: 0 0 var(--filter-select-width, 180px) !important;
+  height: var(--filter-height, 36px) !important;
+}
+
+/* Compact page size select (pagination) */
+.page-size-select + .ts-wrapper {
+  width: 75px !important;
+  min-width: 75px !important;
+  max-width: 75px !important;
+  flex: 0 0 75px !important;
+}
+
+/* 9. Form Modals & Form Groups */
+.modal-card .ts-wrapper,
+.modal-body .ts-wrapper,
+.form-group .ts-wrapper,
+.mfg-field-row .ts-wrapper,
+.form-row .ts-wrapper,
+.form-select + .ts-wrapper,
+#view-modals .ts-wrapper {
+  width: 100% !important;
+  display: block !important;
+}

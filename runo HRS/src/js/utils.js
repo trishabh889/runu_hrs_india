@@ -7,6 +7,7 @@ window.openModal = function(modalId) {
   if (modal) {
     modal.classList.add('active');
     if (window.initFlatpickrDates) window.initFlatpickrDates();
+    if (window.initTomSelectDropdowns) window.initTomSelectDropdowns();
   }
 };
 

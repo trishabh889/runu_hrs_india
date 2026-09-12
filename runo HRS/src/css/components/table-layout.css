@@ -43,6 +43,17 @@
   vertical-align: middle;
   white-space: nowrap;
 }
+.design-master-table thead th.th-stage-sub,
+.design-master-table thead th.group-header {
+  text-align: center !important;
+  padding: 4px 2px !important;
+}
+.design-master-table tbody td.td-stage-cell,
+.design-master-table tbody td.td-hrs-num,
+.design-master-table tbody td.td-center-action {
+  text-align: center !important;
+  padding: 6px 2px !important;
+}
 :is(.data-table, .pr-data-table, .design-master-table, .mfg-table) td > div {
   line-height: 16px;
 }

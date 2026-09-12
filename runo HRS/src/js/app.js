@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (window.initNewProjectForm) window.initNewProjectForm();
   if (window.initUsers) window.initUsers();
   if (window.initFlatpickrDates) window.initFlatpickrDates();
+  if (window.initTomSelectDropdowns) window.initTomSelectDropdowns();
 
   // 3. Restore active session
   try {

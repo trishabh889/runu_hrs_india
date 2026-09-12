@@ -5,13 +5,13 @@
   border-color: #fde047 !important;
 }
 :is(.badge-review, .badge-in-review, .badge-reorder, .badge-status-inreview,
-    .status-pill.pill-in-review, .mfg-badge.in-review, .badge-admin) {
+    .mfg-badge.in-review, .badge-admin) {
   background: var(--status-review) !important;
   color: var(--text-on-solid) !important;
   border-color: #ff9f64 !important;
 }
 :is(.badge-active, .badge-in-design, .badge-in-progress, .badge-approved,
-    .badge-status-approved, .status-pill.pill-in-design,
+    .badge-status-approved,
     .mfg-badge.in-progress, .mfg-badge.in-design) {
   background: var(--status-approved) !important;
   color: var(--text-on-solid) !important;
@@ -19,26 +19,26 @@
 }
 :is(.badge-completed, .badge-received, .badge-pass, .badge-comm-submitted,
     .badge-status-poreleased, .badge-status-received,
-    .status-pill.pill-completed, .mfg-badge.completed) {
+    .mfg-badge.completed) {
   background: var(--status-success) !important;
   color: var(--text-on-solid) !important;
   border-color: #34d399 !important;
 }
 :is(.badge-sent, .badge-in-transit, .badge-transit, .badge-rework,
-    .badge-status-intransit, .status-pill.pill-sent, .mfg-badge.rework) {
+    .badge-status-intransit, .mfg-badge.rework) {
   background: var(--status-transit) !important;
   color: var(--text-on-solid) !important;
   border-color: #b69aff !important;
 }
 :is(.badge-danger, .badge-rejected, .badge-cancelled, .badge-paused,
     .badge-comm-cancel, .badge-status-cancelled,
-    .status-pill.pill-paused, .mfg-badge.paused) {
+    .mfg-badge.paused) {
   background: var(--status-danger) !important;
   color: var(--text-on-solid) !important;
   border-color: #ff9393 !important;
 }
 :is(.badge-on-hold, .badge-inactive, .badge-not-started,
-    .status-pill.pill-on-hold, .mfg-badge.not-started, .mfg-badge.on-hold) {
+    .mfg-badge.not-started, .mfg-badge.on-hold) {
   background: var(--status-neutral) !important;
   color: var(--text-on-solid) !important;
   border-color: #a0b5c8 !important;

@@ -144,6 +144,7 @@ function switchView(viewName) {
   else if (viewName === 'users' && window.loadUsers) window.loadUsers();
 
   if (window.initFlatpickrDates) window.initFlatpickrDates();
+  if (window.initTomSelectDropdowns) window.initTomSelectDropdowns();
 }
 
 window.initNavigation = initNavigation;

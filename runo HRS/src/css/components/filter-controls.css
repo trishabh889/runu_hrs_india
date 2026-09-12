@@ -27,8 +27,9 @@
   min-width: 0;
   flex-wrap: wrap !important;
 }
-.sub-view :is(.filter-select-compact, .pr-filter-select, .filter-item-select,
-    .mfg-select-filter, .filter-group .custom-dropdown-btn) {
+.sub-view select:is(.filter-select-compact, .pr-filter-select, .filter-item-select,
+    .mfg-select-filter),
+.sub-view .filter-group .custom-dropdown-btn {
   width: var(--filter-select-width) !important;
   min-width: var(--filter-select-width) !important;
   max-width: var(--filter-select-width) !important;

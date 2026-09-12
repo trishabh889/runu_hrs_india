@@ -77,11 +77,11 @@ const INITIAL_DESIGN_PROJECTS = [
     concept_action: 'PAUSE',
     concept_status: 'COMPLETED',
     twod_hours: 14,
-    twod_action: 'PAUSE',
+    twod_action: 'PLAY',
     twod_status: 'COMPLETED',
     threed_hours: 16,
-    threed_action: 'IDLE',
-    threed_status: 'COMPLETED',
+    threed_action: 'GRAY_PAUSE',
+    threed_status: 'PLAY',
     overall_status: 'IN DESIGN',
     order_date: '2026-01-22'
   },
@@ -100,8 +100,8 @@ const INITIAL_DESIGN_PROJECTS = [
     twod_action: 'PAUSE',
     twod_status: 'COMPLETED',
     threed_hours: 14,
-    threed_action: 'IDLE',
-    threed_status: 'COMPLETED',
+    threed_action: 'GRAY_FORWARD',
+    threed_status: 'GRAY_PLAY',
     overall_status: 'ON HOLD',
     order_date: '2026-01-25'
   },
@@ -117,10 +117,10 @@ const INITIAL_DESIGN_PROJECTS = [
     concept_action: 'PLAY',
     concept_status: 'COMPLETED',
     twod_hours: 12,
-    twod_action: 'PAUSE',
+    twod_action: 'ORANGE_PAUSE',
     twod_status: 'COMPLETED',
     threed_hours: 20,
-    threed_action: 'IDLE',
+    threed_action: 'PLAY',
     threed_status: 'COMPLETED',
     overall_status: 'IN DESIGN',
     order_date: '2026-01-28'
@@ -140,8 +140,8 @@ const INITIAL_DESIGN_PROJECTS = [
     twod_action: 'BLUE_PAUSE',
     twod_status: 'COMPLETED',
     threed_hours: 18,
-    threed_action: 'IDLE',
-    threed_status: 'COMPLETED',
+    threed_action: 'GRAY_FORWARD',
+    threed_status: 'GRAY_PLAY',
     overall_status: 'IN DESIGN',
     order_date: '2026-02-01'
   },
@@ -569,10 +569,13 @@ const INITIAL_DESIGN_PROJECTS = [
 ];
 
 // Persistent state
+const DESIGN_STORAGE_VERSION = 'v3_centered_icons';
+let storedVersion = localStorage.getItem('runo_design_version');
 let designProjects = JSON.parse(localStorage.getItem('runo_design_projects') || 'null');
-if (!designProjects || designProjects.length === 0) {
+if (!designProjects || designProjects.length === 0 || storedVersion !== DESIGN_STORAGE_VERSION) {
   designProjects = JSON.parse(JSON.stringify(INITIAL_DESIGN_PROJECTS));
   localStorage.setItem('runo_design_projects', JSON.stringify(designProjects));
+  localStorage.setItem('runo_design_version', DESIGN_STORAGE_VERSION);
 }
 
 let designState = {
@@ -905,7 +908,7 @@ function renderDesignView() {
       const threedStatusBtn = renderStageStatusButton(p.id, 'threed', p.threed_status);
 
       tr.innerHTML = `
-        <td style="color: #8B9BB4; font-weight: 600;">${srNo}</td>
+        <td style="color: #8B9BB4; font-weight: 600; text-align: center;">${srNo}</td>
         <td class="td-proj-code">${escapeHtml(p.project_code)}</td>
         <td class="td-customer">${escapeHtml(p.customer_name)}</td>
         <td class="td-desc" title="${escapeHtml(p.project_description)}">${escapeHtml(p.project_description)}</td>
@@ -913,47 +916,47 @@ function renderDesignView() {
         <td class="td-designer">${escapeHtml(p.designer)}</td>
 
         <!-- Concept Design Group -->
-        <td class="td-hrs-num">${p.concept_hours || 0}</td>
-        <td>${conceptActionBtn}</td>
-        <td>${conceptStatusBtn}</td>
+        <td class="td-stage-cell td-hrs-num" style="text-align: center; padding: 6px 2px;">${p.concept_hours || 0}</td>
+        <td class="td-stage-cell" style="text-align: center; padding: 6px 2px;">${conceptActionBtn}</td>
+        <td class="td-stage-cell" style="text-align: center; padding: 6px 2px;">${conceptStatusBtn}</td>
 
         <!-- 2D Design Group -->
-        <td class="td-hrs-num">${p.twod_hours || 0}</td>
-        <td>${twodActionBtn}</td>
-        <td>${twodStatusBtn}</td>
+        <td class="td-stage-cell td-hrs-num" style="text-align: center; padding: 6px 2px;">${p.twod_hours || 0}</td>
+        <td class="td-stage-cell" style="text-align: center; padding: 6px 2px;">${twodActionBtn}</td>
+        <td class="td-stage-cell" style="text-align: center; padding: 6px 2px;">${twodStatusBtn}</td>
 
         <!-- 3D Design Group -->
-        <td class="td-hrs-num">${p.threed_hours || 0}</td>
-        <td>${threedActionBtn}</td>
-        <td>${threedStatusBtn}</td>
+        <td class="td-stage-cell td-hrs-num" style="text-align: center; padding: 6px 2px;">${p.threed_hours || 0}</td>
+        <td class="td-stage-cell" style="text-align: center; padding: 6px 2px;">${threedActionBtn}</td>
+        <td class="td-stage-cell" style="text-align: center; padding: 6px 2px;">${threedStatusBtn}</td>
 
         <!-- Overall Status -->
-        <td>
+        <td class="td-center-action" style="text-align: center; padding: 6px 2px;">
           <span class="status-pill ${pillClass}">${escapeHtml(p.overall_status)}</span>
         </td>
 
         <!-- Action Columns -->
-        <td>
+        <td class="td-center-action" style="text-align: center; padding: 6px 2px;">
           <button class="btn-action-icon" title="Upload CAD/Drawing" onclick="openUploadModal('${p.id}')">
             <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
           </button>
         </td>
-        <td>
+        <td class="td-center-action" style="text-align: center; padding: 6px 2px;">
           <button class="btn-action-icon" title="Edit / Copy Project" onclick="openEditDesignProjectModal('${p.id}')">
             <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
           </button>
         </td>
-        <td>
+        <td class="td-center-action" style="text-align: center; padding: 6px 2px;">
           <button class="btn-action-icon" title="View Technical Drawing" onclick="openViewDocModal('${p.id}')">
             <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
           </button>
         </td>
-        <td>
+        <td class="td-center-action" style="text-align: center; padding: 6px 2px;">
           <button class="btn-action-icon" title="View 3D Parametric Model" onclick="openView3dModal('${p.id}')">
             <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
           </button>
         </td>
-        <td>
+        <td class="td-center-action" style="text-align: center; padding: 6px 2px;">
           <button class="btn-action-icon icon-purple" title="Send Design to Customer" onclick="openSendToCustomerModal('${p.id}')">
             <svg viewBox="0 0 512 512" width="16" height="16" fill="currentColor"><path d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480V392c0-2.5 .6-4.9 1.6-7.2L358 136.6c4.6-5.8 4-14.1-1.5-19.1s-14.1-4-19.1 1.5L127.3 328.7 16.7 282.8C6.6 278.6 .3 268.7 0 257.8s6-20.9 15.7-25.1l448-192c10.7-4.6 23.1-2.8 32.1 4.3z"/></svg>
           </button>
@@ -981,36 +984,94 @@ function renderStageActionButton(projId, stage, action) {
   if (action === 'PLAY') {
     return `
       <button class="btn-stage-circle play-green" title="Active Timer (Click to Pause)" onclick="toggleStageAction('${projId}', '${stage}')">
-        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <svg viewBox="0 0 24 24" width="17" height="17" style="filter: drop-shadow(0 1px 1px rgba(0,0,0,0.35));">
+          <path d="M7.5 4.5v15l12-7.5z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
       </button>
     `;
   } else if (action === 'PAUSE') {
     return `
       <button class="btn-stage-circle pause-amber" title="Paused Timer (Click to Play)" onclick="toggleStageAction('${projId}', '${stage}')">
-        <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        <svg viewBox="0 0 24 24" width="17" height="17">
+          <rect x="5" y="3.5" width="5.5" height="17" rx="2.75" fill="#2E1602"/>
+          <rect x="13.5" y="3.5" width="5.5" height="17" rx="2.75" fill="#2E1602"/>
+        </svg>
+      </button>
+    `;
+  } else if (action === 'ORANGE_PAUSE') {
+    return `
+      <button class="btn-stage-circle pause-orange" title="Paused Stage (Click to Play)" onclick="toggleStageAction('${projId}', '${stage}')">
+        <svg viewBox="0 0 24 24" width="17" height="17">
+          <rect x="5" y="3.5" width="5.5" height="17" rx="2.75" fill="#2E1602"/>
+          <rect x="13.5" y="3.5" width="5.5" height="17" rx="2.75" fill="#2E1602"/>
+        </svg>
       </button>
     `;
   } else if (action === 'BLUE_PAUSE') {
     return `
       <button class="btn-stage-circle pause-blue" title="Active Milestone (Click to Toggle)" onclick="toggleStageAction('${projId}', '${stage}')">
-        <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        <svg viewBox="0 0 24 24" width="17" height="17">
+          <rect x="5" y="3.5" width="5.5" height="17" rx="2.75" fill="#FFFFFF"/>
+          <rect x="13.5" y="3.5" width="5.5" height="17" rx="2.75" fill="#FFFFFF"/>
+        </svg>
+      </button>
+    `;
+  } else if (action === 'GRAY_PAUSE') {
+    return `
+      <button class="btn-stage-circle pause-gray" title="Stage Paused" onclick="toggleStageAction('${projId}', '${stage}')">
+        <svg viewBox="0 0 24 24" width="17" height="17">
+          <rect x="5" y="3.5" width="5.5" height="17" rx="2.75" fill="#FFFFFF"/>
+          <rect x="13.5" y="3.5" width="5.5" height="17" rx="2.75" fill="#FFFFFF"/>
+        </svg>
+      </button>
+    `;
+  } else if (action === 'GRAY_FORWARD') {
+    return `
+      <button class="btn-stage-circle idle-gray" title="Fast Forward / Start" onclick="toggleStageAction('${projId}', '${stage}')">
+        <svg viewBox="0 0 24 24" width="17" height="17">
+          <path d="M5 4.5v15l9-7.5z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round"/>
+          <rect x="15.5" y="4" width="3.5" height="16" rx="1.75" fill="#FFFFFF"/>
+        </svg>
       </button>
     `;
   } else {
     return `
       <button class="btn-stage-circle idle-gray" title="Start Tracking" onclick="toggleStageAction('${projId}', '${stage}')">
-        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <svg viewBox="0 0 24 24" width="17" height="17">
+          <path d="M5 4.5v15l9-7.5z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round"/>
+          <rect x="15.5" y="4" width="3.5" height="16" rx="1.75" fill="#FFFFFF"/>
+        </svg>
       </button>
     `;
   }
 }
 
 function renderStageStatusButton(projId, stage, status) {
-  return `
-    <button class="btn-stage-circle status-done" title="Stage Complete" onclick="toggleStageStatus('${projId}', '${stage}')">
-      <svg viewBox="0 0 24 24" style="width: 10px; height: 10px;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-    </button>
-  `;
+  if (status === 'PLAY' || status === 'ACTIVE') {
+    return `
+      <button class="btn-stage-circle play-green" title="Stage In Progress" onclick="toggleStageStatus('${projId}', '${stage}')">
+        <svg viewBox="0 0 24 24" width="17" height="17" style="filter: drop-shadow(0 1px 1px rgba(0,0,0,0.35));">
+          <path d="M7.5 4.5v15l12-7.5z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    `;
+  } else if (status === 'GRAY_PLAY' || status === 'PENDING' || status === 'IDLE' || status === 'NOT_STARTED') {
+    return `
+      <button class="btn-stage-circle idle-gray" title="Stage Pending" onclick="toggleStageStatus('${projId}', '${stage}')">
+        <svg viewBox="0 0 24 24" width="17" height="17" style="filter: drop-shadow(0 1px 1px rgba(0,0,0,0.35));">
+          <path d="M7.5 4.5v15l12-7.5z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    `;
+  } else {
+    return `
+      <button class="btn-stage-circle status-done" title="Stage Complete" onclick="toggleStageStatus('${projId}', '${stage}')">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#FFFFFF" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1px 1px rgba(0,0,0,0.35));">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </button>
+    `;
+  }
 }
 
 function toggleStageAction(projId, stage) {

@@ -1,8 +1,8 @@
 /* Fields, buttons and existing SVG icons; no changes to shapes or dimensions. */
-:is(.form-input, .form-select, .form-textarea, .login-input, .pr-filter-select,
-    .mfg-select-filter, .mfg-date-input, .mfg-search-input, .comm-inline-input,
+:is(.form-input, select.form-select, .form-textarea, .login-input, select.pr-filter-select,
+    select.mfg-select-filter, .mfg-date-input, .mfg-search-input, .comm-inline-input,
     .select-custom, .custom-dropdown-btn, .header-search-container input, .search-box input,
-    .filter-item-select, .filter-search-box input) {
+    select.filter-item-select, .filter-search-box input) {
   background-color: var(--bg-input) !important;
   border-color: var(--bg-input-border) !important;
   color: var(--text-primary) !important;
@@ -111,9 +111,7 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); }
 #btn-confirm-send-customer { background-color: var(--status-transit) !important; }
 #btn-print-pr-pdf { background-color: var(--status-danger) !important; color: #ffffff !important; }
 #btn-print-mfg-card { background-color: var(--status-success) !important; }
-.btn-stage-circle:is(.play-green, .status-done) { background-color: var(--status-success); }
-.btn-stage-circle.pause-amber { background-color: var(--status-pending); }
-.btn-stage-circle.pause-amber svg { fill: var(--text-on-bright); }
+
 ::-webkit-calendar-picker-indicator,
 .filter-date-box input::-webkit-calendar-picker-indicator {
   filter: grayscale(1) brightness(2);
