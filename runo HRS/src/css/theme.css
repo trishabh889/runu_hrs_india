@@ -1,5 +1,5 @@
 /* ==========================================================================
-   RUNO HRS INDIA - Core Design Tokens & Theme Variables
+   RUNO HRS INDIA - Core Design Tokens (Dark Mode Only)
    ========================================================================== */
 
 :root {
@@ -16,9 +16,9 @@
   --bg-content: #0b0d11;
   --bg-toolbar: #11141c;
   --bg-input-border: #282f3f;
-  --bg-table-header: #141722;
-  --bg-table-stripe: rgba(255, 255, 255, 0.02);
-  --bg-table-hover: rgba(255, 87, 34, 0.06);
+  --bg-table-header: #0D213F;
+  --bg-table-stripe: #0c182f;
+  --bg-table-hover: rgba(30, 64, 120, 0.45);
 
   --sidebar-text: #94A3B8;
   --sidebar-hover-bg: rgba(255, 255, 255, 0.04);
@@ -46,6 +46,7 @@
   --color-info-bg: rgba(59, 130, 246, 0.15);
 
   /* Typography */
+  --font-primary: 'Cambria', Georgia, 'Times New Roman', serif;
   --text-primary: #FFFFFF;
   --text-secondary: #94A3B8;
   --text-muted: #64748B;
@@ -63,40 +64,6 @@
   --transition-normal: 0.25s ease;
 }
 
-[data-theme="light"] {
-  --bg-app: #F1F5F9;
-  --bg-content: #F8FAFC;
-  --bg-surface: #FFFFFF;
-  --bg-card: #FFFFFF;
-  --bg-card-hover: #F8FAFC;
-  --bg-input: #FFFFFF;
-  --bg-input-border: #CBD5E1;
-  --bg-sidebar: #FFFFFF;
-  --bg-sidebar-active: #FFF7ED;
-  --sidebar-text: #64748B;
-  --sidebar-hover-bg: #F1F5F9;
-  --sidebar-hover-text: #0F172A;
-  --sidebar-active-bg: #FFF7ED;
-  --sidebar-active-text: #EA580C;
-  --sidebar-logout-text: #475569;
-  --sidebar-logout-border: #CBD5E1;
-  --bg-header: #FFFFFF;
-  --bg-toolbar: #F8FAFC;
-  --bg-table-header: #F1F5F9;
-  --bg-table-stripe: #F8FAFC;
-  --bg-table-hover: rgba(255, 87, 34, 0.08);
-
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
-  --text-muted: #64748B;
-  --text-dark: #0F172A;
-
-  --border-subtle: #E2E8F0;
-  --border-card: #CBD5E1;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -105,12 +72,19 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: var(--font-primary);
   background-color: var(--bg-app);
   color: var(--text-primary);
   height: 100vh;
   overflow: hidden;
   user-select: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
 }
 
 /* Custom Scrollbars */
@@ -126,37 +100,6 @@ body {
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--brand-orange);
-}
-
-/* Theme Switcher Button */
-.theme-toggle-btn {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  padding: 5px 12px;
-  border-radius: 20px;
-  color: var(--text-primary);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  box-shadow: var(--shadow-sm);
-}
-
-.theme-toggle-btn:hover {
-  border-color: var(--brand-orange);
-  background-color: var(--bg-card-hover);
-  color: var(--brand-orange);
-}
-
-[data-theme="light"] ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-}
-[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
   background: var(--brand-orange);
 }
 
@@ -182,14 +125,3 @@ input[type="time"],
 input[type="datetime-local"] {
   color-scheme: dark;
 }
-
-[data-theme="light"] input[type="date"],
-[data-theme="light"] input[type="time"],
-[data-theme="light"] input[type="datetime-local"] {
-  color-scheme: light;
-}
-
-[data-theme="light"] ::-webkit-calendar-picker-indicator {
-  filter: none;
-}
-

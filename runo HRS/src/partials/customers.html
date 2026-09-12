@@ -1,6 +1,6 @@
 <div class="view-header">
   <div class="view-title-group">
-    <h1>CUSTOMERS DIRECTORY</h1>
+    <h1>CUSTOMER ( SALES &amp; ADMIN ACCESS)</h1>
     <p>Manage OEM client accounts, tool room partners, contact personnel, and project history</p>
   </div>
   <div class="view-actions">
@@ -11,31 +11,41 @@
 </div>
 
 <div class="table-card">
-  <div class="table-toolbar" style="flex-wrap: wrap; gap: 10px; align-items: center;">
-    <div class="search-box" style="flex: 1 1 240px;">
-      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-      <input type="text" id="search-customers" placeholder="Search by Company, Contact Person, City, GSTIN...">
+  <div class="table-toolbar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--border-color); background: #0c1017;">
+    <!-- Left Filter Group: Search, City, State -->
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; flex: 1 1 auto;">
+      <div class="search-box" style="min-width: 200px; max-width: 260px;">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input type="text" id="search-customers" placeholder="Search customers...">
+      </div>
+
+      <!-- City Dropdown -->
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <select id="filter-cust-city" class="filter-select-compact" style="min-width: 120px; padding: 7px 10px; font-size: 12px; background: #131923; color: #E2E8F0; border: 1px solid #233044; border-radius: 6px;">
+          <option value="ALL">City: All</option>
+        </select>
+      </div>
+
+      <!-- State Dropdown -->
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <select id="filter-cust-state" class="filter-select-compact" style="min-width: 120px; padding: 7px 10px; font-size: 12px; background: #131923; color: #E2E8F0; border: 1px solid #233044; border-radius: 6px;">
+          <option value="ALL">State: All</option>
+        </select>
+      </div>
     </div>
 
-    <div style="display: flex; align-items: center; gap: 6px;">
-      <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">FINANCIAL YEAR:</span>
-      <select id="filter-cust-fy" class="filter-select-compact">
-        <option value="ALL">ALL PROJECTS</option>
-        <option value="2026">FY 2026-27</option>
-        <option value="2027">FY 2027-28</option>
-        <option value="2028">FY 2028-29</option>
-      </select>
-    </div>
-
-    <div style="display: flex; align-items: center; gap: 6px;">
-      <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">CATEGORY:</span>
-      <select id="filter-cust-category" class="filter-select-compact">
-        <option value="ALL">ALL CATEGORIES</option>
-        <option value="HRS">HRS</option>
-        <option value="HRTC">HRTC</option>
-        <option value="SPARE-HRS">SPARE-HRS</option>
-        <option value="SPARE-HRTC">SPARE-HRTC</option>
-      </select>
+    <!-- Right Filter Group: Project Category Filter (5 Options) -->
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 11px; font-weight: 800; color: #94A3B8; letter-spacing: 0.5px;">SORT / CATEGORY:</span>
+        <select id="filter-cust-project-category" class="filter-select-compact" style="min-width: 160px; padding: 7px 12px; font-size: 12px; font-weight: 700; background: #131923; color: #38BDF8; border: 1px solid #0284C7; border-radius: 6px;">
+          <option value="ALL">1. ALL PROJECTS</option>
+          <option value="HRS">2. HRS</option>
+          <option value="HRTC">3. HRTC</option>
+          <option value="SPARE-HRS">4. SPARE-HRS</option>
+          <option value="SPARE-HRTC">5. SPARE-HRTC</option>
+        </select>
+      </div>
     </div>
   </div>
 
@@ -43,13 +53,13 @@
     <table class="data-table">
       <thead>
         <tr>
-          <th>CUSTOMER NAME</th>
+          <th>COMPANY NAME</th>
           <th>CONTACT PERSON</th>
-          <th>CONTACT NUMBER</th>
-          <th>OFFICIAL EMAIL</th>
-          <th>LOCATION &amp; ADDRESS</th>
-          <th>PROJECTS BREAKDOWN</th>
-          <th>ACTIONS</th>
+          <th>PHONE</th>
+          <th>EMAIL</th>
+          <th>GSTIN</th>
+          <th style="text-align: center;">PROJECTS</th>
+          <th style="text-align: center;">ACTIONS</th>
         </tr>
       </thead>
       <tbody id="customers-table-body"></tbody>

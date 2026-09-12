@@ -77,7 +77,9 @@ class CustomerRepository {
       email: custData.email || '',
       gstin: (custData.gstin || '').toUpperCase(),
       pan: (custData.pan || '').toUpperCase(),
-      city_state: custData.city_state || '',
+      city: custData.city || (custData.city_state ? custData.city_state.split(',')[0].trim() : ''),
+      state: custData.state || (custData.city_state && custData.city_state.includes(',') ? custData.city_state.split(',')[1].trim() : ''),
+      city_state: custData.city_state || (custData.city && custData.state ? `${custData.city}, ${custData.state}` : (custData.city || custData.state || '')),
       pincode: custData.pincode || '',
       address: custData.address || '',
       section: custData.section || 'HRS',
@@ -101,12 +103,12 @@ class CustomerRepository {
   }
 
   delete(id) {
-    const hasProjects = (this.db.data.projects || []).some(p => p.customer_id === id);
-    if (hasProjects) {
-      return { success: false, message: 'Cannot delete customer with existing project orders' };
-    }
+    const target = this.getById(id);
+    const targetName = target ? target.company_name.toLowerCase() : '';
 
-    this.db.data.customers = (this.db.data.customers || []).filter(c => c.id !== id);
+    this.db.data.customers = (this.db.data.customers || []).filter(c => 
+      c.id !== id && (!targetName || c.company_name.toLowerCase() !== targetName)
+    );
     this.db.save();
     return { success: true };
   }

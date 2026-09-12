@@ -1,0 +1,176 @@
+/* ==========================================================================
+   RUNO HRS INDIA - Commercial Workspace Stylesheet
+   ========================================================================== */
+
+.commercial-tabs-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.commercial-tab-btn {
+  padding: 9px 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #94A3B8;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.commercial-tab-btn:hover {
+  background: rgba(255, 87, 34, 0.1);
+  border-color: rgba(255, 87, 34, 0.4);
+  color: #F8FAFC;
+}
+
+.commercial-tab-btn.active {
+  background: linear-gradient(135deg, rgba(255, 87, 34, 0.2) 0%, rgba(255, 87, 34, 0.08) 100%);
+  border-color: var(--brand-orange);
+  color: #FFFFFF;
+  box-shadow: 0 0 14px rgba(255, 87, 34, 0.25);
+}
+
+.commercial-tab-badge {
+  padding: 1px 7px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--brand-orange);
+}
+
+/* Status Badges - Strict Prompt Specification */
+.badge-comm-pending {
+  background: #CA8A04 !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  border: 1px solid #EAB308 !important;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 105px;
+  box-shadow: 0 2px 6px rgba(202, 138, 4, 0.35);
+  text-transform: uppercase;
+}
+
+.badge-comm-submitted {
+  background: #15803D !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  border: 1px solid #22C55E !important;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 105px;
+  box-shadow: 0 2px 6px rgba(21, 128, 61, 0.35);
+  text-transform: uppercase;
+}
+
+.badge-comm-cancel {
+  background: #B91C1C !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  border: 1px solid #EF4444 !important;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 105px;
+  box-shadow: 0 2px 6px rgba(185, 28, 28, 0.35);
+  text-transform: uppercase;
+}
+
+/* Editable cells and select controls */
+.comm-cell-select {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+  min-width: 110px;
+}
+
+.comm-cell-select.val-pending {
+  background: #713F12;
+  color: #FEF08A;
+  border-color: #EAB308;
+}
+
+.comm-cell-select.val-submitted {
+  background: #14532D;
+  color: #BBF7D0;
+  border-color: #22C55E;
+}
+
+.comm-cell-select.val-cancel {
+  background: #7F1D1D;
+  color: #FECACA;
+  border-color: #EF4444;
+}
+
+.comm-inline-input {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  padding: 3px 6px;
+  font-size: 11px;
+  color: #F8FAFC;
+  width: 100%;
+  min-width: 75px;
+  box-sizing: border-box;
+}
+
+.comm-inline-input:focus {
+  border-color: var(--brand-orange);
+  outline: none;
+  background: rgba(20, 28, 48, 0.95);
+}
+
+.comm-legend-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  background: rgba(11, 15, 25, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.comm-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #CBD5E1;
+}
+
+.comm-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}

@@ -91,10 +91,14 @@
             <input type="text" id="cust-pan" class="form-input" placeholder="e.g., AAACM1234D" style="text-transform: uppercase;">
           </div>
           <div class="form-group">
-            <label class="form-label">PLANT CITY &amp; STATE</label>
-            <input type="text" id="cust-city" class="form-input" placeholder="e.g., IMT Manesar, Gurugram, HR">
+            <label class="form-label">CITY *</label>
+            <input type="text" id="cust-city" class="form-input" placeholder="e.g., IMT Manesar / Pune" required>
           </div>
           <div class="form-group">
+            <label class="form-label">STATE *</label>
+            <input type="text" id="cust-state" class="form-input" placeholder="e.g., Haryana / Maharashtra" required>
+          </div>
+          <div class="form-group span-2">
             <label class="form-label">POSTAL / PIN CODE</label>
             <input type="text" id="cust-pincode" class="form-input" placeholder="e.g., 122050">
           </div>
@@ -108,6 +112,54 @@
           <button type="submit" class="btn-action-primary">SAVE CLIENT PROFILE</button>
         </div>
       </form>
+    </div>
+  </div>
+</div>
+
+<!-- Customer Projects Breakdown Modal -->
+<div id="modal-customer-projects" class="modal-overlay">
+  <div class="modal-box modal-lg" style="max-width: 860px; background: #0c1017; border: 1px solid #1e293b;">
+    <div class="modal-header" style="border-bottom: 1px solid #1e293b; padding-bottom: 14px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="display: inline-block; width: 4px; height: 18px; background: var(--brand-orange); border-radius: 2px;"></span>
+        <div>
+          <h3 id="modal-cust-proj-title" style="font-size: 16px; margin: 0; color: #FFFFFF;">CUSTOMER PROJECTS</h3>
+          <div id="modal-cust-proj-subtitle" style="font-size: 11px; color: #94A3B8; margin-top: 2px;">Viewing associated engineering projects</div>
+        </div>
+      </div>
+      <button class="btn-close-modal" onclick="closeModal('modal-customer-projects')">&times;</button>
+    </div>
+    <div class="modal-body" style="padding: 18px 22px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 10px 16px; background: #06090f; border: 1px solid #1e293b; border-radius: 6px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 11px; color: #94A3B8; text-transform: uppercase; font-weight: 800;">CATEGORY FILTER:</span>
+          <span id="modal-cust-proj-category" class="badge badge-active" style="font-weight: 800; font-size: 11px; background: rgba(14, 165, 233, 0.2); color: #38BDF8; border: 1px solid #0284c7;">ALL PROJECTS</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 11px; color: #94A3B8; text-transform: uppercase; font-weight: 800;">MATCHING PROJECTS:</span>
+          <span id="modal-cust-proj-count" class="badge" style="font-weight: 800; font-size: 11px; background: rgba(16, 185, 129, 0.18); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.4);">0 PROJECTS</span>
+        </div>
+      </div>
+
+      <div class="table-responsive" style="max-height: 380px; overflow-y: auto; border: 1px solid #1e293b; border-radius: 6px;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>PROJECT CODE</th>
+              <th>MOULD DESCRIPTION</th>
+              <th>CATEGORY</th>
+              <th>STATUS</th>
+              <th>PO STATUS</th>
+              <th>QUOTE / VALUE</th>
+            </tr>
+          </thead>
+          <tbody id="cust-projects-table-body"></tbody>
+        </table>
+      </div>
+
+      <div class="form-actions" style="margin-top: 18px; justify-content: flex-end;">
+        <button type="button" class="btn-action-secondary" onclick="closeModal('modal-customer-projects')">CLOSE</button>
+      </div>
     </div>
   </div>
 </div>
@@ -135,17 +187,30 @@
             <input type="text" id="usr-username" class="form-input" placeholder="e.g., ANAND" required>
           </div>
           <div class="form-group">
-            <label class="form-label">ROLE / DEPARTMENT *</label>
-            <select id="usr-role" class="form-select" required>
-              <option value="ADMIN">ADMIN (Full Access)</option>
-              <option value="SALES">SALES (Sales Pipeline &amp; Quotes)</option>
-              <option value="COMMERCIAL">COMMERCIAL (Costing &amp; Quote Status)</option>
-              <option value="DESIGN">DESIGN (2D/3D Design Lifecycle)</option>
-              <option value="ACCOUNTS">ACCOUNTS (Tally Accounting &amp; Ledger)</option>
-              <option value="STORE">STORE (BUSY Inventory &amp; Stock)</option>
-              <option value="PURCHASE">PURCHASE (Procurement)</option>
-              <option value="ENGINEER">ENGINEER (General Engineering)</option>
-              <option value="OPERATOR">OPERATOR (Machining)</option>
+            <label class="form-label">DEPARTMENT *</label>
+            <select id="usr-department" class="form-select" required>
+              <option value="ADMIN">1. ADMIN</option>
+              <option value="CUSTOMER">2. CUSTOMER</option>
+              <option value="VENDOR">3. VENDOR</option>
+              <option value="SALES">4. SALES</option>
+              <option value="COMMERCIAL">5. COMMERCIAL</option>
+              <option value="DESIGN" selected>6. DESIGN</option>
+              <option value="MANUFACTURING">7. MANUFACTURING</option>
+              <option value="ACCOUNTS">8. ACCOUNTS</option>
+              <option value="ASSEMBLY">9. ASSEMBLY</option>
+              <option value="STORE">10. STORE</option>
+              <option value="SERVICE">11. SERVICE</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">ROLE / DESIGNATION *</label>
+            <input type="text" id="usr-designation" class="form-input" placeholder="e.g. Senior Design Engineer / CNC Incharge" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">ACCOUNT STATUS *</label>
+            <select id="usr-status" class="form-select" required>
+              <option value="APPROVED">APPROVED (Active Access)</option>
+              <option value="PENDING_APPROVAL">PENDING APPROVAL (Access Blocked)</option>
             </select>
           </div>
           <div class="form-group span-2">
@@ -155,7 +220,7 @@
         </div>
         <div class="form-section-title" style="margin-top: 14px;">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-          PERSONNEL INFORMATION &amp; DEPARTMENT
+          PERSONNEL INFORMATION
         </div>
         <div class="form-grid">
           <div class="form-group">
@@ -165,10 +230,6 @@
           <div class="form-group">
             <label class="form-label">OFFICIAL EMAIL</label>
             <input type="email" id="usr-email" class="form-input" placeholder="e.g., anand@runohrs.com">
-          </div>
-          <div class="form-group span-2">
-            <label class="form-label">DEPARTMENT / TEAM</label>
-            <input type="text" id="usr-department" class="form-input" placeholder="e.g., Executive Management">
           </div>
         </div>
         <div class="form-actions">
@@ -462,5 +523,546 @@
   </div>
 </div>
 
+<!-- ==========================================================================
+     DESIGN DEPARTMENT MODALS
+     ========================================================================== -->
+
+<!-- Add / Edit Design Project Modal -->
+<div id="modal-add-design-project" class="modal-overlay">
+  <div class="modal-box modal-lg" style="max-width: 720px; background: #0E1626; border: 1px solid #23314A; color: #E2E8F0;">
+    <div class="modal-header" style="border-bottom: 1px solid #1E293B;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="display: inline-block; width: 4px; height: 18px; background: #FF5722; border-radius: 2px;"></span>
+        <h3 id="modal-design-form-title" style="color: #FFFFFF; font-size: 15px; font-weight: 800; letter-spacing: 0.8px;">ADD NEW DESIGN PROJECT</h3>
+      </div>
+      <button class="btn-close-modal" onclick="closeModal('modal-add-design-project')">&times;</button>
+    </div>
+    <div class="modal-body" style="padding: 20px;">
+      <form id="form-design-project" onsubmit="return false;">
+        <input type="hidden" id="design-edit-id" value="">
+        <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label class="form-label" style="font-size: 11px; font-weight: 700; color: #8B9BB4;">PROJECT CODE *</label>
+            <input type="text" id="inp-design-code" class="form-input" placeholder="e.g. RUNO-2026-029" required style="background: #0A101D; border: 1px solid #23314A; color: #FF7043; font-weight: 700;">
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="font-size: 11px; font-weight: 700; color: #8B9BB4;">CUSTOMER NAME *</label>
+            <input type="text" id="inp-design-customer" class="form-input" placeholder="e.g. Minda Automotive" required style="background: #0A101D; border: 1px solid #23314A; color: #FFFFFF;">
+          </div>
+          <div class="form-group span-2" style="grid-column: span 2;">
+            <label class="form-label" style="font-size: 11px; font-weight: 700; color: #8B9BB4;">PROJECT DESCRIPTION *</label>
+            <input type="text" id="inp-design-desc" class="form-input" placeholder="e.g. Rear Lamp Housing 4-Drop" required style="background: #0A101D; border: 1px solid #23314A; color: #FFFFFF;">
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="font-size: 11px; font-weight: 700; color: #8B9BB4;">HRS TYPE *</label>
+            <select id="inp-design-hrs-type" class="form-select" style="background: #0A101D; border: 1px solid #23314A; color: #FFFFFF;">
+              <option value="Valve Gate">Valve Gate</option>
+              <option value="Open Gate">Open Gate</option>
+              <option value="Sequential">Sequential</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="font-size: 11px; font-weight: 700; color: #8B9BB4;">LEAD DESIGNER *</label>
+            <input type="text" id="inp-design-designer" class="form-input" placeholder="e.g. Rahul S." required style="background: #0A101D; border: 1px solid #23314A; color: #FFFFFF;">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" style="font-size: 11px; font-weight: 700; color: #8B9BB4;">CONCEPT DESIGN (Hrs)</label>
+            <input type="number" id="inp-design-concept-hrs" class="form-input" min="0" value="8" style="background: #0A101D; border: 1px solid #23314A; color: #FFFFFF;">
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="font-size: 11px; font-weight: 700; color: #8B9BB4;">2D DESIGN (Hrs)</label>
+            <input type="number" id="inp-design-2d-hrs" class="form-input" min="0" value="12" style="background: #0A101D; border: 1px solid #23314A; color: #FFFFFF;">
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="font-size: 11px; font-weight: 700; color: #8B9BB4;">3D DESIGN (Hrs)</label>
+            <input type="number" id="inp-design-3d-hrs" class="form-input" min="0" value="16" style="background: #0A101D; border: 1px solid #23314A; color: #FFFFFF;">
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="font-size: 11px; font-weight: 700; color: #8B9BB4;">OVERALL STATUS</label>
+            <select id="inp-design-status" class="form-select" style="background: #0A101D; border: 1px solid #23314A; color: #FFFFFF;">
+              <option value="IN DESIGN">IN DESIGN</option>
+              <option value="IN REVIEW">IN REVIEW</option>
+              <option value="COMPLETED">COMPLETED</option>
+              <option value="PAUSED">PAUSED</option>
+              <option value="ON HOLD">ON HOLD</option>
+              <option value="SENT TO CUSTOMER">SENT TO CUSTOMER</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-actions" style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+          <button type="button" class="btn-action-secondary" onclick="closeModal('modal-add-design-project')">CANCEL</button>
+          <button type="submit" class="btn-action-primary" id="btn-submit-design-project" style="background: #FF5722; color: #FFFFFF; font-weight: 700;">SAVE DESIGN PROJECT</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Upload CAD / Drawing Modal -->
+<div id="modal-design-upload" class="modal-overlay">
+  <div class="modal-box" style="max-width: 520px; background: #0E1626; border: 1px solid #23314A; color: #E2E8F0;">
+    <div class="modal-header" style="border-bottom: 1px solid #1E293B;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="display: inline-block; width: 4px; height: 16px; background: #3B82F6; border-radius: 2px;"></span>
+        <h3 id="upload-modal-title" style="color: #FFFFFF; font-size: 14px; font-weight: 800;">UPLOAD CAD / DRAWINGS</h3>
+      </div>
+      <button class="btn-close-modal" onclick="closeModal('modal-design-upload')">&times;</button>
+    </div>
+    <div class="modal-body" style="padding: 20px;">
+      <input type="hidden" id="upload-project-id">
+      <div style="margin-bottom: 14px;">
+        <label class="form-label" style="font-size: 11px; font-weight: 700; color: #8B9BB4;">SELECT STAGE / DRAWING TYPE</label>
+        <select id="upload-stage-select" class="form-select" style="background: #0A101D; border: 1px solid #23314A; color: #FFFFFF;">
+          <option value="CONCEPT">Concept Hand Sketch / Layout (.PDF / .PNG)</option>
+          <option value="2D_AUTOCAD">2D AutoCAD Detailed Drawing (.DWG / .DXF)</option>
+          <option value="3D_PARAMETRIC">3D Parametric CAD Solid Model (.STEP / .IGES)</option>
+          <option value="GA_DRAWING">General Assembly Sign-off PDF (.PDF)</option>
+        </select>
+      </div>
+
+      <div style="border: 2px dashed #23314A; border-radius: 8px; padding: 24px; text-align: center; background: #0A101D; margin-bottom: 16px; cursor: pointer;" onclick="document.getElementById('file-cad-input').click()">
+        <svg viewBox="0 0 24 24" style="width: 36px; height: 36px; fill: #3B82F6; margin-bottom: 8px;"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+        <div style="font-size: 13px; font-weight: 700; color: #FFFFFF;">Click to select CAD / Drawing file</div>
+        <div style="font-size: 11px; color: #8B9BB4; margin-top: 4px;">Supports DWG, DXF, STEP, IGES, SLDPRT, PDF (Max 100MB)</div>
+        <input type="file" id="file-cad-input" style="display: none;" onchange="handleCadFileSelected(this)">
+        <div id="file-cad-selected-name" style="margin-top: 10px; font-size: 12px; color: #10B981; font-weight: 700;"></div>
+      </div>
+
+      <div class="form-actions" style="display: flex; justify-content: flex-end; gap: 10px;">
+        <button type="button" class="btn-action-secondary" onclick="closeModal('modal-design-upload')">CANCEL</button>
+        <button type="button" class="btn-action-primary" id="btn-confirm-upload" style="background: #3B82F6; color: #FFFFFF; font-weight: 700;">UPLOAD DRAWING</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Technical Drawing / Specs Modal -->
+<div id="modal-design-view-doc" class="modal-overlay">
+  <div class="modal-box modal-lg" style="max-width: 700px; background: #0E1626; border: 1px solid #23314A; color: #E2E8F0;">
+    <div class="modal-header" style="border-bottom: 1px solid #1E293B;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="display: inline-block; width: 4px; height: 16px; background: #10B981; border-radius: 2px;"></span>
+        <h3 id="doc-modal-title" style="color: #FFFFFF; font-size: 14px; font-weight: 800;">TECHNICAL DRAWING SPECIFICATION</h3>
+      </div>
+      <button class="btn-close-modal" onclick="closeModal('modal-design-view-doc')">&times;</button>
+    </div>
+    <div class="modal-body" id="doc-modal-content" style="padding: 20px;">
+      <!-- Populated dynamically -->
+    </div>
+  </div>
+</div>
+
+<!-- View 3D CAD Preview Modal -->
+<div id="modal-design-view-3d" class="modal-overlay">
+  <div class="modal-box modal-lg" style="max-width: 760px; background: #0E1626; border: 1px solid #23314A; color: #E2E8F0;">
+    <div class="modal-header" style="border-bottom: 1px solid #1E293B;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="display: inline-block; width: 4px; height: 16px; background: #8B5CF6; border-radius: 2px;"></span>
+        <h3 id="cad3d-modal-title" style="color: #FFFFFF; font-size: 14px; font-weight: 800;">3D PARAMETRIC FLOW MODEL PREVIEW</h3>
+      </div>
+      <button class="btn-close-modal" onclick="closeModal('modal-design-view-3d')">&times;</button>
+    </div>
+    <div class="modal-body" id="cad3d-modal-content" style="padding: 20px;">
+      <!-- Populated dynamically with stylized 3D hot runner model preview -->
+    </div>
+  </div>
+</div>
+
+<!-- Send Design to Customer Modal -->
+<div id="modal-design-send" class="modal-overlay">
+  <div class="modal-box" style="max-width: 480px; background: #0E1626; border: 1px solid #23314A; color: #E2E8F0;">
+    <div class="modal-header" style="border-bottom: 1px solid #1E293B;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="display: inline-block; width: 4px; height: 16px; background: #8B5CF6; border-radius: 2px;"></span>
+        <h3 style="color: #FFFFFF; font-size: 14px; font-weight: 800;">DISPATCH DESIGN PACKAGE</h3>
+      </div>
+      <button class="btn-close-modal" onclick="closeModal('modal-design-send')">&times;</button>
+    </div>
+    <div class="modal-body" style="padding: 20px;">
+      <input type="hidden" id="send-target-id">
+      <div style="font-size: 12px; color: #CBD5E1; margin-bottom: 14px;" id="send-target-text">
+        Ready to transmit verified Hot Runner design bundle to client:
+      </div>
+
+      <div style="background: #0A101D; border: 1px solid #23314A; border-radius: 6px; padding: 12px; margin-bottom: 16px;">
+        <div style="font-size: 11px; font-weight: 700; color: #8B9BB4; margin-bottom: 8px;">PACKAGE DELIVERABLES:</div>
+        <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #FFFFFF; margin-bottom: 6px;">
+          <input type="checkbox" checked disabled> 2D AutoCAD Detailing Drawing (.DWG / .PDF)
+        </label>
+        <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #FFFFFF; margin-bottom: 6px;">
+          <input type="checkbox" checked disabled> 3D Parametric CAD Solid Geometry (.STEP AP214)
+        </label>
+        <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #FFFFFF; margin-bottom: 6px;">
+          <input type="checkbox" checked disabled> Hot Runner Gate Cutout &amp; Cavity Recommendation
+        </label>
+        <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #FFFFFF;">
+          <input type="checkbox" checked disabled> Heater &amp; Thermocouple Wiring Schematic
+        </label>
+      </div>
+
+      <div class="form-actions" style="display: flex; justify-content: flex-end; gap: 10px;">
+        <button type="button" class="btn-action-secondary" onclick="closeModal('modal-design-send')">CANCEL</button>
+        <button type="button" class="btn-action-primary" id="btn-confirm-send-customer" style="background: #7C3AED; color: #FFFFFF; font-weight: 800;">
+          CONFIRM &amp; DISPATCH
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     NEW PROJECT CREATION MODAL (SLIDE 1 SPECIFICATIONS)
+     ========================================================================== -->
+<div id="modal-create-project" class="modal-overlay">
+  <div class="modal-box modal-lg" style="max-width: 860px; max-height: 90vh; overflow-y: auto;">
+    <div class="modal-header">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="display: inline-block; width: 4px; height: 16px; background: var(--brand-orange); border-radius: 2px;"></span>
+        <h3 style="font-size: 14px; font-weight: 800;">NEW PROJECT SPECIFICATION <span class="access-badge-yellow" style="font-size: 11px;">( SALES + DESIGN + COMMERCIAL &amp; ADMIN ACCESS )</span></h3>
+      </div>
+      <button class="btn-close-modal" onclick="closeModal('modal-create-project')">&times;</button>
+    </div>
+    <div class="modal-body" style="padding: 20px;">
+      <!-- Category Action Buttons matching Slide 1 -->
+      <div class="slide-action-bar" style="margin-bottom: 15px;">
+        <button type="button" class="btn-category-box active" id="modal-cat-hrs" data-category="HRS">+HRS</button>
+        <button type="button" class="btn-category-box" id="modal-cat-hrtc" data-category="HRTC">+HRTC</button>
+        <button type="button" class="btn-category-box" id="modal-cat-spare-hrs" data-category="SPARE-HRS">+SPARE HRS</button>
+        <button type="button" class="btn-category-box" id="modal-cat-spare-hrtc" data-category="SPARE-HRTC">+SPARE HRTC</button>
+        <button type="button" class="btn-category-box btn-category-export" id="modal-cat-export">EXPORT</button>
+      </div>
+
+      <form id="form-modal-create-project" onsubmit="return false;">
+        <input type="hidden" id="modal-proj-category" value="HRS">
+
+        <div class="form-grid">
+          <!-- ROW 1: CUSTOMER NAME * & PROJECT DESCRIPTION * -->
+          <div class="form-group">
+            <label class="form-label">CUSTOMER NAME *</label>
+            <select id="modal-proj-customer" class="form-select" required></select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">PROJECT DESCRIPTION *</label>
+            <input type="text" id="modal-proj-desc" class="form-input" placeholder="e.g. 4-Drop Prewired Hot Half for Automotive Rear Lamp" required>
+          </div>
+
+          <!-- ROW 2: APPLICATION / INDUSTRY & NO OF DROPS * -->
+          <div class="form-group">
+            <label class="form-label">APPLICATION / INDUSTRY</label>
+            <input type="text" id="modal-proj-industry" class="form-input" placeholder="e.g. Automotive, Packaging, Medical, Caps &amp; Closures">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">NO OF DROPS *</label>
+            <input type="number" id="modal-proj-drops" class="form-input" value="4" min="1" max="64" required>
+          </div>
+
+          <!-- ROW 3: HRS TYPE (SCROLL) * & PLASTIC MATERIAL/GRADE * -->
+          <div class="form-group">
+            <label class="form-label">HRS TYPE (SCROLL) *</label>
+            <select id="modal-proj-hrs-type" class="form-select" required>
+              <option value="1. OPEN - RUNNER">1. OPEN - RUNNER</option>
+              <option value="1. OPEN - ON PART">1. OPEN - ON PART</option>
+              <option value="2. VALVE - RUNNER" selected>2. VALVE - RUNNER</option>
+              <option value="2. VALVE - ON PART">2. VALVE - ON PART</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">PLASTIC MATERIAL/GRADE *</label>
+            <input type="text" id="modal-proj-material" class="form-input" placeholder="e.g. Polypropylene (PP), PA66, ABS, PC" required>
+          </div>
+
+          <!-- ROW 4: PART WEIGHT (In GRAMS) & COLOR CHANGE - YES/NO -->
+          <div class="form-group">
+            <label class="form-label">PART WEIGHT (In GRAMS)</label>
+            <input type="text" id="modal-proj-part-weight" class="form-input" placeholder="e.g. 150 g / 250 g">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">COLOR CHANGE - YES/NO</label>
+            <select id="modal-proj-color-change" class="form-select">
+              <option value="NO" selected>NO</option>
+              <option value="YES">YES</option>
+            </select>
+          </div>
+
+          <!-- ROW 5: MOULD TYPE - NEW / EXISTING & YEAR AND MONTH -->
+          <div class="form-group">
+            <label class="form-label">MOULD TYPE - NEW / EXISTING</label>
+            <select id="modal-proj-mould-type" class="form-select">
+              <option value="NEW MOULD" selected>NEW MOULD</option>
+              <option value="EXISTING MOULD">EXISTING MOULD</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">YEAR AND MONTH</label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <select id="modal-proj-year" class="form-select" style="font-weight: 700;"></select>
+              <select id="modal-proj-month" class="form-select" style="font-weight: 700;">
+                <option value="01">JAN (01)</option>
+                <option value="02">FEB (02)</option>
+                <option value="03">MAR (03)</option>
+                <option value="04">APR (04)</option>
+                <option value="05">MAY (05)</option>
+                <option value="06">JUN (06)</option>
+                <option value="07">JUL (07)</option>
+                <option value="08">AUG (08)</option>
+                <option value="09" selected>SEP (09)</option>
+                <option value="10">OCT (10)</option>
+                <option value="11">NOV (11)</option>
+                <option value="12">DEC (12)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- ROW 6: PROJECT CODE & TARGET DELIVERY DATE * -->
+          <div class="form-group">
+            <label class="form-label">PROJECT CODE</label>
+            <input type="text" id="modal-proj-code" class="form-input" placeholder="e.g. RUNO-2026-002 (auto-generated)">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">TARGET DELIVERY DATE *</label>
+            <input type="date" id="modal-proj-date" class="form-input" required>
+          </div>
+
+          <!-- ROW 7: ESTIMATED COMMERCIAL VALUE -->
+          <div class="form-group span-2">
+            <label class="form-label">ESTIMATED COMMERCIAL VALUE</label>
+            <input type="text" id="modal-proj-value" class="form-input" placeholder="e.g. ₹ 5,50,000">
+          </div>
+
+          <!-- ROW 8: TECHNICAL NOTES / SPECIAL REQUIREMENTS -->
+          <div class="form-group span-2">
+            <label class="form-label">TECHNICAL NOTES / SPECIAL REQUIREMENTS</label>
+            <textarea id="modal-proj-notes" class="form-textarea" style="min-height: 80px;" placeholder="Include special thermocouple type, connector pinouts, manifold heater specs..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn-action-secondary" onclick="closeModal('modal-create-project')">CANCEL</button>
+          <button type="reset" class="btn-action-secondary" id="modal-btn-reset-project" style="border-color: #64748B; color: #94A3B8;">RESET</button>
+          <button type="submit" id="modal-btn-submit-project" class="btn-action-primary">SAVE PROJECT</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     NEW PURCHASE REQUEST MODAL (SLIDE 2 SPECIFICATIONS)
+     ========================================================================== -->
+<div id="modal-new-purchase-request" class="modal-overlay">
+  <div class="modal-box" style="max-width: 950px; max-height: 90vh; overflow-y: auto;">
+    <div class="modal-header">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="font-size: 20px;">🛒</span>
+        <div>
+          <h3 style="font-size: 15px; font-weight: 800; letter-spacing: 0.5px;">NEW PURCHASE REQUEST</h3>
+          <div style="font-size: 11px; color: var(--text-muted);">Hot Runner Solutions - Component &amp; Raw Material Procurement Requisition</div>
+        </div>
+      </div>
+      <button class="btn-close-modal" onclick="closeModal('modal-new-purchase-request')">&times;</button>
+    </div>
+    <div class="modal-body" style="padding: 20px;">
+      <form id="form-purchase-request" onsubmit="return false;">
+        
+        <!-- SECTION 1: GENERAL INFORMATION -->
+        <div class="form-section-title" style="margin-top: 0;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+          1. GENERAL INFORMATION
+        </div>
+        <div class="form-grid" style="grid-template-columns: repeat(3, 1fr);">
+          <div class="form-group">
+            <label class="form-label">PR NO</label>
+            <input type="text" id="pr-number" class="form-input" readonly style="font-weight: 800; color: #F97316; background: rgba(255, 255, 255, 0.04);">
+          </div>
+          <div class="form-group">
+            <label class="form-label">DATE</label>
+            <input type="text" id="pr-date" class="form-input" readonly style="background: rgba(255, 255, 255, 0.04);">
+          </div>
+          <div class="form-group">
+            <label class="form-label">REQUIRED DATE *</label>
+            <input type="date" id="pr-required-date" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">PROJECT CODE *</label>
+            <select id="pr-project-code" class="form-select" required></select>
+          </div>
+          <div class="form-group span-2">
+            <label class="form-label">PROJECT DESCRIPTION</label>
+            <input type="text" id="pr-project-desc" class="form-input" readonly placeholder="Auto-filled based on selected Project Code" style="background: rgba(255, 255, 255, 0.04);">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">REQUESTED BY *</label>
+            <input type="text" id="pr-requested-by" class="form-input" value="Rohit Sharma (Design)" required>
+          </div>
+
+          <!-- CATEGORY FIELD: Highlighted in Red Box in Slide 2 -->
+          <div class="form-group">
+            <label class="form-label" style="color: #EF4444; font-weight: 800;">CATEGORY *</label>
+            <select id="pr-category" class="form-select" required style="border: 2px solid #EF4444; font-weight: 700;">
+              <option value="">Select Category</option>
+              <option value="HRS" selected>HRS</option>
+              <option value="HRTC">HRTC</option>
+              <option value="SPARE - HRS">SPARE - HRS</option>
+              <option value="SPARE - HRTC">SPARE - HRTC</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">PRIORITY *</label>
+            <select id="pr-priority" class="form-select" required>
+              <option value="Normal" selected>Normal</option>
+              <option value="High">High</option>
+              <option value="Urgent">Urgent</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- SECTION 2: ITEM DETAILS -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; margin-bottom: 12px;">
+          <div class="form-section-title" style="margin: 0;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            2. ITEM DETAILS
+          </div>
+          <button type="button" class="btn-action-secondary" id="btn-add-pr-item" style="border-color: #10B981; color: #10B981; font-size: 11px; padding: 6px 12px;">
+            + Add More Items
+          </button>
+        </div>
+
+        <div class="table-responsive" style="border: 1px solid var(--border-subtle); border-radius: 4px; margin-bottom: 20px;">
+          <table class="data-table" style="font-size: 12px;">
+            <thead>
+              <tr>
+                <th style="min-width: 180px;">ITEM DESCRIPTION *</th>
+                <th style="min-width: 120px;">DRAWING NO</th>
+                <th style="min-width: 130px;">MATERIAL / SPEC</th>
+                <th style="width: 75px;">QTY *</th>
+                <th style="width: 85px;">UNIT</th>
+                <th style="min-width: 130px;">PREFERRED VENDOR</th>
+                <th style="min-width: 120px;">REMARKS</th>
+                <th style="width: 40px; text-align: center;">DEL</th>
+              </tr>
+            </thead>
+            <tbody id="pr-items-table-body">
+              <!-- Dynamically rendered item rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- SECTION 3: ATTACHMENTS -->
+        <div class="form-section-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/></svg>
+          3. ATTACHMENTS (DRAWINGS, BOM, DATASHEETS)
+        </div>
+        <div style="background: rgba(15, 23, 42, 0.6); border: 2px dashed #334155; border-radius: 6px; padding: 18px; text-align: center; margin-bottom: 15px; cursor: pointer;" id="pr-dropzone">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="#64748B" style="margin-bottom: 6px;"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+          <div style="font-size: 13px; font-weight: 600; color: #E2E8F0;">Drag &amp; drop technical drawings or specs here, or <span style="color: var(--brand-orange); text-decoration: underline;">Browse Files</span></div>
+          <div style="font-size: 11px; color: #94A3B8; margin-top: 4px;">Supported: PDF, DWG, STEP, DXF, XLSX, PNG (Max 25MB each)</div>
+          <input type="file" id="pr-file-input" multiple style="display: none;">
+        </div>
+
+        <div id="pr-attachments-list" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
+          <div class="attachment-pill" style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 4px; font-size: 11px; color: #93C5FD;">
+            <span>📄 CAD_Detail_Drawing_Rev3.dwg (2.4 MB)</span>
+            <button type="button" style="background: none; border: none; color: #EF4444; cursor: pointer; font-size: 13px; font-weight: 800;" onclick="this.parentElement.remove();">&times;</button>
+          </div>
+          <div class="attachment-pill" style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 4px; font-size: 11px; color: #6EE7B7;">
+            <span>📊 Heater_Datasheet_Specification.pdf (840 KB)</span>
+            <button type="button" style="background: none; border: none; color: #EF4444; cursor: pointer; font-size: 13px; font-weight: 800;" onclick="this.parentElement.remove();">&times;</button>
+          </div>
+        </div>
+
+        <!-- SECTION 4: ADDITIONAL INFORMATION -->
+        <div class="form-section-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/></svg>
+          4. ADDITIONAL INFORMATION
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">PURPOSE / JUSTIFICATION</label>
+            <textarea id="pr-purpose" class="form-textarea" placeholder="e.g. Critical procurement for hot runner assembly line project milestone."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">INTERNAL REMARKS</label>
+            <textarea id="pr-internal-remarks" class="form-textarea" placeholder="e.g. Ensure supplier provides material test certificate (MTC) and thermocouple calibration certificate."></textarea>
+          </div>
+        </div>
+
+        <!-- MODAL FOOTER ACTIONS -->
+        <div class="form-actions" style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-subtle);">
+          <button type="button" class="btn-action-secondary" onclick="closeModal('modal-new-purchase-request')">CANCEL</button>
+          <button type="submit" id="btn-submit-purchase-request" class="btn-action-primary" style="background: #10B981; border-color: #10B981; color: #FFFFFF; font-weight: 800;">
+            SUBMIT REQUEST
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     VIEW PURCHASE REQUEST DETAIL MODAL
+     ========================================================================== -->
+<div id="modal-view-purchase-request" class="modal-overlay">
+  <div class="modal-box" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+    <div class="modal-header">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="display: inline-block; width: 4px; height: 16px; background: #3B82F6; border-radius: 2px;"></span>
+        <h3 id="view-pr-modal-title" style="font-size: 14px; font-weight: 800;">PURCHASE REQUISITION DETAILS</h3>
+      </div>
+      <button class="btn-close-modal" onclick="closeModal('modal-view-purchase-request')">&times;</button>
+    </div>
+    <div class="modal-body" style="padding: 20px;" id="view-pr-modal-body">
+      <!-- Injected dynamically by purchaseView.js -->
+    </div>
+    <div class="modal-footer" style="padding: 14px 20px; display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--border-subtle);">
+      <button type="button" class="btn-action-secondary" onclick="closeModal('modal-view-purchase-request')">CLOSE</button>
+      <button type="button" class="btn-action-primary" id="btn-print-pr-pdf" style="background: #EF4444; border-color: #EF4444; color: #FFFFFF;">
+        📄 EXPORT PDF
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     VIEW MANUFACTURING JOB DETAILS MODAL
+     ========================================================================== -->
+<div id="modal-view-mfg-details" class="modal-overlay">
+  <div class="modal-box" style="max-width: 760px; max-height: 90vh; overflow-y: auto;">
+    <div class="modal-header">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="display: inline-block; width: 4px; height: 18px; background: #F97316; border-radius: 2px;"></span>
+        <h3 style="font-size: 14px; font-weight: 800; color: #FFFFFF; margin: 0; letter-spacing: 0.5px;">MANUFACTURING JOB DETAILS</h3>
+        <span id="view-mfg-code-badge" style="background: rgba(249, 115, 22, 0.15); color: #F97316; border: 1px solid rgba(249, 115, 22, 0.4); border-radius: 4px; font-size: 11px; font-weight: 800; padding: 2px 8px;"></span>
+      </div>
+      <button class="btn-close-modal" onclick="closeModal('modal-view-mfg-details')">&times;</button>
+    </div>
+    <div class="modal-body" style="padding: 20px;" id="view-mfg-modal-body">
+      <!-- Injected dynamically by mfgView.js -->
+    </div>
+    <div class="modal-footer" style="padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle);">
+      <button type="button" class="btn-action-secondary" id="btn-edit-from-view-mfg" style="background: #1E293B; border-color: #334155; color: #E2E8F0;">
+        ✏️ EDIT JOB
+      </button>
+      <div style="display: flex; gap: 10px;">
+        <button type="button" class="btn-action-secondary" onclick="closeModal('modal-view-mfg-details')">CLOSE</button>
+        <button type="button" class="btn-action-primary" id="btn-print-mfg-card" style="background: #059669; border-color: #10B981; color: #FFFFFF;">
+          📄 PRINT JOB CARD
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Toast Container -->
 <div id="toast-container"></div>
+

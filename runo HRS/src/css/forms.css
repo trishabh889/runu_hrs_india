@@ -3,11 +3,12 @@
    ========================================================================== */
 
 .form-card {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
+  background: linear-gradient(160deg, #1a1e28 0%, #14171f 100%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
   padding: 28px;
   max-width: 900px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .form-grid {
@@ -42,14 +43,14 @@
 .form-select,
 .form-textarea {
   width: 100%;
-  background-color: var(--bg-input);
-  border: 1px solid var(--bg-input-border);
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
   padding: 10px 14px;
   font-size: 13px;
   color: var(--text-primary);
   outline: none;
-  transition: border-color var(--transition-fast);
+  transition: all 0.2s ease;
 }
 
 .form-select {
@@ -65,7 +66,7 @@
 }
 
 .form-select option {
-  background-color: var(--bg-surface);
+  background-color: #1a1e28;
   color: var(--text-primary);
   padding: 8px;
 }
@@ -73,8 +74,9 @@
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
-  border-color: var(--brand-orange);
-  background-color: var(--bg-surface);
+  border-color: rgba(255, 87, 34, 0.6);
+  background: rgba(255, 87, 34, 0.03);
+  box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.1), 0 0 12px rgba(255, 87, 34, 0.08);
 }
 
 .form-textarea {
@@ -93,11 +95,11 @@
 
 /* Action Buttons */
 .btn-action-primary {
-  background: linear-gradient(90deg, #E64A19, #FF5722);
+  background: linear-gradient(135deg, #E64A19 0%, #FF5722 50%, #FF7043 100%);
   color: #FFFFFF;
   border: none;
-  border-radius: 4px;
-  padding: 9px 16px;
+  border-radius: 6px;
+  padding: 9px 20px;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -106,14 +108,20 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  box-shadow: var(--shadow-orange);
+  box-shadow: 0 4px 16px rgba(255, 87, 34, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-action-primary:hover {
+  box-shadow: 0 6px 24px rgba(255, 87, 34, 0.55), 0 2px 8px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
 }
 
 .btn-action-secondary {
-  background-color: var(--bg-card);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text-primary);
-  border: 1px solid var(--border-subtle);
-  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
   padding: 9px 16px;
   font-size: 11px;
   font-weight: 700;
@@ -123,10 +131,12 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  transition: all 0.2s ease;
 }
 
 .btn-action-secondary:hover {
-  background-color: var(--bg-card-hover);
+  background: rgba(255, 87, 34, 0.08);
+  border-color: rgba(255, 87, 34, 0.3);
   color: var(--brand-orange);
 }
 
@@ -176,33 +186,101 @@
 .custom-dropdown.open .custom-dropdown-arrow { transform: rotate(180deg); }
 
 .custom-dropdown-menu {
-  position: absolute; top: calc(100% + 5px); right: 0; min-width: 100%;
-  width: max-content; background-color: var(--bg-surface);
-  border: 1px solid var(--border-card); border-radius: 6px;
-  box-shadow: var(--shadow-md); padding: 5px; z-index: 100;
+  position: absolute; top: calc(100% + 6px); right: 0; min-width: 100%;
+  width: max-content;
+  background: linear-gradient(160deg, #1c2030 0%, #14171f 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 87, 34, 0.06);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  padding: 6px; z-index: 100;
   display: none; flex-direction: column; gap: 2px;
-  animation: dropdownFadeIn 0.12s ease-out;
+  animation: dropdownFadeIn 0.15s ease-out;
 }
 .custom-dropdown.open .custom-dropdown-menu { display: flex; }
 
 .custom-dropdown-item {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 7px 12px; font-size: 11px; font-weight: 600;
-  color: var(--text-secondary); border-radius: 4px; cursor: pointer;
-  transition: all var(--transition-fast);
+  padding: 8px 12px; font-size: 11px; font-weight: 600;
+  color: var(--text-secondary); border-radius: 5px; cursor: pointer;
+  transition: all 0.15s ease;
 }
 .custom-dropdown-item:hover {
-  background-color: var(--bg-card-hover); color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06); color: var(--text-primary);
 }
 .custom-dropdown-item.active {
-  background-color: var(--bg-sidebar-active); color: var(--sidebar-active-text); font-weight: 700;
+  background: rgba(255, 87, 34, 0.12); color: var(--brand-orange);
+  font-weight: 700; box-shadow: inset 0 0 0 1px rgba(255, 87, 34, 0.2);
 }
 .custom-dropdown-item .check-icon { display: none; color: var(--brand-orange); }
 .custom-dropdown-item.active .check-icon { display: inline-block; }
 
 @keyframes dropdownFadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+/* ==========================================================================
+   Slide Top Action Bar & Yellow Access Badge
+   ========================================================================== */
+.access-badge-yellow {
+  background: #FFEB3B;
+  color: #DC2626;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.6px;
+  display: inline-block;
+  vertical-align: middle;
+  border: 1px solid #FBC02D;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.slide-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0 20px 0;
+  flex-wrap: wrap;
+}
+
+.btn-category-box {
+  background: transparent;
+  color: #DC2626;
+  border: 2px solid #DC2626;
+  border-radius: 4px;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.btn-category-box:hover {
+  background: rgba(220, 38, 38, 0.12);
+  transform: translateY(-1px);
+}
+
+.btn-category-box.active {
+  background: #DC2626;
+  color: #FFFFFF;
+  box-shadow: 0 2px 10px rgba(220, 38, 38, 0.45);
+}
+
+.btn-category-box.btn-category-export {
+  border-color: #B91C1C;
+  color: #B91C1C;
+}
+
+.btn-category-box.btn-category-export:hover {
+  background: rgba(185, 28, 28, 0.15);
+}
+
 
 

@@ -1,0 +1,138 @@
+<div class="view-header">
+  <div class="view-title-group">
+    <h1>VENDOR DIRECTORY</h1>
+    <p>Approved suppliers, specialized material providers, heat-treatment partners, and toolmaker directories</p>
+  </div>
+  <div class="view-actions">
+    <button class="btn-action-primary" onclick="window.showToast('New vendor onboarding form opened', 'success')">+ ONBOARD VENDOR</button>
+    <button class="btn-action-secondary" onclick="window.api.exportCSV && window.api.exportCSV('VENDORS')">EXPORT DIRECTORY</button>
+  </div>
+</div>
+
+<!-- 4 KPI Summary Cards -->
+<div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 24px;">
+  <div class="kpi-card">
+    <div class="kpi-header">
+      <div class="kpi-title">TOTAL VENDORS</div>
+      <div class="kpi-icon" style="background: rgba(37, 99, 235, 0.15); color: #3B82F6;">
+        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+      </div>
+    </div>
+    <div class="kpi-value">15</div>
+    <div class="kpi-subtext" style="color: #60A5FA;">Active Global Suppliers</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-header">
+      <div class="kpi-title">APPROVED (AVL)</div>
+      <div class="kpi-icon" style="background: rgba(5, 150, 105, 0.15); color: #10B981;">
+        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+      </div>
+    </div>
+    <div class="kpi-value">12</div>
+    <div class="kpi-subtext" style="color: #34D399;">Certified Quality Grade A</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-header">
+      <div class="kpi-title">IN EVALUATION</div>
+      <div class="kpi-icon" style="background: rgba(234, 88, 12, 0.15); color: #F97316;">
+        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+      </div>
+    </div>
+    <div class="kpi-value">2</div>
+    <div class="kpi-subtext" style="color: #FB923C;">Audit Underway</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-header">
+      <div class="kpi-title">ON-TIME DELIVERY</div>
+      <div class="kpi-icon" style="background: rgba(139, 92, 246, 0.15); color: #A855F7;">
+        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+      </div>
+    </div>
+    <div class="kpi-value">94.2%</div>
+    <div class="kpi-subtext" style="color: #C084FC;">Average Supplier Rating</div>
+  </div>
+</div>
+
+<!-- Table Card -->
+<div class="table-card">
+  <div class="table-toolbar" style="display: flex; gap: 12px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;">
+    <div class="search-box" style="flex: 1; min-width: 220px;">
+      <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" id="search-vendor" placeholder="Search vendor name, code, category...">
+    </div>
+    <select id="filter-vendor-category" class="filter-select-compact">
+      <option value="ALL">All Categories</option>
+      <option value="Heaters">Heaters &amp; Sensors</option>
+      <option value="Steel">Die Steel &amp; Plates</option>
+      <option value="Machining">Precision Machining</option>
+      <option value="Standard">Standard Components</option>
+    </select>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>VENDOR CODE</th>
+          <th>SUPPLIER NAME</th>
+          <th>CATEGORY</th>
+          <th>CONTACT PERSON</th>
+          <th>PHONE / EMAIL</th>
+          <th>LOCATION</th>
+          <th style="text-align: center;">RATING</th>
+          <th style="text-align: center;">STATUS</th>
+          <th style="text-align: center;">ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight: 700; color: var(--brand-orange);">VND-001</td>
+          <td style="font-weight: 700; color: #FFFFFF;">Watlow India Pvt Ltd</td>
+          <td><span class="badge badge-category">HEATERS &amp; TC</span></td>
+          <td style="color: #E2E8F0;">Rajiv Malhotra</td>
+          <td style="color: #94A3B8;">+91 98230 44122</td>
+          <td style="color: #CBD5E1;">Pune, Maharashtra</td>
+          <td style="text-align: center; color: #FACC15; font-weight: 800;">4.9 ★</td>
+          <td style="text-align: center;"><span class="badge badge-completed">APPROVED</span></td>
+          <td style="text-align: center;"><button class="btn-icon" title="View Vendor Profile">👁</button></td>
+        </tr>
+        <tr>
+          <td style="font-weight: 700; color: var(--brand-orange);">VND-002</td>
+          <td style="font-weight: 700; color: #FFFFFF;">Omega Thermal Systems</td>
+          <td><span class="badge badge-category">SENSORS</span></td>
+          <td style="color: #E2E8F0;">Suresh Nair</td>
+          <td style="color: #94A3B8;">+91 98450 11982</td>
+          <td style="color: #CBD5E1;">Bangalore, Karnataka</td>
+          <td style="text-align: center; color: #FACC15; font-weight: 800;">4.8 ★</td>
+          <td style="text-align: center;"><span class="badge badge-completed">APPROVED</span></td>
+          <td style="text-align: center;"><button class="btn-icon" title="View Vendor Profile">👁</button></td>
+        </tr>
+        <tr>
+          <td style="font-weight: 700; color: var(--brand-orange);">VND-003</td>
+          <td style="font-weight: 700; color: #FFFFFF;">Steelage Special Alloys</td>
+          <td><span class="badge badge-category">H13 STEEL</span></td>
+          <td style="color: #E2E8F0;">Pravin Mehta</td>
+          <td style="color: #94A3B8;">+91 98201 88471</td>
+          <td style="color: #CBD5E1;">Mumbai, Maharashtra</td>
+          <td style="text-align: center; color: #FACC15; font-weight: 800;">4.7 ★</td>
+          <td style="text-align: center;"><span class="badge badge-completed">APPROVED</span></td>
+          <td style="text-align: center;"><button class="btn-icon" title="View Vendor Profile">👁</button></td>
+        </tr>
+        <tr>
+          <td style="font-weight: 700; color: var(--brand-orange);">VND-004</td>
+          <td style="font-weight: 700; color: #FFFFFF;">Meusburger Standard Parts</td>
+          <td><span class="badge badge-category">MOULD BASES</span></td>
+          <td style="color: #E2E8F0;">Vikram Chopra</td>
+          <td style="color: #94A3B8;">+91 99100 23411</td>
+          <td style="color: #CBD5E1;">Gurgaon, Haryana</td>
+          <td style="text-align: center; color: #FACC15; font-weight: 800;">4.9 ★</td>
+          <td style="text-align: center;"><span class="badge badge-completed">APPROVED</span></td>
+          <td style="text-align: center;"><button class="btn-icon" title="View Vendor Profile">👁</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -11,6 +11,18 @@ function registerMfgHandlers(sessionState) {
     return db.manufacturing.updateStage(projectId, stage, status, notes);
   });
 
+  ipcMain.handle('manufacturing:create', (event, data) => {
+    return db.manufacturing.createRecord(data);
+  });
+
+  ipcMain.handle('manufacturing:update', (event, { id, data }) => {
+    return db.manufacturing.updateRecord(id, data);
+  });
+
+  ipcMain.handle('manufacturing:delete', (event, id) => {
+    return db.manufacturing.deleteRecord(id);
+  });
+
   // Approvals handlers
   ipcMain.handle('approvals:getAll', () => {
     return db.approvals.getAll();

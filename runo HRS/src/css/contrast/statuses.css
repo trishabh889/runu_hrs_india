@@ -1,0 +1,63 @@
+/* Semantic color pairs. Existing labels, badge geometry and status logic are preserved. */
+:is(.badge-pending, .badge-comm-pending, .badge-status-pending, .access-badge-yellow) {
+  background: var(--status-pending) !important;
+  color: var(--text-on-bright) !important;
+  border-color: #fde047 !important;
+}
+:is(.badge-review, .badge-in-review, .badge-reorder, .badge-status-inreview,
+    .status-pill.pill-in-review, .mfg-badge.in-review, .badge-admin) {
+  background: var(--status-review) !important;
+  color: var(--text-on-solid) !important;
+  border-color: #ff9f64 !important;
+}
+:is(.badge-active, .badge-in-design, .badge-in-progress, .badge-approved,
+    .badge-status-approved, .status-pill.pill-in-design,
+    .mfg-badge.in-progress, .mfg-badge.in-design) {
+  background: var(--status-approved) !important;
+  color: var(--text-on-solid) !important;
+  border-color: #78b7ff !important;
+}
+:is(.badge-completed, .badge-received, .badge-pass, .badge-comm-submitted,
+    .badge-status-poreleased, .badge-status-received,
+    .status-pill.pill-completed, .mfg-badge.completed) {
+  background: var(--status-success) !important;
+  color: var(--text-on-solid) !important;
+  border-color: #34d399 !important;
+}
+:is(.badge-sent, .badge-in-transit, .badge-transit, .badge-rework,
+    .badge-status-intransit, .status-pill.pill-sent, .mfg-badge.rework) {
+  background: var(--status-transit) !important;
+  color: var(--text-on-solid) !important;
+  border-color: #b69aff !important;
+}
+:is(.badge-danger, .badge-rejected, .badge-cancelled, .badge-paused,
+    .badge-comm-cancel, .badge-status-cancelled,
+    .status-pill.pill-paused, .mfg-badge.paused) {
+  background: var(--status-danger) !important;
+  color: var(--text-on-solid) !important;
+  border-color: #ff9393 !important;
+}
+:is(.badge-on-hold, .badge-inactive, .badge-not-started,
+    .status-pill.pill-on-hold, .mfg-badge.not-started, .mfg-badge.on-hold) {
+  background: var(--status-neutral) !important;
+  color: var(--text-on-solid) !important;
+  border-color: #a0b5c8 !important;
+}
+:is(.badge-category, .badge-category-hrs, .badge-category-hrtc, .badge-category-spare) {
+  background-color: #122e43;
+  color: #d6e7f5;
+  border-color: #54748b;
+}
+.comm-cell-select.val-pending { background-color: #342b10; color: #fde68a; }
+.comm-cell-select.val-submitted { background-color: #0c342e; color: #8af0c6; }
+.comm-cell-select.val-cancel { background-color: #3d2029; color: #ffb4b4; }
+/* Legends use their existing semantic colors as selectors, not their position. */
+:is(.pr-legend-swatch, .comm-legend-dot)[style*="#EAB308" i],
+.comm-legend-dot[style*="#CA8A04" i] { background-color: var(--status-pending) !important; }
+.pr-legend-swatch[style*="#F97316" i] { background-color: var(--status-review) !important; }
+.pr-legend-swatch[style*="#2563EB" i] { background-color: var(--status-approved) !important; }
+.pr-legend-swatch:is([style*="#10B981" i], [style*="#059669" i]),
+.comm-legend-dot[style*="#15803D" i] { background-color: var(--status-success) !important; }
+.pr-legend-swatch[style*="#6366F1" i] { background-color: var(--status-transit) !important; }
+.pr-legend-swatch[style*="#EF4444" i],
+.comm-legend-dot[style*="#B91C1C" i] { background-color: var(--status-danger) !important; }

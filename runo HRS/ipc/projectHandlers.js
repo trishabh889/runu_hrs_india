@@ -40,6 +40,22 @@ function registerProjectHandlers() {
   ipcMain.handle('projects:setWorkflow', (event, { projectId, step, timestamp }) => {
     return db.projects.setWorkflow(projectId, step, timestamp);
   });
+
+  // Bulk data reset / clear handlers
+  ipcMain.handle('data:clearAllSampleData', (event) => {
+    return db.clearAllSampleData();
+  });
+
+  ipcMain.handle('data:resetToDefaultData', (event) => {
+    return db.resetToDefaultData();
+  });
+
+  // Purchase Requests Handlers (Slide 2)
+  ipcMain.handle('purchase:getAll', (event, filters) => db.getPurchaseRequests(filters));
+  ipcMain.handle('purchase:create', (event, data) => db.createPurchaseRequest(data));
+  ipcMain.handle('purchase:update', (event, { id, data }) => db.updatePurchaseRequest(id, data));
+  ipcMain.handle('purchase:delete', (event, id) => db.deletePurchaseRequest(id));
+  ipcMain.handle('purchase:getStats', (event) => db.getPurchaseStats());
 }
 
 module.exports = registerProjectHandlers;

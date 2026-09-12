@@ -29,7 +29,7 @@ async function loadApprovals() {
         <td>
           ${a.status === 'PENDING' ? `
             <div class="table-actions">
-              <button class="btn-icon" style="color: #10B981; border-color: #10B981;" title="Approve" onclick="handleApprovalAction('${a.id}', 'APPROVED')">✓</button>
+              <button class="btn-icon" title="Approve" onclick="handleApprovalAction('${a.id}', 'APPROVED')">✓</button>
               <button class="btn-icon danger" title="Reject" onclick="handleApprovalAction('${a.id}', 'REJECTED')">✕</button>
             </div>
           ` : `<span style="font-size: 11px; color: #64748B;">Signed off by ${a.approved_by}</span>`}

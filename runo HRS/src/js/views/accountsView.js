@@ -109,7 +109,7 @@ async function renderAccountsTab(tab) {
           tr.innerHTML = `
             <td>${s.date}</td>
             <td style="font-weight: 600;">${s.particulars}</td>
-            <td><span style="font-family: monospace; color: var(--brand-orange);">${s.refNo}</span></td>
+            <td><span style="font-family: var(--font-primary); color: var(--brand-orange);">${s.refNo}</span></td>
             <td style="font-weight: 700; color: #10B981;">₹ ${parseFloat(s.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
           `;
           salesBody.appendChild(tr);
@@ -125,7 +125,7 @@ async function renderAccountsTab(tab) {
           tr.innerHTML = `
             <td>${p.date}</td>
             <td style="font-weight: 600;">${p.particulars}</td>
-            <td><span style="font-family: monospace; color: var(--text-secondary);">${p.refNo}</span></td>
+            <td><span style="font-family: var(--font-primary); color: var(--text-secondary);">${p.refNo}</span></td>
             <td style="font-weight: 700; color: #EF4444;">₹ ${parseFloat(p.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
           `;
           purBody.appendChild(tr);
@@ -173,7 +173,7 @@ async function renderAccountsTable(tab, search = '') {
       tr.innerHTML = `
         <td>${row.date}</td>
         <td style="font-weight: 700; color: var(--text-primary);">${row.particulars}</td>
-        <td><span style="font-family: monospace; font-size: 11px;">${row.refNo}</span></td>
+        <td><span style="font-family: var(--font-primary); font-size: 11px;">${row.refNo}</span></td>
         <td><span class="badge badge-active">${row.tabType}</span></td>
         <td style="color: ${row.debit > 0 ? '#EF4444' : 'var(--text-muted)'}; font-weight: 600;">${row.debit > 0 ? `₹ ${row.debit.toLocaleString('en-IN', { minimumFractionDigits: 2 })}` : '-'}</td>
         <td style="color: ${row.credit > 0 ? '#10B981' : 'var(--text-muted)'}; font-weight: 600;">${row.credit > 0 ? `₹ ${row.credit.toLocaleString('en-IN', { minimumFractionDigits: 2 })}` : '-'}</td>
@@ -204,7 +204,7 @@ async function renderAccountsTable(tab, search = '') {
       tr.innerHTML = `
         <td>${e.date}</td>
         <td style="font-weight: 700; color: var(--text-primary);">${e.particulars}</td>
-        <td><span style="font-family: monospace; font-size: 11px; background: var(--bg-surface); padding: 2px 6px; border-radius: 3px;">${e.refNo}</span></td>
+        <td><span style="font-family: var(--font-primary); font-size: 11px; background: var(--bg-surface); padding: 2px 6px; border-radius: 3px;">${e.refNo}</span></td>
         <td><span class="badge badge-active">${e.tabType}</span></td>
         <td style="font-weight: 700; color: var(--brand-orange); font-size: 13px;">₹ ${parseFloat(e.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
         <td><span class="badge badge-completed">${e.status}</span></td>

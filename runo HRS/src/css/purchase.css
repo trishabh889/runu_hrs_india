@@ -1,0 +1,155 @@
+/* ==========================================================================
+   RUNO HRS INDIA - Purchase Department View Styles (1:1 Slide Reference)
+   ========================================================================== */
+.purchase-title-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.purchase-heading { font-size: 20px; font-weight: 800; color: #FFFFFF; margin: 0; letter-spacing: 0.5px; }
+.purchase-subheading { font-size: 11.5px; color: #7E91AA; margin: 3px 0 0 0; }
+.btn-new-purchase {
+  background: #059669; color: #FFFFFF; border: 1px solid #10B981; border-radius: 6px;
+  padding: 8px 16px; font-size: 12px; font-weight: 800; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease;
+}
+.btn-new-purchase:hover { background: #10B981; box-shadow: 0 0 12px rgba(16, 185, 129, 0.4); }
+
+/* 6 KPI Cards Grid */
+.purchase-kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 14px; }
+.pr-kpi-card {
+  background: #0B1220; border: 1px solid #1B2842; border-radius: 8px;
+  padding: 12px 14px; display: flex; align-items: center; gap: 12px;
+}
+.pr-kpi-icon-box {
+  width: 40px; height: 40px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.pr-kpi-info { display: flex; flex-direction: column; }
+.pr-kpi-val { font-size: 22px; font-weight: 800; color: #FFFFFF; line-height: 1.1; }
+.pr-kpi-lbl {
+  font-size: 9.5px; font-weight: 700; color: #8A9CB5;
+  letter-spacing: 0.6px; text-transform: uppercase; margin-top: 2px;
+}
+
+/* Filter Bar */
+.purchase-filter-bar {
+  background: #0B1220; border: 1px solid #1B2842; border-radius: 8px;
+  padding: 8px 12px; display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+}
+.pr-filter-select {
+  background: #060B14; border: 1px solid #1B2842; color: #CBD5E1;
+  font-size: 11.5px; padding: 6px 24px 6px 10px; border-radius: 5px; outline: none; cursor: pointer;
+}
+.pr-date-range-box {
+  display: flex; align-items: center; gap: 6px; background: #060B14;
+  border: 1px solid #1B2842; border-radius: 5px; padding: 6px 10px;
+  color: #7E91AA; font-size: 11.5px; white-space: nowrap;
+}
+.pr-search-box {
+  display: flex; align-items: center; gap: 6px; background: #060B14;
+  border: 1px solid #1B2842; border-radius: 5px; padding: 6px 10px; flex: 1; min-width: 140px;
+}
+.pr-search-box input {
+  background: transparent; border: none; outline: none;
+  color: #FFFFFF; font-size: 11.5px; width: 100%;
+}
+.btn-pr-filter-btn {
+  background: #0E1626; border: 1px solid #2A3B5C; color: #CBD5E1;
+  border-radius: 5px; padding: 6px 14px; font-size: 11.5px; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+}
+
+.pr-table-card {
+  background: linear-gradient(180deg, #0a1324 0%, #060d1a 100%);
+  border: 1px solid rgba(59, 130, 246, 0.22);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  box-shadow: 0 8px 32px rgba(2, 6, 23, 0.6);
+}
+.pr-data-table { width: 100%; border-collapse: collapse; font-size: 11.5px; color: #CBD5E1; }
+.pr-data-table th {
+  background: var(--bg-table-header, #040e18); color: #CBD5E1; font-size: 10px; font-weight: 800;
+  letter-spacing: 0.6px; text-transform: uppercase; padding: 10px 8px;
+  text-align: left; border-bottom: 1px solid rgba(59, 130, 246, 0.25); white-space: nowrap;
+}
+.pr-data-table td {
+  padding: 8px 8px; border-bottom: 1px solid rgba(59, 130, 246, 0.14);
+  vertical-align: middle; white-space: nowrap;
+  background: #081121;
+}
+.pr-data-table tbody tr:nth-child(even) td {
+  background: #0c182f;
+}
+.pr-data-table tbody tr:hover td {
+  background: rgba(30, 64, 120, 0.45);
+}
+.pr-highlight-code { color: #F97316; font-weight: 700; }
+
+/* Status Badges (Solid Vibrant Capsule Chips) */
+.pr-status-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 3.5px 12px; border-radius: 20px;
+  font-size: 10.5px; font-weight: 800; letter-spacing: 0.5px;
+  text-transform: uppercase; text-align: center; white-space: nowrap;
+  min-width: 96px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  color: #FFFFFF;
+}
+.badge-status-pending { background: #EA580C; color: #FFFFFF; border: 1px solid #F97316; }
+.badge-status-approved { background: #2563EB; color: #FFFFFF; border: 1px solid #3B82F6; }
+.badge-status-poreleased { background: #059669; color: #FFFFFF; border: 1px solid #10B981; }
+.badge-status-intransit { background: #8B5CF6; color: #FFFFFF; border: 1px solid #A855F7; }
+.badge-status-received { background: #059669; color: #FFFFFF; border: 1px solid #10B981; }
+.badge-status-inreview { background: #EA580C; color: #FFFFFF; border: 1px solid #F97316; }
+.badge-status-cancelled { background: #DC2626; color: #FFFFFF; border: 1px solid #EF4444; }
+
+/* Action Icons */
+.pr-action-group { display: inline-flex; align-items: center; gap: 8px; }
+.pr-action-btn {
+  background: none; border: none; color: #FFFFFF; cursor: pointer;
+  padding: 2px; display: inline-flex; align-items: center; justify-content: center;
+  transition: all 0.2s ease;
+}
+.pr-action-btn svg {
+  fill: #FFFFFF;
+  color: #FFFFFF;
+}
+.pr-action-btn:hover {
+  color: #FFFFFF;
+  transform: scale(1.12);
+}
+.pr-action-btn:hover svg {
+  fill: #FFFFFF;
+  color: #FFFFFF;
+}
+
+/* Pagination Bar */
+.purchase-pagination-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 4px; margin-bottom: 14px;
+}
+.pr-entries-text { font-size: 11.5px; color: #7E91AA; }
+.pr-pagination-controls { display: flex; align-items: center; gap: 6px; }
+.pr-page-link {
+  background: none; border: none; color: #64748B; font-size: 11.5px;
+  cursor: default; padding: 4px 6px;
+}
+.pr-page-num {
+  background: #EA580C; color: #FFFFFF; font-size: 11.5px;
+  font-weight: 700; padding: 3px 8px; border-radius: 4px;
+}
+
+/* Bottom Legend & Quote Bar */
+.purchase-footer-legend-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #0B1220; border: 1px solid #1B2842; border-radius: 8px;
+  padding: 10px 14px;
+}
+.pr-status-legend { display: flex; align-items: center; gap: 12px; }
+.pr-legend-title { font-size: 11px; font-weight: 800; color: #CBD5E1; }
+.pr-legend-item {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; color: #94A3B8;
+}
+.pr-legend-swatch { width: 14px; height: 9px; border-radius: 2px; display: inline-block; }
+.pr-footer-quote {
+  font-size: 11.5px; font-style: italic;
+  font-family: 'Cambria', Georgia, serif; color: #8A9CB5; letter-spacing: 0.3px;
+}

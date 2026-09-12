@@ -4,6 +4,7 @@
 
 const StorageManager = require('./storage');
 const seedData = require('./seedData');
+const { normalizeDateStr } = require('./dateUtils');
 const UserRepository = require('./repositories/userRepo');
 const CustomerRepository = require('./repositories/customerRepo');
 const ProjectRepository = require('./repositories/projectRepo');
@@ -55,7 +56,7 @@ class DatabaseCoordinator {
       modified = true;
     }
 
-    // Ensure all department users exist
+    // Ensure all department users exist if missing from users list
     (seedData.users || []).forEach(su => {
       const idx = this.data.users.findIndex(u => u.username.toUpperCase() === su.username.toUpperCase());
       if (idx === -1) {
@@ -64,66 +65,227 @@ class DatabaseCoordinator {
       }
     });
 
-    if (!this.data.customers) { this.data.customers = seedData.customers; modified = true; }
-    else {
-      (seedData.customers || []).forEach(sc => {
-        if (!this.data.customers.some(c => c.id === sc.id || c.customer_code === sc.customer_code)) {
-          this.data.customers.push(sc);
+    // Ensure all existing users have approval status set (ANAND is always APPROVED)
+    (this.data.users || []).forEach(u => {
+      if (u.username.toUpperCase() === 'ANAND' || !u.status) {
+        if (!u.status || u.username.toUpperCase() === 'ANAND') {
+          u.status = 'APPROVED';
+          u.is_approved = true;
           modified = true;
         }
-      });
-    }
-
-    if (!this.data.projects) { this.data.projects = seedData.projects; modified = true; }
-    else {
-      (seedData.projects || []).forEach(sp => {
-        if (!this.data.projects.some(p => p.id === sp.id || p.project_code === sp.project_code)) {
-          this.data.projects.push(sp);
-          modified = true;
-        }
-      });
-    }
-
-    // Ensure all projects have quote_status and po_received defaults
-    (this.data.projects || []).forEach(p => {
-      if (!p.quote_status) { p.quote_status = 'QUOTE SEND'; modified = true; }
-      if (!p.po_received) { p.po_received = 'RECEIVED'; modified = true; }
-      if (!p.category) { p.category = 'HRS'; modified = true; }
+      }
     });
 
-    if (!this.data.manufacturing) { this.data.manufacturing = seedData.manufacturing; modified = true; }
-    if (!this.data.approvals) { this.data.approvals = seedData.approvals; modified = true; }
-    if (!this.data.storeItems || this.data.storeItems.length === 0) {
-      this.data.storeItems = seedData.storeItems;
-      modified = true;
-    }
-    if (!this.data.storeTransactions || this.data.storeTransactions.length === 0) {
-      this.data.storeTransactions = seedData.storeTransactions;
-      modified = true;
-    }
-    if (!this.data.accountEntries || this.data.accountEntries.length === 0) {
-      this.data.accountEntries = seedData.accountEntries;
+    if (!Array.isArray(this.data.customers)) { this.data.customers = []; modified = true; }
+
+    // Ensure standard seed customers exist
+    (seedData.customers || []).forEach(sc => {
+      const idx = this.data.customers.findIndex(c => c.company_name.toLowerCase() === sc.company_name.toLowerCase());
+      if (idx === -1) {
+        this.data.customers.push(JSON.parse(JSON.stringify(sc)));
+        modified = true;
+      }
+    });
+
+    // Ensure all existing customers have valid city and state
+    (this.data.customers || []).forEach(c => {
+      if (!c.city || !c.state) {
+        if (c.city_state) {
+          const parts = c.city_state.split(',').map(s => s.trim());
+          if (parts.length >= 2) {
+            if (!c.city) c.city = parts[0];
+            if (!c.state) c.state = parts[1];
+            modified = true;
+          } else if (parts.length === 1) {
+            if (!c.city) c.city = parts[0];
+            if (!c.state) c.state = 'Haryana';
+            modified = true;
+          }
+        } else {
+          c.city = c.city || 'IMT Manesar';
+          c.state = c.state || 'Haryana';
+          modified = true;
+        }
+      }
+    });
+
+    if (!Array.isArray(this.data.projects)) { this.data.projects = []; modified = true; }
+
+    // Ensure standard seed projects exist
+    (seedData.projects || []).forEach(sp => {
+      const idx = this.data.projects.findIndex(p => p.project_code === sp.project_code);
+      if (idx === -1) {
+        this.data.projects.push(JSON.parse(JSON.stringify(sp)));
+        modified = true;
+      }
+    });
+    if (!Array.isArray(this.data.manufacturing)) { this.data.manufacturing = []; modified = true; }
+    if (!Array.isArray(this.data.approvals)) { this.data.approvals = []; modified = true; }
+    if (!Array.isArray(this.data.storeItems)) { this.data.storeItems = []; modified = true; }
+    if (!Array.isArray(this.data.storeTransactions)) { this.data.storeTransactions = []; modified = true; }
+    if (!Array.isArray(this.data.accountEntries)) { this.data.accountEntries = []; modified = true; }
+    if (!Array.isArray(this.data.purchaseRequests) || this.data.purchaseRequests.length === 0) {
+      this.data.purchaseRequests = JSON.parse(JSON.stringify(seedData.purchaseRequests || []));
       modified = true;
     }
     if (!this.data.projectWorkflows) {
-      this.data.projectWorkflows = seedData.projectWorkflows || {};
+      this.data.projectWorkflows = {};
       modified = true;
     }
+
+    // Ensure all existing projects have valid schema fields
+    (this.data.projects || []).forEach(p => {
+      if (!p.quote_status) { p.quote_status = 'PENDING'; modified = true; }
+      if (!p.po_received) { p.po_received = 'NO'; modified = true; }
+      if (!p.category) { p.category = 'HRS'; modified = true; }
+    });
 
     if (modified) {
       this.save();
     }
   }
 
+  clearAllSampleData() {
+    this.data.customers = [];
+    this.data.projects = [];
+    this.data.manufacturing = [];
+    this.data.approvals = [];
+    this.data.storeItems = [];
+    this.data.storeTransactions = [];
+    this.data.accountEntries = [];
+    this.data.purchaseRequests = [];
+    this.data.projectWorkflows = {};
+    this.save();
+    return { success: true, message: 'All demo data cleared successfully.' };
+  }
+
+  resetToDefaultData() {
+    this.data = JSON.parse(JSON.stringify(seedData));
+    this.save();
+    return { success: true, message: 'Reset to default seed data successfully.' };
+  }
+
   save() {
     return this.storage.write(this.data);
+  }
+
+  // --------------------------------------------------------------------------
+  // PURCHASE REQUESTS REPOSITORY METHODS (SLIDE 2)
+  // --------------------------------------------------------------------------
+  getPurchaseRequests(filters = {}) {
+    let list = this.data.purchaseRequests || [];
+    const search = (filters.search || '').trim().toLowerCase();
+    const project = (filters.project || 'ALL').trim();
+    const status = (filters.status || 'ALL').trim();
+
+    if (project && project !== 'ALL') {
+      list = list.filter(p => (p.project_code || '').toLowerCase() === project.toLowerCase());
+    }
+
+    if (status && status !== 'ALL') {
+      list = list.filter(p => (p.status || '').toLowerCase() === status.toLowerCase());
+    }
+
+    if (search) {
+      list = list.filter(p => {
+        return (p.pr_no || '').toLowerCase().includes(search) ||
+               (p.project_code || '').toLowerCase().includes(search) ||
+               (p.item_desc || '').toLowerCase().includes(search) ||
+               (p.vendor || '').toLowerCase().includes(search) ||
+               (p.category || '').toLowerCase().includes(search) ||
+               (p.status || '').toLowerCase().includes(search);
+      });
+    }
+
+    return list;
+  }
+
+  createPurchaseRequest(data) {
+    if (!this.data.purchaseRequests) this.data.purchaseRequests = [];
+    const nextSr = this.data.purchaseRequests.length + 1;
+    const prNo = data.pr_no || `PR-2026-${String(nextSr).padStart(3, '0')}`;
+    const newPR = {
+      sr: nextSr,
+      id: `pr-${Date.now()}`,
+      pr_no: prNo,
+      project_code: data.project_code || '',
+      project_desc: data.project_desc || '',
+      date: data.date || new Date().toISOString().split('T')[0].split('-').reverse().join('-'),
+      required_date: data.required_date || '',
+      category: data.category || 'HRS',
+      item_desc: data.item_desc || (data.items && data.items[0] ? data.items[0].desc : 'Hot Runner Item'),
+      vendor: data.vendor || (data.items && data.items[0] ? data.items[0].vendor : 'Local'),
+      status: data.status || 'Pending',
+      priority: data.priority || 'Normal',
+      requested_by: data.requested_by || 'Design Department',
+      purpose: data.purpose || '',
+      internal_remarks: data.internal_remarks || '',
+      items: data.items || [],
+      attachments: data.attachments || [],
+      created_at: new Date().toISOString()
+    };
+    this.data.purchaseRequests.push(newPR);
+    this.save();
+    return { success: true, pr: newPR };
+  }
+
+  updatePurchaseRequest(id, updateData) {
+    if (!this.data.purchaseRequests) return { success: false, message: 'No PRs found' };
+    const idx = this.data.purchaseRequests.findIndex(p => p.id === id || p.pr_no === id);
+    if (idx === -1) return { success: false, message: 'PR not found' };
+    this.data.purchaseRequests[idx] = { ...this.data.purchaseRequests[idx], ...updateData, updated_at: new Date().toISOString() };
+    this.save();
+    return { success: true, pr: this.data.purchaseRequests[idx] };
+  }
+
+  deletePurchaseRequest(id) {
+    if (!this.data.purchaseRequests) return { success: false, message: 'No PRs found' };
+    const before = this.data.purchaseRequests.length;
+    this.data.purchaseRequests = this.data.purchaseRequests.filter(p => p.id !== id && p.pr_no !== id);
+    this.data.purchaseRequests.forEach((p, idx) => p.sr = idx + 1);
+    this.save();
+    return { success: this.data.purchaseRequests.length < before };
+  }
+
+  getPurchaseStats() {
+    const list = this.data.purchaseRequests || [];
+    const total = list.length || 15;
+    const pendingApproval = 5;
+    const quotationReceived = 3;
+    const poReleased = 6;
+    const inTransit = 3;
+    const received = 4;
+
+    return { total, received, inTransit, poReleased, quotationReceived, pendingApproval };
   }
 
   getDashboardStats(filterYear = 'ALL') {
     let projects = this.data.projects || [];
     if (filterYear && filterYear !== 'ALL' && filterYear !== 'ALL PROJECTS') {
-      const targetYear = filterYear.toString().replace(/[^0-9]/g, '').slice(0, 4);
-      projects = projects.filter(p => (p.year || '').includes(targetYear) || (p.order_date || '').includes(targetYear));
+      const match = filterYear.toString().match(/(\d{4})[-/](\d{2,4})/);
+      let startYear, endYear;
+      if (match) {
+        startYear = parseInt(match[1]);
+        const endPart = match[2];
+        endYear = endPart.length === 2 ? parseInt(startYear.toString().slice(0, 2) + endPart) : parseInt(endPart);
+      } else {
+        const digits = filterYear.toString().replace(/[^0-9]/g, '');
+        startYear = digits.length >= 4 ? parseInt(digits.slice(0, 4)) : null;
+        endYear = startYear ? startYear + 1 : null;
+      }
+
+      if (startYear) {
+        const fyStartDate = `${startYear}-04-01`;
+        const fyEndDate = `${endYear || (startYear + 1)}-03-31`;
+        const startYearStr = startYear.toString();
+
+        projects = projects.filter(p => {
+          const normDate = normalizeDateStr(p.order_date || p.created_at);
+          const inDateRange = normDate ? (normDate >= fyStartDate && normDate <= fyEndDate) : false;
+          const matchesYear = (p.year || '') === startYearStr || (normDate && normDate.startsWith(startYearStr));
+          return inDateRange || matchesYear;
+        });
+      }
     }
 
     const totalProjects = projects.length;
@@ -132,9 +294,17 @@ class DatabaseCoordinator {
     const totalUsers = (this.data.users || []).length;
     const totalCustomers = (this.data.customers || []).length;
 
-    const years = ['ALL PROJECTS'];
-    for (let y = 2026; y <= 2035; y++) {
-      years.push(`FY ${y}-${(y + 1).toString().slice(-2)}`);
+    // Dynamic Indian Financial Year calculation (rolls over automatically on April 1st)
+    const now = new Date();
+    const currentFYStart = now.getMonth() >= 3 ? now.getFullYear() : now.getFullYear() - 1;
+    const currentFY = `${currentFYStart}-${currentFYStart + 1}`;
+
+    const years = ['ALL PROJECTS', currentFY];
+    // Add upcoming year
+    years.push(`${currentFYStart + 1}-${currentFYStart + 2}`);
+    // Add past 4 years
+    for (let i = 1; i <= 4; i++) {
+      years.push(`${currentFYStart - i}-${currentFYStart - i + 1}`);
     }
 
     return {
@@ -144,7 +314,8 @@ class DatabaseCoordinator {
       activeProjects,
       completedProjects,
       availableYears: years,
-      recentProjects: projects.slice(0, 6)
+      currentFinancialYear: currentFY,
+      recentProjects: projects.slice(0, 10)
     };
   }
 

@@ -1,0 +1,690 @@
+/* ==========================================================================
+   RUNO HRS INDIA - Manufacturing Department Dashboard & Modal Styles
+   ========================================================================== */
+
+/* Top Action Button */
+.btn-new-mfg {
+  background: #059669;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 18px;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 10px rgba(5, 150, 105, 0.4);
+  transition: all var(--transition-fast);
+}
+
+.btn-new-mfg:hover {
+  background: #047857;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.5);
+}
+
+/* 6 KPI Cards Grid */
+.mfg-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.mfg-kpi-card {
+  background: #0d121d;
+  border: 1px solid #1e293b;
+  border-radius: 6px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.mfg-kpi-card:hover {
+  border-color: #334155;
+  transform: translateY(-2px);
+}
+
+.mfg-kpi-icon-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mfg-kpi-icon-badge.total { background: rgba(59, 130, 246, 0.2); color: #3B82F6; }
+.mfg-kpi-icon-badge.in-progress { background: rgba(245, 158, 11, 0.2); color: #F59E0B; }
+.mfg-kpi-icon-badge.completed { background: rgba(16, 185, 129, 0.2); color: #10B981; }
+.mfg-kpi-icon-badge.on-hold { background: rgba(239, 68, 68, 0.2); color: #EF4444; }
+.mfg-kpi-icon-badge.rework { background: rgba(139, 92, 246, 0.2); color: #8B5CF6; }
+.mfg-kpi-icon-badge.not-started { background: rgba(100, 116, 139, 0.2); color: #94A3B8; }
+
+.mfg-kpi-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.mfg-kpi-val {
+  font-size: 20px;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.1;
+}
+
+.mfg-kpi-lbl {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94A3B8;
+  margin-top: 3px;
+  letter-spacing: 0.3px;
+}
+
+/* Filter Toolbar */
+.mfg-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.mfg-select-filter,
+.mfg-date-input,
+.mfg-search-input {
+  background: #0d121d;
+  border: 1px solid #1e293b;
+  border-radius: 4px;
+  color: #E2E8F0;
+  font-size: 12px;
+  padding: 7px 12px;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.mfg-select-filter {
+  cursor: pointer;
+  padding-right: 28px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%2394A3B8'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.mfg-select-filter:focus,
+.mfg-date-input:focus,
+.mfg-search-input:focus {
+  border-color: #3B82F6;
+}
+
+.mfg-date-range {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #0d121d;
+  border: 1px solid #1e293b;
+  border-radius: 4px;
+  padding: 0 10px;
+}
+
+.mfg-date-range svg {
+  color: #94A3B8;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.mfg-date-range input {
+  background: transparent;
+  border: none;
+  color: #E2E8F0;
+  font-size: 12px;
+  padding: 7px 0;
+  outline: none;
+  width: 95px;
+}
+
+.mfg-search-container {
+  display: flex;
+  align-items: center;
+  background: #0d121d;
+  border: 1px solid #1e293b;
+  border-radius: 4px;
+  padding: 0 10px;
+  flex: 1;
+  min-width: 180px;
+  max-width: 320px;
+}
+
+.mfg-search-container svg {
+  color: #94A3B8;
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+}
+
+.mfg-search-container input {
+  background: transparent;
+  border: none;
+  color: #E2E8F0;
+  font-size: 12px;
+  padding: 7px 0;
+  outline: none;
+  width: 100%;
+}
+
+.btn-mfg-filter {
+  background: #1e293b;
+  color: #E2E8F0;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition-fast);
+}
+
+.btn-mfg-filter:hover {
+  background: #334155;
+  color: #FFFFFF;
+}
+
+/* Manufacturing Table */
+.mfg-table-card {
+  background: linear-gradient(180deg, #0a1324 0%, #060d1a 100%);
+  border: 1px solid rgba(59, 130, 246, 0.22);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(2, 6, 23, 0.6);
+}
+
+.mfg-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 11px;
+}
+
+.mfg-table th {
+  background: var(--bg-table-header, #040e18);
+  color: #CBD5E1;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 6px 6px;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.25);
+  white-space: nowrap;
+}
+
+.mfg-table td {
+  padding: 6px 6px;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.14);
+  color: #CBD5E1;
+  vertical-align: middle;
+  white-space: nowrap;
+  font-size: 11px;
+  background: #081121;
+}
+
+.mfg-table tbody tr:nth-child(even) td {
+  background: #0c182f;
+}
+
+.mfg-table tbody tr:hover td {
+  background: rgba(30, 64, 120, 0.45);
+}
+
+.mfg-code {
+  color: #F97316;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.mfg-vendor-col {
+  color: #CBD5E1;
+  font-weight: 500;
+}
+
+/* Status Badges (Solid Vibrant Capsule Chips) */
+.mfg-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5px 12px;
+  border-radius: 20px;
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+  white-space: nowrap;
+  min-width: 96px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  color: #FFFFFF;
+  transition: all 0.2s ease;
+}
+
+.mfg-badge.in-progress,
+.mfg-badge.in-design {
+  background: #2563EB;
+  color: #FFFFFF;
+  border: 1px solid #3B82F6;
+}
+
+.mfg-badge.completed {
+  background: #059669;
+  color: #FFFFFF;
+  border: 1px solid #10B981;
+}
+
+.mfg-badge.not-started {
+  background: #475569;
+  color: #FFFFFF;
+  border: 1px solid #64748B;
+}
+
+.mfg-badge.on-hold {
+  background: #475569;
+  color: #FFFFFF;
+  border: 1px solid #64748B;
+}
+
+.mfg-badge.paused {
+  background: #DC2626;
+  color: #FFFFFF;
+  border: 1px solid #EF4444;
+}
+
+.mfg-badge.in-review {
+  background: #EA580C;
+  color: #FFFFFF;
+  border: 1px solid #F97316;
+}
+
+.mfg-badge.rework {
+  background: #8B5CF6;
+  color: #FFFFFF;
+  border: 1px solid #A855F7;
+}
+
+/* Progress Bar Cell */
+.mfg-progress-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 90px;
+}
+
+.mfg-progress-track {
+  flex: 1;
+  height: 10px;
+  background: #141b27;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.mfg-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2563EB, #3B82F6);
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.mfg-progress-text {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #CBD5E1;
+  width: 28px;
+  text-align: right;
+}
+
+/* Table Footer & Legend */
+.mfg-table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #0d121d;
+  border-top: 1px solid #1e293b;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.mfg-status-legend {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 11px;
+  color: #94A3B8;
+}
+
+.mfg-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mfg-legend-color {
+  width: 14px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.mfg-pagination {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mfg-page-btn {
+  background: #1e293b;
+  color: #94A3B8;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mfg-page-btn.active {
+  background: #F97316;
+  color: #FFFFFF;
+  border-color: #F97316;
+}
+
+.mfg-page-btn:hover:not(.active) {
+  background: #334155;
+  color: #FFFFFF;
+}
+
+/* New Manufacturing Entry Modal */
+.mfg-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.mfg-modal-overlay.active {
+  display: flex;
+}
+
+.mfg-modal-box {
+  background: #0B1220;
+  border: 1px solid #1B2842;
+  border-radius: 8px;
+  width: 92%;
+  max-width: 1160px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+.mfg-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #080D18;
+  border-bottom: 1px solid #1B2842;
+}
+
+.mfg-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: 0.3px;
+}
+
+.mfg-modal-title svg {
+  width: 18px;
+  height: 18px;
+  color: #3B82F6;
+}
+
+.btn-mfg-close-modal {
+  background: transparent;
+  border: none;
+  color: #8A9CB5;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.btn-mfg-close-modal:hover {
+  background: #1B2842;
+  color: #FFFFFF;
+}
+
+/* Modal Tabs */
+.mfg-modal-tabs {
+  display: flex;
+  background: #080D18;
+  border-bottom: 1px solid #1B2842;
+  padding: 0 16px;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.mfg-tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #8A9CB5;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 9px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.mfg-tab-btn:hover {
+  color: #FFFFFF;
+}
+
+.mfg-tab-btn.active {
+  color: #3B82F6;
+  border-bottom-color: #3B82F6;
+  font-weight: 700;
+}
+
+/* Modal Body Form */
+.mfg-modal-body {
+  padding: 18px 22px;
+  overflow-y: auto;
+  flex: 1;
+  background: #0B1220;
+}
+
+.mfg-tab-panel {
+  display: none;
+}
+
+.mfg-tab-panel.active {
+  display: block;
+}
+
+.mfg-tab-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 28px;
+}
+
+.mfg-field-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mfg-field-lbl {
+  font-size: 11px;
+  font-weight: 700;
+  color: #CBD5E1;
+  min-width: 110px;
+  white-space: nowrap;
+}
+
+.mfg-field-lbl.required::after {
+  content: ' *';
+  color: #EF4444;
+}
+
+.mfg-field-input,
+.mfg-field-select {
+  flex: 1;
+  background: #060B14;
+  border: 1px solid #1B2842;
+  border-radius: 4px;
+  padding: 7px 10px;
+  color: #FFFFFF;
+  font-size: 11.5px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.mfg-field-select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='%2364748B'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 24px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.mfg-field-input[readonly],
+.mfg-field-input:disabled {
+  background: #0E1626;
+  color: #8A9CB5;
+  border-color: #1B2842;
+}
+
+.mfg-field-input:focus,
+.mfg-field-select:focus,
+.mfg-field-textarea:focus {
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+.mfg-field-date-wrap {
+  display: flex;
+  align-items: center;
+  background: #060B14;
+  border: 1px solid #1B2842;
+  border-radius: 4px;
+  padding: 0 6px 0 10px;
+  flex: 1;
+}
+
+.mfg-field-date-wrap input {
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-size: 11.5px;
+  padding: 6px 0;
+  outline: none;
+  width: 100%;
+  cursor: pointer;
+  color-scheme: dark;
+}
+
+.mfg-field-date-wrap input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.8;
+  filter: invert(1);
+}
+
+.mfg-field-textarea {
+  width: 100%;
+  background: #060B14;
+  border: 1px solid #1B2842;
+  border-radius: 4px;
+  padding: 8px 10px;
+  color: #FFFFFF;
+  font-size: 11.5px;
+  outline: none;
+  min-height: 140px;
+  resize: vertical;
+}
+
+/* Modal Footer */
+.mfg-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: #080D18;
+  border-top: 1px solid #1B2842;
+}
+
+.btn-mfg-cancel {
+  background: #0E1626;
+  border: 1px solid #2A3B5C;
+  color: #CBD5E1;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-mfg-cancel:hover {
+  background: #1B2842;
+  color: #FFFFFF;
+}
+
+.btn-mfg-save {
+  background: #059669;
+  color: #FFFFFF;
+  border: 1px solid #10B981;
+  padding: 6px 18px;
+  border-radius: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.btn-mfg-save:hover {
+  background: #047857;
+}

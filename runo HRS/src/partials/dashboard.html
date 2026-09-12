@@ -1,77 +1,54 @@
+<!-- Center Hero Branding Section (Full Black Landing Page Style) -->
+<div class="dashboard-hero-section">
+  <img src="assets/logo.svg" alt="RUNO HRS INDIA" class="hero-logo-img">
+</div>
+
+<!-- Section Header & Financial Year Filter -->
 <div class="view-header">
   <div class="view-title-group">
-    <h1>DASHBOARD</h1>
+    <h1>COMPANY OVERVIEW</h1>
   </div>
   <div class="view-actions">
     <div class="filter-group">
       <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.8px;">PROJECTS BY YEAR</span>
       <div class="custom-dropdown" id="dropdown-dashboard-year">
         <button type="button" class="custom-dropdown-btn">
-          <span class="custom-dropdown-label">ALL PROJECTS</span>
+          <span class="custom-dropdown-label" id="label-dashboard-year">ALL PROJECTS</span>
           <svg class="custom-dropdown-arrow" width="12" height="12" viewBox="0 0 24 24"><path fill="currentColor" d="M7 10l5 5 5-5z"/></svg>
         </button>
-        <div class="custom-dropdown-menu">
-          <div class="custom-dropdown-item active" data-value="ALL">
-            <span>ALL PROJECTS</span>
-            <svg class="check-icon" width="13" height="13" viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-          </div>
-          <div class="custom-dropdown-item" data-value="2026">
-            <span>2026</span>
-            <svg class="check-icon" width="13" height="13" viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-          </div>
-          <div class="custom-dropdown-item" data-value="2025">
-            <span>2025</span>
-            <svg class="check-icon" width="13" height="13" viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-          </div>
-          <div class="custom-dropdown-item" data-value="2024">
-            <span>2024</span>
-            <svg class="check-icon" width="13" height="13" viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-          </div>
+        <div class="custom-dropdown-menu" id="dashboard-year-menu">
+          <!-- Dynamically populated based on April 1 rollover -->
         </div>
         <input type="hidden" id="select-dashboard-year" value="ALL">
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- KPI Summary Cards (Exact match of Screenshot 2) -->
+<!-- KPI Summary Cards (Placed directly above Recent Projects) -->
 <div class="kpi-grid">
   <div class="kpi-card">
-    <div class="kpi-value" id="kpi-total-projects">1</div>
+    <div class="kpi-value" id="kpi-total-projects">0</div>
     <div class="kpi-label">TOTAL PROJECTS</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-value" id="kpi-project-users">1</div>
+    <div class="kpi-value" id="kpi-project-users">0</div>
     <div class="kpi-label">PROJECT USERS</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-value" id="kpi-customers">1</div>
+    <div class="kpi-value" id="kpi-customers">0</div>
     <div class="kpi-label">CUSTOMERS</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-value" id="kpi-active-projects">1</div>
+    <div class="kpi-value" id="kpi-active-projects">0</div>
     <div class="kpi-label">ACTIVE PROJECTS</div>
   </div>
   <div class="kpi-card completed-card">
     <div>
       <div class="kpi-label" style="margin-top: 0; margin-bottom: 6px;">COMPLETED PROJECTS</div>
-      <div class="kpi-value" id="kpi-completed-projects" style="color: #059669;">0</div>
+      <div class="kpi-value" id="kpi-completed-projects" style="color: #10B981;">0</div>
     </div>
     <button id="btn-open-completed-kpi" class="btn-open-completed">OPEN COMPLETED PROJECTS</button>
-  </div>
-</div>
-
-<!-- Center Hero Branding Section -->
-<div class="dashboard-hero-section">
-  <img src="assets/icon.png" alt="RUNO HRS INDIA" class="hero-logo-img" style="max-width: 200px; width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 25px rgba(255, 87, 34, 0.25); border: 1px solid rgba(255,255,255,0.08); margin-bottom: 16px;">
-  <h2 class="hero-system-title">RUNO HRS INDIA</h2>
-  <p class="hero-system-desc">MANAGEMENT INFORMATION SYSTEM</p>
-  
-  <div class="quick-actions-bar" style="display: flex; gap: 12px; margin-top: 20px;">
-    <button class="btn-action-primary" id="btn-quick-new-project">+ NEW PROJECT</button>
-    <button class="btn-action-secondary" id="btn-quick-new-customer">+ ADD CUSTOMER</button>
-    <button class="btn-action-secondary" id="btn-quick-export">EXPORT REPORT</button>
   </div>
 </div>
 

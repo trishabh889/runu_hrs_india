@@ -2,6 +2,8 @@ const { contextBridge, ipcRenderer } = require('electron');
 const fs = require('fs');
 const path = require('path');
 
+const ELOG_PATH = path.join(__dirname, 'elog.txt');
+
 contextBridge.exposeInMainWorld('api', {
   getPartial: (name) => {
     const file = path.join(__dirname, 'src', 'partials', `${name}.html`);
@@ -38,8 +40,15 @@ contextBridge.exposeInMainWorld('api', {
   getWorkflow: (projectId) => ipcRenderer.invoke('projects:getWorkflow', projectId),
   setWorkflow: (projectId, step, timestamp) => ipcRenderer.invoke('projects:setWorkflow', { projectId, step, timestamp }),
 
+  // Bulk Data Management
+  clearAllSampleData: () => ipcRenderer.invoke('data:clearAllSampleData'),
+  resetToDefaultData: () => ipcRenderer.invoke('data:resetToDefaultData'),
+
   // Manufacturing & Approvals
   getManufacturing: (projectId) => ipcRenderer.invoke('manufacturing:getAll', projectId),
+  createManufacturingRecord: (data) => ipcRenderer.invoke('manufacturing:create', data),
+  updateManufacturingRecord: (id, data) => ipcRenderer.invoke('manufacturing:update', { id, data }),
+  deleteManufacturingRecord: (id) => ipcRenderer.invoke('manufacturing:delete', id),
   updateManufacturingStage: (projectId, stage, status, notes) => 
     ipcRenderer.invoke('manufacturing:updateStage', { projectId, stage, status, notes }),
   getApprovals: () => ipcRenderer.invoke('approvals:getAll'),
@@ -61,6 +70,13 @@ contextBridge.exposeInMainWorld('api', {
   getReorderList: () => ipcRenderer.invoke('store:getReorderList'),
   getStockLedger: () => ipcRenderer.invoke('store:getStockLedger'),
 
+  // Purchase Department (Slide 2)
+  getPurchaseRequests: (filters) => ipcRenderer.invoke('purchase:getAll', filters),
+  createPurchaseRequest: (data) => ipcRenderer.invoke('purchase:create', data),
+  updatePurchaseRequest: (id, data) => ipcRenderer.invoke('purchase:update', { id, data }),
+  deletePurchaseRequest: (id) => ipcRenderer.invoke('purchase:delete', id),
+  getPurchaseStats: () => ipcRenderer.invoke('purchase:getStats'),
+
   // Users & Password
   getUsers: () => ipcRenderer.invoke('users:getAll'),
   createUser: (data) => ipcRenderer.invoke('users:create', data),
@@ -70,9 +86,20 @@ contextBridge.exposeInMainWorld('api', {
 
   // Data Export
   exportCSV: (type) => ipcRenderer.invoke('data:exportCSV', type),
+  exportPDF: (params) => ipcRenderer.invoke('data:exportPDF', params),
 
   // Window Controls
   minimizeWindow: () => ipcRenderer.send('window:minimize'),
   maximizeWindow: () => ipcRenderer.send('window:maximize'),
-  closeWindow: () => ipcRenderer.send('window:close')
+  closeWindow: () => ipcRenderer.send('window:close'),
+
+  // Error Log (elog.txt)
+  readElog: () => {
+    try {
+      if (fs.existsSync(ELOG_PATH)) return fs.readFileSync(ELOG_PATH, 'utf8');
+      return '(No errors logged yet)';
+    } catch (e) { return 'Error reading log: ' + e.message; }
+  },
+  elogPath: ELOG_PATH,
+  openElog: () => ipcRenderer.invoke('elog:open')
 });

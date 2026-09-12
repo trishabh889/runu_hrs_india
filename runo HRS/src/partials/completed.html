@@ -1,28 +1,74 @@
 <div class="view-header">
   <div class="view-title-group">
     <h1 style="color: #10B981;">COMPLETED PROJECTS ARCHIVE</h1>
-    <p>Dispatched and successfully commissioned Hot Runner Systems</p>
+    <p>Dispatched and successfully commissioned Hot Runner Systems technical archive</p>
   </div>
   <div class="view-actions">
-    <button class="btn-action-secondary" id="btn-export-completed">EXPORT ARCHIVE</button>
+    <button class="btn-action-secondary" id="btn-export-completed-excel">EXPORT EXCEL</button>
+    <button class="btn-action-secondary" id="btn-export-completed-pdf">EXPORT PDF</button>
   </div>
 </div>
 
 <div class="table-card">
+  <div class="table-toolbar" style="display: flex; gap: 12px; align-items: center; justify-content: flex-end; flex-wrap: wrap;">
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">MONTH:</span>
+      <select id="filter-completed-month" class="filter-select-compact">
+        <option value="ALL">ALL MONTHS</option>
+        <option value="01">JANUARY</option>
+        <option value="02">FEBRUARY</option>
+        <option value="03">MARCH</option>
+        <option value="04">APRIL</option>
+        <option value="05">MAY</option>
+        <option value="06">JUNE</option>
+        <option value="07">JULY</option>
+        <option value="08">AUGUST</option>
+        <option value="09">SEPTEMBER</option>
+        <option value="10">OCTOBER</option>
+        <option value="11">NOVEMBER</option>
+        <option value="12">DECEMBER</option>
+      </select>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">YEAR:</span>
+      <select id="filter-completed-year" class="filter-select-compact">
+        <option value="ALL">ALL YEARS</option>
+        <option value="2026">2026</option>
+        <option value="2027">2027</option>
+        <option value="2028">2028</option>
+        <option value="2029">2029</option>
+        <option value="2030">2030</option>
+      </select>
+    </div>
+  </div>
+
   <div class="table-responsive">
-    <table class="data-table">
+    <table class="data-table" id="completed-projects-table">
       <thead>
         <tr>
-          <th>PROJECT CODE</th>
-          <th>CUSTOMER</th>
-          <th>MOULD DESCRIPTION</th>
-          <th>DROPS</th>
-          <th>TARGET DATE</th>
-          <th>STATUS</th>
+          <th>MFG DATE</th>
+          <th>CUSTOMER NAME</th>
+          <th>PROJECT NAME</th>
+          <th>ID CARDNO</th>
+          <th>DELIVERY DATE</th>
+          <th>COST($)</th>
+          <th>HRS TYPE</th>
+          <th>MATERIAL</th>
+          <th>NOZZLE SERIES</th>
+          <th>GATE TYPE</th>
+          <th>CONNECTOR</th>
+          <th>GATE DIA</th>
+          <th>GUIDE DIA</th>
+          <th>REMARK</th>
           <th>ACTIONS</th>
         </tr>
       </thead>
       <tbody id="completed-projects-table-body"></tbody>
     </table>
+  </div>
+  <div class="table-footer" style="padding: 10px 18px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(59, 130, 246, 0.18); background: #060d1a; font-size: 11.5px; color: #94A3B8; font-weight: 700;">
+    <div id="completed-footer-count">Total Projects: 0</div>
+    <div style="font-size: 11px; color: #64748B;">Click on Quote Status to update in real time</div>
   </div>
 </div>

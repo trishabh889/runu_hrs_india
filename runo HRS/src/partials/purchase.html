@@ -1,100 +1,176 @@
-<div class="view-header">
-  <div class="view-title-group">
-    <h1>PURCHASE &amp; PROCUREMENT</h1>
-    <p>Vendor purchase orders, steel forging requisitions, heater &amp; sensor procurement, and supplier management</p>
+<div class="purchase-title-bar">
+  <div class="purchase-title-left">
+    <h1 class="purchase-heading">PURCHASE REQUESTS</h1>
+    <p class="purchase-subheading">Create, track and manage purchase requests, quotations and purchase orders</p>
   </div>
-  <div class="view-actions">
-    <button class="btn-action-primary" id="btn-add-purchase-order">+ NEW PURCHASE REQUISITION</button>
-    <button class="btn-action-secondary" id="btn-export-purchase-excel">EXPORT EXCEL</button>
-  </div>
-</div>
-
-<div class="kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 20px;">
-  <div class="kpi-card">
-    <div class="kpi-title">OPEN PURCHASE ORDERS</div>
-    <div class="kpi-value" style="color: var(--brand-orange);">4</div>
-    <div class="kpi-subtext">Active Vendor Indents</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-title">MONTHLY PROCUREMENT</div>
-    <div class="kpi-value">₹ 6,85,000</div>
-    <div class="kpi-subtext">Components &amp; Tool Steel</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-title">APPROVED VENDORS</div>
-    <div class="kpi-value" style="color: #10B981;">18</div>
-    <div class="kpi-subtext">Quality Audited Suppliers</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-title">PENDING DISPATCHES</div>
-    <div class="kpi-value">2</div>
-    <div class="kpi-subtext">Awaiting Material Delivery</div>
+  <div class="purchase-title-right">
+    <button type="button" class="btn-new-purchase" id="btn-open-new-pr-modal">
+      <span style="font-size: 15px; font-weight: 900;">+</span> NEW PURCHASE REQUEST
+    </button>
   </div>
 </div>
 
-<div class="table-card">
-  <div class="table-toolbar">
-    <div class="search-box">
-      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-      <input type="text" id="search-purchase" placeholder="Search PO number, supplier, or material description...">
+<!-- 6 KPI Summary Cards matching Screenshot -->
+<div class="purchase-kpi-grid">
+  <!-- 1. Total Requests -->
+  <div class="pr-kpi-card">
+    <div class="pr-kpi-icon-box" style="background: #1D4ED8;">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="#FFFFFF"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+    </div>
+    <div class="pr-kpi-info">
+      <div class="pr-kpi-val" id="kpi-pr-total">15</div>
+      <div class="pr-kpi-lbl">TOTAL REQUESTS</div>
     </div>
   </div>
-  <div class="table-responsive">
-    <table class="data-table">
+
+  <!-- 2. Pending Approval -->
+  <div class="pr-kpi-card">
+    <div class="pr-kpi-icon-box" style="background: #EA580C;">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="#FFFFFF"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+    </div>
+    <div class="pr-kpi-info">
+      <div class="pr-kpi-val" id="kpi-pr-pending-appr" style="color: #FFFFFF;">5</div>
+      <div class="pr-kpi-lbl">PENDING APPROVAL</div>
+    </div>
+  </div>
+
+  <!-- 3. Quotation Received -->
+  <div class="pr-kpi-card">
+    <div class="pr-kpi-icon-box" style="background: #0284C7;">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="#FFFFFF"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+    </div>
+    <div class="pr-kpi-info">
+      <div class="pr-kpi-val" id="kpi-pr-quote-rcvd">3</div>
+      <div class="pr-kpi-lbl">QUOTATION RECEIVED</div>
+    </div>
+  </div>
+
+  <!-- 4. PO Released -->
+  <div class="pr-kpi-card">
+    <div class="pr-kpi-icon-box" style="background: #059669;">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="#FFFFFF"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+    </div>
+    <div class="pr-kpi-info">
+      <div class="pr-kpi-val" id="kpi-pr-poreleased">6</div>
+      <div class="pr-kpi-lbl">PO RELEASED</div>
+    </div>
+  </div>
+
+  <!-- 5. In Transit -->
+  <div class="pr-kpi-card">
+    <div class="pr-kpi-icon-box" style="background: #6366F1;">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="#FFFFFF"><path d="M20 8h-3V4H1v13h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+    </div>
+    <div class="pr-kpi-info">
+      <div class="pr-kpi-val" id="kpi-pr-intransit">3</div>
+      <div class="pr-kpi-lbl">IN TRANSIT</div>
+    </div>
+  </div>
+
+  <!-- 6. Received -->
+  <div class="pr-kpi-card">
+    <div class="pr-kpi-icon-box" style="background: #10B981;">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="#FFFFFF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+    </div>
+    <div class="pr-kpi-info">
+      <div class="pr-kpi-val" id="kpi-pr-received">4</div>
+      <div class="pr-kpi-lbl">RECEIVED</div>
+    </div>
+  </div>
+</div>
+
+<!-- Horizontal Filter Bar -->
+<div class="purchase-filter-bar">
+  <select id="filter-pr-project" class="pr-filter-select">
+    <option value="ALL">All Projects</option>
+  </select>
+
+  <select id="filter-pr-vendor" class="pr-filter-select">
+    <option value="ALL">All Vendors</option>
+  </select>
+
+  <select id="filter-pr-status" class="pr-filter-select">
+    <option value="ALL">All Status</option>
+    <option value="Pending">Pending</option>
+    <option value="In Review">In Review</option>
+    <option value="Approved">Approved</option>
+    <option value="PO Released">PO Released</option>
+    <option value="In Transit">In Transit</option>
+    <option value="Received">Received</option>
+    <option value="Cancelled">Cancelled</option>
+  </select>
+
+  <div class="pr-date-range-box" style="display: flex; align-items: center; gap: 4px;">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+    <input type="date" id="filter-pr-start" style="background: transparent; border: none; color: #E2E8F0; font-size: 11px; outline: none;" title="Start Date">
+    <span style="color: #64748B;">—</span>
+    <input type="date" id="filter-pr-end" style="background: transparent; border: none; color: #E2E8F0; font-size: 11px; outline: none;" title="End Date">
+  </div>
+
+  <div class="pr-search-box">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="#64748B"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    <input type="text" id="search-purchase-requests" placeholder="Search...">
+  </div>
+
+  <button type="button" class="btn-pr-filter-btn" id="btn-pr-filter-apply">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+    Filter
+  </button>
+  <button type="button" class="btn-pr-filter-btn" id="btn-pr-filter-reset" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15);">
+    Reset
+  </button>
+</div>
+
+<!-- Table Card -->
+<div class="pr-table-card">
+  <div style="overflow-x: auto;">
+    <table class="pr-data-table">
       <thead>
         <tr>
-          <th>PO NUMBER</th>
-          <th>DATE</th>
-          <th>SUPPLIER NAME</th>
-          <th>MATERIAL DESCRIPTION</th>
-          <th>ORDER QTY</th>
-          <th>TOTAL VALUE</th>
-          <th>TARGET DELIVERY</th>
-          <th>STATUS</th>
+          <th style="width: 45px; text-align: center;">SR NO</th>
+          <th style="width: 95px;">PR NO</th>
+          <th style="width: 80px;">DATE</th>
+          <th style="width: 110px;">PROJECT CODE</th>
+          <th>PROJECT DESCRIPTION</th>
+          <th>ITEM DESCRIPTION</th>
+          <th style="text-align: center; width: 45px;">QTY</th>
+          <th style="width: 50px;">UNIT</th>
+          <th style="width: 75px;">PR BY</th>
+          <th style="width: 85px;">REQUIRED DATE</th>
+          <th style="text-align: center; width: 105px;">STATUS</th>
+          <th style="width: 95px;">PO NO</th>
+          <th style="width: 90px;">VENDOR</th>
+          <th style="text-align: center; width: 85px;">ACTIONS</th>
         </tr>
       </thead>
-      <tbody id="purchase-table-body">
-        <tr>
-          <td><span style="font-weight: 700; color: var(--brand-orange);">PO-2026-088</span></td>
-          <td>2026-02-10</td>
-          <td style="font-weight: 600;">Rotfil Heating Tech Ltd.</td>
-          <td>Coil Heater Band 230V 650W (Custom Drop Size)</td>
-          <td>30 NOS</td>
-          <td>₹ 45,000</td>
-          <td>2026-02-25</td>
-          <td><span class="badge badge-active">DELIVERED</span></td>
-        </tr>
-        <tr>
-          <td><span style="font-weight: 700; color: var(--brand-orange);">PO-2026-094</span></td>
-          <td>2026-02-18</td>
-          <td style="font-weight: 600;">SMC Pneumatics India</td>
-          <td>Pneumatic Valve Gate Cylinder 16mm (Compact)</td>
-          <td>12 NOS</td>
-          <td>₹ 72,000</td>
-          <td>2026-03-05</td>
-          <td><span class="badge badge-active">DELIVERED</span></td>
-        </tr>
-        <tr>
-          <td><span style="font-weight: 700; color: var(--brand-orange);">PO-2026-101</span></td>
-          <td>2026-02-28</td>
-          <td style="font-weight: 600;">Bohler-Uddeholm Special Steels</td>
-          <td>Pre-hardened H13 Vacuum Degassed Forged Manifold Block</td>
-          <td>450 KGS</td>
-          <td>₹ 3,15,000</td>
-          <td>2026-03-18</td>
-          <td><span class="badge badge-review">IN TRANSIT</span></td>
-        </tr>
-        <tr>
-          <td><span style="font-weight: 700; color: var(--brand-orange);">PO-2026-105</span></td>
-          <td>2026-03-02</td>
-          <td style="font-weight: 600;">Harting India Pvt. Ltd.</td>
-          <td>Heavy Duty Ceramic Mold Connectors 16-Pin &amp; 24-Pin</td>
-          <td>25 NOS</td>
-          <td>₹ 58,000</td>
-          <td>2026-03-22</td>
-          <td><span class="badge badge-review">PO ISSUED</span></td>
-        </tr>
-      </tbody>
+      <tbody id="purchase-table-body"></tbody>
     </table>
+  </div>
+</div>
+
+<!-- Pagination Bar -->
+<div class="purchase-pagination-bar">
+  <div class="pr-entries-text">Showing 1 to 15 of 15 entries</div>
+  <div class="pr-pagination-controls">
+    <button type="button" class="pr-page-link disabled">Previous</button>
+    <span class="pr-page-num">1</span>
+    <button type="button" class="pr-page-link disabled">Next</button>
+  </div>
+</div>
+
+<!-- Status Legend & Motto Bar -->
+<div class="purchase-footer-legend-bar">
+  <div class="pr-status-legend">
+    <span class="pr-legend-title">Status Legend :</span>
+    <span class="pr-legend-item"><span class="pr-legend-swatch" style="background: #EAB308;"></span>Pending</span>
+    <span class="pr-legend-item"><span class="pr-legend-swatch" style="background: #F97316;"></span>In Review</span>
+    <span class="pr-legend-item"><span class="pr-legend-swatch" style="background: #2563EB;"></span>Approved</span>
+    <span class="pr-legend-item"><span class="pr-legend-swatch" style="background: #10B981;"></span>PO Released</span>
+    <span class="pr-legend-item"><span class="pr-legend-swatch" style="background: #6366F1;"></span>In Transit</span>
+    <span class="pr-legend-item"><span class="pr-legend-swatch" style="background: #059669;"></span>Received</span>
+    <span class="pr-legend-item"><span class="pr-legend-swatch" style="background: #EF4444;"></span>Cancelled</span>
+  </div>
+  <div class="pr-footer-quote">
+    "From Components to Reliable Hot Runner Solutions"
   </div>
 </div>

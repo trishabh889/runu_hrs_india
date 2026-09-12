@@ -16,7 +16,7 @@ function registerAuthHandlers(sessionState) {
 
   ipcMain.handle('auth:register', (event, userData) => {
     const res = db.users.create(userData);
-    if (res.success) {
+    if (res.success && !res.pendingApproval) {
       sessionState.currentUser = res.user;
     }
     return res;

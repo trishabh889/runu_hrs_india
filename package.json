@@ -6,8 +6,15 @@
   "main": "runo HRS/main.js",
   "scripts": {
     "start": "electron \"runo HRS\"",
-    "build:exe": "electron-builder --win portable",
-    "build:installer": "electron-builder --win nsis"
+    "build:exe": "node \"runo HRS/build_exe.js\"",
+    "build:installer": "electron-builder --win nsis",
+    "test": "npm run test:lint && npm run test:unit && npm run test:e2e",
+    "test:unit": "node scripts/testing/run-unit-tests.cjs",
+    "test:integration": "node scripts/testing/run-unit-tests.cjs",
+    "test:e2e": "npx playwright test",
+    "test:smoke": "npx playwright test -g \"@smoke\"",
+    "test:report": "npx playwright show-report",
+    "test:lint": "node scripts/testing/check-test-file-size.cjs"
   },
   "keywords": [
     "runo",
@@ -19,6 +26,7 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "electron": "^44.3.0",
     "electron-builder": "^26.15.3"
   },

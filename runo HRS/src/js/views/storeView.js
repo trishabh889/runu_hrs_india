@@ -200,7 +200,7 @@ async function renderStoreTable(tab, search = '') {
     items.forEach(i => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td><span style="font-family: monospace; font-weight: 700; color: var(--brand-orange);">${i.code}</span></td>
+        <td><span style="font-family: var(--font-primary); font-weight: 700; color: var(--brand-orange);">${i.code}</span></td>
         <td style="font-weight: 600;">${i.name}</td>
         <td><span class="badge badge-active">${i.category}</span></td>
         <td>${i.unit}</td>
@@ -229,7 +229,7 @@ async function renderStoreTable(tab, search = '') {
     godowns.forEach(g => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td><span style="font-family: monospace; font-weight: 700; color: var(--brand-orange);">${g.code}</span></td>
+        <td><span style="font-family: var(--font-primary); font-weight: 700; color: var(--brand-orange);">${g.code}</span></td>
         <td style="font-weight: 700;">${g.name}</td>
         <td>${g.minStock || '-'}</td>
         <td>${g.location || '-'}</td>
@@ -252,7 +252,7 @@ async function renderStoreTable(tab, search = '') {
     list.forEach(r => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td><span style="font-family: monospace; font-weight: 700; color: var(--brand-orange);">${r.code}</span></td>
+        <td><span style="font-family: var(--font-primary); font-weight: 700; color: var(--brand-orange);">${r.code}</span></td>
         <td style="font-weight: 600;">${r.name}</td>
         <td style="font-weight: 700;">${r.currentStock} ${r.unit}</td>
         <td>${r.reorderLevel} ${r.unit}</td>
@@ -279,7 +279,7 @@ async function renderStoreTable(tab, search = '') {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${row.date}</td>
-        <td><span style="font-family: monospace; font-weight: 700; color: var(--brand-orange);">${row.itemCode}</span></td>
+        <td><span style="font-family: var(--font-primary); font-weight: 700; color: var(--brand-orange);">${row.itemCode}</span></td>
         <td style="font-weight: 600;">${row.itemName}</td>
         <td><span class="badge badge-active">${row.tabType}</span></td>
         <td>${row.refNo}</td>
@@ -311,8 +311,8 @@ async function renderStoreTable(tab, search = '') {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${t.date}</td>
-        <td><span style="font-family: monospace; font-size: 11px;">${t.refNo}</span></td>
-        <td><span style="font-family: monospace; font-weight: 700; color: var(--brand-orange);">${t.itemCode}</span></td>
+        <td><span style="font-family: var(--font-primary); font-size: 11px;">${t.refNo}</span></td>
+        <td><span style="font-family: var(--font-primary); font-weight: 700; color: var(--brand-orange);">${t.itemCode}</span></td>
         <td style="font-weight: 600;">${t.itemName}</td>
         <td>${t.partyOrDept}</td>
         <td style="font-weight: 700;">${t.qty} ${t.unit}</td>

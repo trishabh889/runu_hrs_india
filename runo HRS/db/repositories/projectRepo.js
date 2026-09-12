@@ -2,6 +2,8 @@
 // RUNO HRS INDIA - Project Repository (Sales, Commercial & Design Lifecycle)
 // ==========================================================================
 
+const { normalizeDateStr, isDateInRange } = require('../dateUtils');
+
 class ProjectRepository {
   constructor(db) {
     this.db = db;
@@ -10,9 +12,30 @@ class ProjectRepository {
   getAll(filters = {}) {
     let list = [...(this.db.data.projects || [])];
 
+    if (filters.startDate || filters.endDate) {
+      list = list.filter(p => isDateInRange(p.order_date || p.target_date || p.created_at, filters.startDate, filters.endDate));
+    }
+
     if (filters.year && filters.year !== 'ALL' && filters.year !== 'ALL PROJECTS') {
-      const targetYear = filters.year.toString().replace(/[^0-9]/g, '').slice(0, 4);
-      list = list.filter(p => (p.year || '').includes(targetYear) || (p.order_date || '').includes(targetYear));
+      const match = filters.year.toString().match(/(\d{4})[-/](\d{2,4})/);
+      if (match) {
+        const startYr = parseInt(match[1]);
+        const endPart = match[2];
+        const endYr = endPart.length === 2 ? parseInt(startYr.toString().slice(0, 2) + endPart) : parseInt(endPart);
+        const fyStart = `${startYr}-04-01`;
+        const fyEnd = `${endYr}-03-31`;
+        list = list.filter(p => {
+          const norm = normalizeDateStr(p.order_date || p.created_at);
+          if (norm && norm >= fyStart && norm <= fyEnd) return true;
+          return (p.year || '') === startYr.toString();
+        });
+      } else {
+        const targetYear = filters.year.toString().replace(/[^0-9]/g, '').slice(0, 4);
+        list = list.filter(p => {
+          const norm = normalizeDateStr(p.order_date || p.created_at);
+          return (p.year || '').includes(targetYear) || (norm && norm.startsWith(targetYear));
+        });
+      }
     }
 
     if (filters.status && filters.status !== 'ALL') {
@@ -74,19 +97,24 @@ class ProjectRepository {
       manifold_type: projData.manifold_type || 'Balanced Manifold H13',
       runner_diameter: projData.runner_diameter || '12 mm',
       gate_type: projData.gate_type || 'Valve Gate 2.5mm',
-      material: projData.material || 'Polycarbonate (PC)',
-      shot_weight: projData.shot_weight || '',
+      material: projData.plastic_grade || projData.material || 'Polycarbonate (PC)',
+      plastic_grade: projData.plastic_grade || projData.material || 'Polycarbonate (PC)',
+      shot_weight: projData.part_weight || projData.shot_weight || '',
+      part_weight: projData.part_weight || projData.shot_weight || '',
+      color_change: projData.color_change || 'NO',
+      mould_type: projData.mould_type || 'NEW MOULD',
+      year_month: projData.year_month || '',
       year: projData.year || year,
       order_date: projData.order_date || new Date().toISOString().split('T')[0],
       target_date: projData.target_date || '',
       status: projData.status || 'ACTIVE',
-      priority: projData.priority || 'MEDIUM',
+      priority: projData.mould_type || projData.priority || 'MEDIUM',
       project_manager: projData.project_manager || 'Anand Sharma',
       lead_engineer: projData.lead_engineer || 'Vikram Singh',
-      value: projData.value || '₹ 3,50,000',
+      value: projData.value || '₹ 5,50,000',
       id_card_no: projData.id_card_no || `IDC-${year}-${String(count).padStart(2, '0')}`,
-      cost: projData.cost || '350000',
-      hrs_type: (projData.category || 'HRS').toUpperCase(),
+      cost: projData.cost || '550000',
+      hrs_type: projData.hrs_type || projData.nozzle_type || 'VALVE - RUNNER',
       nozzle_series: projData.nozzle_series || 'Series 16',
       connector: projData.connector || '16-Pin Heavy Duty',
       gate_dia: projData.gate_dia || '2.5 mm',

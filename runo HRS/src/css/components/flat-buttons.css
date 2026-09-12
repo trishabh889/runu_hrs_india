@@ -1,0 +1,21 @@
+/* All buttons stay flat in default, active, focus and hover states. */
+:is(button, [role="button"], input[type="button"], input[type="submit"],
+    input[type="reset"], .nav-item, .custom-dropdown-item,
+    [class^="btn-"], [class*=" btn-"]) {
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+:is(button, [role="button"], .nav-item, .custom-dropdown-item,
+    [class^="btn-"], [class*=" btn-"]) *,
+:is(button, [role="button"], .nav-item)::before,
+:is(button, [role="button"], .nav-item)::after {
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+:is(button, [role="button"], input[type="button"], input[type="submit"],
+    .custom-dropdown-item):focus-visible {
+  outline: 2px solid #ffc398;
+  outline-offset: 2px;
+}

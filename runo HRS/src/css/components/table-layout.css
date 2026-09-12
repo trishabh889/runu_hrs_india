@@ -1,0 +1,82 @@
+/* Consistent table density, with horizontal scrolling for wide domain schemas. */
+:root {
+  --table-header-height: 40px;
+  --table-row-height: 52px;
+  --table-cell-padding: 8px 12px;
+  --table-radius: 8px;
+}
+:is(.table-card, .pr-table-card, .design-table-card, .mfg-table-card) {
+  width: 100%;
+  min-width: 0;
+  border-radius: var(--table-radius);
+}
+:is(.table-responsive, .design-table-wrapper) {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+}
+:is(.data-table, .pr-data-table, .design-master-table, .mfg-table) {
+  width: 100%;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-primary);
+  font-size: 12px !important;
+}
+:is(.data-table, .pr-data-table, .design-master-table, .mfg-table) thead th {
+  height: var(--table-header-height) !important;
+  padding: var(--table-cell-padding) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  line-height: 16px;
+  letter-spacing: 0.5px !important;
+  white-space: nowrap;
+  vertical-align: middle;
+  text-align: left;
+}
+/* Each tier is 40px; row-spanning labels cover both tiers. */
+.design-master-table thead th.group-header { padding: 3px 12px !important; }
+:is(.data-table, .pr-data-table, .design-master-table, .mfg-table) tbody td {
+  height: var(--table-row-height);
+  padding: var(--table-cell-padding) !important;
+  font-size: 12px !important;
+  line-height: 16px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+:is(.data-table, .pr-data-table, .design-master-table, .mfg-table) td > div {
+  line-height: 16px;
+}
+/* Keep stacked identifiers readable without wrapping them into tall rows. */
+#customers-table-body td > div { flex-wrap: nowrap !important; }
+:is(.data-table, .pr-data-table, .design-master-table, .mfg-table) td[colspan] {
+  white-space: normal;
+}
+:is(.data-table, .pr-data-table, .design-master-table, .mfg-table)
+    :is(.badge, .pr-status-badge, .status-pill, .mfg-badge) {
+  min-width: 104px;
+  height: 26px;
+  padding: 0 10px;
+  line-height: 24px;
+  font-size: 10.5px;
+}
+:is(.data-table, .pr-data-table, .design-master-table, .mfg-table)
+    :is(.btn-icon, .pr-action-btn, .btn-action-icon) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  flex: 0 0 30px;
+  color: #FFFFFF !important;
+}
+:is(.data-table, .pr-data-table, .design-master-table, .mfg-table)
+    :is(.btn-icon, .pr-action-btn, .btn-action-icon) svg {
+  fill: #FFFFFF !important;
+  color: #FFFFFF !important;
+}
+:is(.table-actions, .pr-action-group) { align-items: center; gap: 6px; }
+:is(.table-responsive, .design-table-wrapper)::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}

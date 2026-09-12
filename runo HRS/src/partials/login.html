@@ -1,82 +1,153 @@
 <div class="login-container">
-  <!-- Left Brand Showcase -->
+  <!-- Left Brand Showcase: Sleek pure black background with standalone RUNO vector logo -->
   <div class="login-brand-panel">
-    <div style="padding: 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 18px; box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 35px rgba(255, 87, 34, 0.25);">
-      <img src="assets/icon.png" alt="RUNO HRS INDIA" class="login-logo-img" style="max-width: 290px; width: 100%; border-radius: 14px; display: block;">
-    </div>
-    <div style="margin-top: 24px; text-align: center; z-index: 2;">
-      <div style="font-size: 13px; font-weight: 800; letter-spacing: 3px; color: var(--brand-orange); text-transform: uppercase;">MANAGEMENT INFORMATION SYSTEM</div>
-      <div style="font-size: 11px; font-weight: 600; letter-spacing: 2px; color: #94A3B8; margin-top: 6px;">ENTERPRISE HOT RUNNER SOLUTIONS</div>
+    <div class="brand-logo-wrapper">
+      <img src="assets/logo.svg" alt="RUNO HRS INDIA" class="login-logo-img">
     </div>
   </div>
 
-
   <!-- Right Form Panel -->
   <div class="login-form-panel">
-    <div class="login-header-group">
-      <h1 class="login-system-title">RUNO HRS INDIA</h1>
-      <p class="login-system-subtitle">Management Information System</p>
+    <div class="login-card-box">
+      <div class="login-header-group">
+        <h1 class="login-system-title">RUNO HRS INDIA</h1>
+        <p class="login-system-subtitle">MANAGEMENT INFORMATION SYSTEM</p>
+      </div>
+
+      <!-- Auth Switch Tabs -->
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab-btn active" id="tab-btn-login">LOGIN</button>
+        <button type="button" class="auth-tab-btn" id="tab-btn-register">REGISTER</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="form-login" onsubmit="return false;">
+        <div class="login-form-group">
+          <label for="login-username">USERNAME</label>
+          <input type="text" id="login-username" class="login-input" placeholder="Enter username" autocomplete="off" required>
+        </div>
+
+        <div class="login-form-group">
+          <label for="login-password">PASSWORD</label>
+          <input type="password" id="login-password" class="login-input" placeholder="Enter password" required>
+        </div>
+
+        <button type="submit" id="btn-submit-login" class="btn-login">LOGIN</button>
+        <div id="login-error" class="login-error-msg"></div>
+
+        <p class="login-hint-text">ADMIN: ANAND / ADMIN</p>
+        <p style="text-align: center; margin-top: 14px; font-size: 12px; color: #8B9BB4;">
+          New user? <span class="auth-toggle-link" id="link-to-register">Register account here</span>
+        </p>
+      </form>
+
+      <!-- REGISTRATION FORM -->
+      <form id="form-register" style="display: none;" onsubmit="return false;">
+        <div class="login-form-group">
+          <label for="reg-username">USERNAME *</label>
+          <input type="text" id="reg-username" class="login-input" placeholder="e.g. AMIT" autocomplete="off" required>
+        </div>
+
+        <div class="login-form-group">
+          <label for="reg-name">FULL NAME</label>
+          <input type="text" id="reg-name" class="login-input" placeholder="e.g. Amit Kumar">
+        </div>
+
+        <!-- A. ROLE HTA K DEPARTMENT DAAL DO - SCROLL RHEGA (11 Options) -->
+        <div class="login-form-group">
+          <label for="reg-department">DEPARTMENT *</label>
+          <select id="reg-department" class="login-input" style="cursor: pointer;" required>
+            <option value="ADMIN">1. ADMIN</option>
+            <option value="CUSTOMER">2. CUSTOMER</option>
+            <option value="VENDOR">3. VENDOR</option>
+            <option value="SALES">4. SALES</option>
+            <option value="COMMERCIAL">5. COMMERCIAL</option>
+            <option value="DESIGN" selected>6. DESIGN</option>
+            <option value="MANUFACTURING">7. MANUFACTURING</option>
+            <option value="ACCOUNTS">8. ACCOUNTS</option>
+            <option value="ASSEMBLY">9. ASSEMBLY</option>
+            <option value="STORE">10. STORE</option>
+            <option value="SERVICE">11. SERVICE</option>
+          </select>
+        </div>
+
+        <!-- B. DEPARTMENT K BAAD ROLE/DESIGNATION DAAL DO - MANUAL INPUT RHEGA -->
+        <div class="login-form-group">
+          <label for="reg-designation">ROLE / DESIGNATION *</label>
+          <input type="text" id="reg-designation" class="login-input" placeholder="e.g. Senior Design Engineer / CNC Operator" required>
+        </div>
+
+        <div class="login-form-group">
+          <label for="reg-password">CREATE PASSWORD *</label>
+          <input type="password" id="reg-password" class="login-input" placeholder="Enter password" required>
+        </div>
+
+        <button type="submit" id="btn-submit-register" class="btn-login">REGISTER ACCOUNT</button>
+        <div id="register-error" class="login-error-msg"></div>
+
+        <p style="text-align: center; margin-top: 16px; font-size: 12px; color: #8B9BB4;">
+          Already registered? <span class="auth-toggle-link" id="link-to-login">Back to Login</span>
+        </p>
+      </form>
     </div>
+  </div>
 
-    <!-- Auth Switch Tabs -->
-    <div class="auth-tabs">
-      <button type="button" class="auth-tab-btn active" id="tab-btn-login">LOGIN</button>
-      <button type="button" class="auth-tab-btn" id="tab-btn-register">REGISTER</button>
+  <!-- C. ADMIN APPROVE KREGA TBHI LOGIN HOGA POP-UP MODAL -->
+  <div id="modal-admin-approval-notice" class="modal-overlay" style="display: none; z-index: 9999;">
+    <div class="modal-box" style="max-width: 480px; text-align: center; padding: 28px; background: #0c1017; border: 1px solid #1e293b; border-radius: 8px;">
+      <div style="width: 54px; height: 54px; border-radius: 50%; background: rgba(245, 158, 11, 0.15); color: #F59E0B; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      </div>
+
+      <h2 id="approval-notice-title" style="font-size: 17px; font-weight: 800; color: #FFFFFF; margin: 0 0 8px 0; letter-spacing: 0.5px;">ACCOUNT APPROVAL REQUIRED</h2>
+      
+      <div style="display: inline-block; background: rgba(245, 158, 11, 0.2); color: #F59E0B; font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 4px; margin-bottom: 14px;">
+        PENDING ADMIN APPROVAL
+      </div>
+
+      <p id="approval-notice-desc" style="font-size: 12.5px; color: #CBD5E1; line-height: 1.5; margin: 0 0 20px 0;">
+        Admin approve karega tabhi login hoga. Aapka account successfully register ho gaya hai, kripya administrator se sampark karein.
+      </p>
+
+      <!-- Contact Admin Box -->
+      <div style="background: #06090f; border: 1px solid #1e293b; border-radius: 6px; padding: 14px; margin-bottom: 22px; text-align: left;">
+        <div style="font-size: 11px; font-weight: 800; color: #EF4444; letter-spacing: 0.8px; margin-bottom: 8px; text-transform: uppercase;">
+          PLEASE CONTACT ADMIN:
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #94A3B8;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#3B82F6"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <span>Email: <strong style="color: #FFFFFF;">anand@runohrs.com</strong></span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#10B981"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            <span>Phone: <strong style="color: #FFFFFF;">+91 98765 43210</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn-login" id="btn-close-approval-notice" style="width: 100%;">
+        OK, BACK TO LOGIN
+      </button>
     </div>
+  </div>
 
-    <!-- LOGIN FORM -->
-    <form id="form-login" onsubmit="return false;">
-      <div class="login-form-group">
-        <label for="login-username">USERNAME</label>
-        <input type="text" id="login-username" class="login-input" placeholder="Enter username" autocomplete="off" required>
-      </div>
-
-      <div class="login-form-group">
-        <label for="login-password">PASSWORD</label>
-        <input type="password" id="login-password" class="login-input" placeholder="Enter password" required>
-      </div>
-
-      <button type="submit" id="btn-submit-login" class="btn-login">LOGIN</button>
-      <div id="login-error" class="login-error-msg"></div>
-
-      <p class="login-hint-text">ADMIN: ANAND / ADMIN</p>
-      <p style="text-align: center; margin-top: 14px; font-size: 12px; color: #94A3B8;">
-        New user? <span class="auth-toggle-link" id="link-to-register">Register account here</span>
-      </p>
-    </form>
-
-    <!-- REGISTRATION FORM -->
-    <form id="form-register" style="display: none;" onsubmit="return false;">
-      <div class="login-form-group">
-        <label for="reg-username">USERNAME *</label>
-        <input type="text" id="reg-username" class="login-input" placeholder="e.g. AMIT" autocomplete="off" required>
-      </div>
-
-      <div class="login-form-group">
-        <label for="reg-name">FULL NAME</label>
-        <input type="text" id="reg-name" class="login-input" placeholder="e.g. Amit Kumar">
-      </div>
-
-      <div class="login-form-group">
-        <label for="reg-role">ROLE / DESIGNATION</label>
-        <select id="reg-role" class="login-input" style="cursor: pointer;">
-          <option value="ENGINEER">DESIGN ENGINEER</option>
-          <option value="OPERATOR">CNC / TOOLING OPERATOR</option>
-          <option value="ADMIN">ADMINISTRATOR</option>
-        </select>
-      </div>
-
-      <div class="login-form-group">
-        <label for="reg-password">CREATE PASSWORD *</label>
-        <input type="password" id="reg-password" class="login-input" placeholder="Enter password" required>
-      </div>
-
-      <button type="submit" id="btn-submit-register" class="btn-login">REGISTER & LOGIN</button>
-      <div id="register-error" class="login-error-msg"></div>
-
-      <p style="text-align: center; margin-top: 16px; font-size: 12px; color: #94A3B8;">
-        Already registered? <span class="auth-toggle-link" id="link-to-login">Back to Login</span>
-      </p>
-    </form>
+  <!-- Right Bottom Corner: Admin Support / Help Contact Badge -->
+  <div class="login-support-corner">
+    <div class="support-title-row">
+      <svg viewBox="0 0 24 24" class="support-icon"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm0-4h-2V7h2v7z"/></svg>
+      <span>Facing issues? Contact Administrator:</span>
+    </div>
+    <div class="support-contact-row">
+      <a href="mailto:anand@runohrs.com" class="support-contact-item" title="Send Email to Admin">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        <span>anand@runohrs.com</span>
+      </a>
+      <span class="support-separator">•</span>
+      <a href="tel:+919876543210" class="support-contact-item" title="Call Admin Support">
+        <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        <span>+91 98765 43210</span>
+      </a>
+    </div>
   </div>
 </div>

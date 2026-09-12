@@ -39,6 +39,14 @@
         <option value="2028">FY 2028-29</option>
       </select>
     </div>
+
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">DATE:</span>
+      <input type="date" id="filter-sales-start" class="filter-select-compact" style="padding: 4px 6px;" title="Start Date">
+      <span style="color: var(--text-muted);">-</span>
+      <input type="date" id="filter-sales-end" class="filter-select-compact" style="padding: 4px 6px;" title="End Date">
+    </div>
+    <button type="button" class="btn-action-secondary" id="btn-sales-filter-reset" style="padding: 5px 10px; font-size: 11px;">RESET</button>
   </div>
 
   <div class="table-responsive">
@@ -47,13 +55,10 @@
         <tr>
           <th>DATE</th>
           <th>CUSTOMER NAME</th>
-          <th>PROJECT CODE</th>
+          <th>PROJECT NAME</th>
           <th>CATEGORY</th>
           <th>QUOTE STATUS</th>
-          <th>PO RECEIVED</th>
-          <th>2D DESIGN</th>
-          <th>3D DESIGN</th>
-          <th>DESIGN SEND</th>
+          <th>PO STATUS</th>
           <th>DESIGN CHECK</th>
           <th>OWNER</th>
           <th>STATUS</th>

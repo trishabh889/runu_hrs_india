@@ -1,0 +1,126 @@
+<div class="view-header">
+  <div class="view-title-group">
+    <h1>CUSTOMER SERVICE &amp; SUPPORT</h1>
+    <p>Hot runner on-site installations, maintenance tickets, spare parts support, and technical servicing</p>
+  </div>
+  <div class="view-actions">
+    <button class="btn-action-primary" onclick="window.showToast('New service ticket logged', 'success')">+ NEW SERVICE TICKET</button>
+    <button class="btn-action-secondary" onclick="window.api.exportCSV && window.api.exportCSV('SERVICE')">EXPORT TICKETS</button>
+  </div>
+</div>
+
+<!-- 4 KPI Summary Cards -->
+<div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 24px;">
+  <div class="kpi-card">
+    <div class="kpi-header">
+      <div class="kpi-title">OPEN TICKETS</div>
+      <div class="kpi-icon" style="background: rgba(234, 88, 12, 0.15); color: #F97316;">
+        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      </div>
+    </div>
+    <div class="kpi-value">5</div>
+    <div class="kpi-subtext" style="color: #FB923C;">Active Customer Requests</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-header">
+      <div class="kpi-title">ON-SITE VISITS</div>
+      <div class="kpi-icon" style="background: rgba(37, 99, 235, 0.15); color: #3B82F6;">
+        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      </div>
+    </div>
+    <div class="kpi-value">3</div>
+    <div class="kpi-subtext" style="color: #60A5FA;">Engineers at Client Plants</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-header">
+      <div class="kpi-title">PREVENTIVE SERVICE</div>
+      <div class="kpi-icon" style="background: rgba(139, 92, 246, 0.15); color: #A855F7;">
+        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+      </div>
+    </div>
+    <div class="kpi-value">12</div>
+    <div class="kpi-subtext" style="color: #C084FC;">Annual Maintenance Contracts</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-header">
+      <div class="kpi-title">RESOLVED RATE</div>
+      <div class="kpi-icon" style="background: rgba(5, 150, 105, 0.15); color: #10B981;">
+        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+      </div>
+    </div>
+    <div class="kpi-value">98.4%</div>
+    <div class="kpi-subtext" style="color: #34D399;">SLA Target Compliance</div>
+  </div>
+</div>
+
+<!-- Table Card -->
+<div class="table-card">
+  <div class="table-toolbar" style="display: flex; gap: 12px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;">
+    <div class="search-box" style="flex: 1; min-width: 220px;">
+      <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" id="search-service" placeholder="Search ticket ID, customer, plant location...">
+    </div>
+    <select id="filter-service-priority" class="filter-select-compact">
+      <option value="ALL">All Priorities</option>
+      <option value="CRITICAL">Critical / Line Down</option>
+      <option value="HIGH">High</option>
+      <option value="NORMAL">Normal</option>
+    </select>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>TICKET NO</th>
+          <th>PROJECT CODE</th>
+          <th>CUSTOMER NAME</th>
+          <th>PLANT LOCATION</th>
+          <th>NATURE OF ISSUE</th>
+          <th>ASSIGNED TECH</th>
+          <th style="text-align: center;">PRIORITY</th>
+          <th style="text-align: center;">STATUS</th>
+          <th style="text-align: center;">ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight: 700; color: var(--brand-orange);">SRV-2026-081</td>
+          <td style="font-weight: 700; color: #60A5FA;">RUNO-2026-001</td>
+          <td style="font-weight: 600; color: #FFFFFF;">Minda Automotive Solutions</td>
+          <td style="color: #94A3B8;">Pune Plant, Bay 4</td>
+          <td style="color: #CBD5E1;">Zone 3 Thermocouple replacement &amp; PID re-tune</td>
+          <td style="color: #E2E8F0;">Kiran Deshmukh</td>
+          <td style="text-align: center;"><span class="badge badge-danger">CRITICAL</span></td>
+          <td style="text-align: center;"><span class="badge badge-in-progress">IN PROGRESS</span></td>
+          <td style="text-align: center;"><button class="btn-icon" title="View Ticket Details">👁</button></td>
+        </tr>
+        <tr>
+          <td style="font-weight: 700; color: var(--brand-orange);">SRV-2026-082</td>
+          <td style="font-weight: 700; color: #60A5FA;">RUNO-2026-002</td>
+          <td style="font-weight: 600; color: #FFFFFF;">Tata Motors Ltd</td>
+          <td style="color: #94A3B8;">Sanand Plant</td>
+          <td style="color: #CBD5E1;">Preventive 6-Month seal ring replacement</td>
+          <td style="color: #E2E8F0;">Rajesh Kumar</td>
+          <td style="text-align: center;"><span class="badge badge-in-review">NORMAL</span></td>
+          <td style="text-align: center;"><span class="badge badge-completed">COMPLETED</span></td>
+          <td style="text-align: center;"><button class="btn-icon" title="View Service Report">✔</button></td>
+        </tr>
+        <tr>
+          <td style="font-weight: 700; color: var(--brand-orange);">SRV-2026-083</td>
+          <td style="font-weight: 700; color: #60A5FA;">RUNO-2026-003</td>
+          <td style="font-weight: 600; color: #FFFFFF;">LG Electronics India</td>
+          <td style="color: #94A3B8;">Greater Noida Plant</td>
+          <td style="color: #CBD5E1;">New mould commissioning &amp; trial assistance</td>
+          <td style="color: #E2E8F0;">Anand Sharma</td>
+          <td style="text-align: center;"><span class="badge badge-in-design">HIGH</span></td>
+          <td style="text-align: center;"><span class="badge badge-in-review">IN REVIEW</span></td>
+          <td style="text-align: center;"><button class="btn-icon" title="View Ticket Details">👁</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

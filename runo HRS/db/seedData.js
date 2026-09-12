@@ -468,36 +468,21 @@ module.exports = {
   ],
 
   manufacturing: [
-    {
-      project_id: 'proj-001',
-      stages: {
-        design_cad: { status: 'COMPLETED', completed_date: '2026-02-08', notes: '3D CAD flow simulation approved.' },
-        cnc_machining: { status: 'COMPLETED', completed_date: '2026-02-18', notes: 'Manifold block 5-axis CNC machining done.' },
-        gun_drilling: { status: 'COMPLETED', completed_date: '2026-02-23', notes: 'Flow channels precision drilled (0.4 Ra).' },
-        hardening: { status: 'IN_PROGRESS', completed_date: null, notes: 'Vacuum heat treatment (48-50 HRC).' },
-        assembly: { status: 'PENDING', completed_date: null, notes: 'Nozzle fitment pending.' },
-        wiring_testing: { status: 'PENDING', completed_date: null, notes: 'Heater and thermocouple testing.' },
-        final_inspection: { status: 'PENDING', completed_date: null, notes: 'CMM inspection and dispatch packaging.' }
-      },
-      current_stage: 'hardening',
-      overall_progress: 55,
-      updated_at: '2026-02-23'
-    },
-    {
-      project_id: 'proj-002',
-      stages: {
-        design_cad: { status: 'IN_PROGRESS', completed_date: null, notes: 'Sequential drop timing 3D model under design.' },
-        cnc_machining: { status: 'PENDING', completed_date: null, notes: 'Material block issued.' },
-        gun_drilling: { status: 'PENDING', completed_date: null, notes: 'Flow channels awaiting drilling.' },
-        hardening: { status: 'PENDING', completed_date: null, notes: 'Heat treatment pending.' },
-        assembly: { status: 'PENDING', completed_date: null, notes: 'Assembly pending.' },
-        wiring_testing: { status: 'PENDING', completed_date: null, notes: 'Wiring pending.' },
-        final_inspection: { status: 'PENDING', completed_date: null, notes: 'Inspection pending.' }
-      },
-      current_stage: 'design_cad',
-      overall_progress: 15,
-      updated_at: '2026-02-20'
-    }
+    { id: 'mfg-001', sr: 1, project_code: 'RUNO-2026-001', project_desc: 'Rear Lamp Housing', customer: 'Minda Automotive', category: 'HRS', vendor: 'Watlow', planned_start: '18-03-26', planned_end: '28-03-26', actual_end: '-', status: 'IN PROGRESS', progress: 60, priority: 'High', mfg_type: 'New', qty: '1 Set', incharge: 'Vikram Singh', machine: 'CNC Milling 01', remarks: '5-Axis roughing completed.' },
+    { id: 'mfg-002', sr: 2, project_code: 'RUNO-2026-002', project_desc: 'Bracket Cover', customer: 'Tata Motors', category: 'HRTC', vendor: 'Omega', planned_start: '20-03-26', planned_end: '02-04-26', actual_end: '-', status: 'IN PROGRESS', progress: 40, priority: 'Normal', mfg_type: 'New', qty: '2 Sets', incharge: 'Rajesh Sharma', machine: 'EDM Wirecut 01', remarks: 'Electrode manufacturing done.' },
+    { id: 'mfg-003', sr: 3, project_code: 'RUNO-2026-003', project_desc: 'Front Panel', customer: 'LG Electronics', category: 'HRS', vendor: 'Steelage', planned_start: '22-03-26', planned_end: '30-03-26', actual_end: '29-03-26', status: 'COMPLETED', progress: 100, priority: 'Normal', mfg_type: 'New', qty: '1 Set', incharge: 'Anand Sharma', machine: 'Assembly Bay 1', remarks: 'CMM inspection passed.' },
+    { id: 'mfg-004', sr: 4, project_code: 'RUNO-2026-004', project_desc: 'Switch Housing', customer: 'Bajaj Auto', category: 'SPARE - HRS', vendor: 'Meusburger', planned_start: '25-03-26', planned_end: '05-04-26', actual_end: '-', status: 'NOT STARTED', progress: 0, priority: 'Normal', mfg_type: 'New', qty: '4 Sets', incharge: 'Vikram Singh', machine: 'Surface Grinder 01', remarks: 'Raw material block received.' },
+    { id: 'mfg-005', sr: 5, project_code: 'RUNO-2026-005', project_desc: 'Sensor Cover', customer: 'Bosch India', category: 'HRS', vendor: 'Tempco', planned_start: '26-03-26', planned_end: '06-04-26', actual_end: '-', status: 'IN PROGRESS', progress: 50, priority: 'High', mfg_type: 'New', qty: '1 Set', incharge: 'Rakesh Verma', machine: 'CNC Milling 02', remarks: 'Gun drilling completed.' },
+    { id: 'mfg-006', sr: 6, project_code: 'RUNO-2026-006', project_desc: 'Connector Housing', customer: 'Hero MotoCorp', category: 'HRTC', vendor: 'LKM', planned_start: '28-03-26', planned_end: '07-04-26', actual_end: '-', status: 'ON HOLD', progress: 30, priority: 'Critical', mfg_type: 'Modification', qty: '1 Set', incharge: 'Rajesh Sharma', machine: 'EDM Wirecut 01', remarks: 'Awaiting customer drawing revision.' },
+    { id: 'mfg-007', sr: 7, project_code: 'RUNO-2026-007', project_desc: 'Dashboard Housing', customer: 'Mahindra', category: 'SPARE - HRTC', vendor: 'Igus', planned_start: '29-03-26', planned_end: '10-04-26', actual_end: '-', status: 'IN PROGRESS', progress: 70, priority: 'Normal', mfg_type: 'New', qty: '2 Sets', incharge: 'Vikram Singh', machine: 'Assembly Bay 2', remarks: 'Wiring ongoing.' },
+    { id: 'mfg-008', sr: 8, project_code: 'RUNO-2026-008', project_desc: 'Actuator Cover', customer: 'Valeo', category: 'HRS', vendor: 'Harting', planned_start: '01-04-26', planned_end: '12-04-26', actual_end: '-', status: 'REWORK', progress: 20, priority: 'High', mfg_type: 'Rework', qty: '1 Set', incharge: 'Rakesh Verma', machine: 'CNC Milling 01', remarks: 'Gate orifice re-machining required.' },
+    { id: 'mfg-009', sr: 9, project_code: 'RUNO-2026-009', project_desc: 'EGR Housing', customer: 'Denso', category: 'HRTC', vendor: 'Yudo', planned_start: '02-04-26', planned_end: '14-04-26', actual_end: '13-04-26', status: 'COMPLETED', progress: 100, priority: 'Normal', mfg_type: 'New', qty: '1 Set', incharge: 'Anand Sharma', machine: 'Assembly Bay 1', remarks: 'Hot test certified.' },
+    { id: 'mfg-010', sr: 10, project_code: 'RUNO-2026-010', project_desc: 'Mirror Base', customer: 'Motherson', category: 'SPARE - HRS', vendor: 'Festo', planned_start: '03-04-26', planned_end: '16-04-26', actual_end: '-', status: 'NOT STARTED', progress: 0, priority: 'Normal', mfg_type: 'New', qty: '2 Sets', incharge: 'Vikram Singh', machine: 'CNC Milling 02', remarks: 'Tool path generation scheduled.' },
+    { id: 'mfg-011', sr: 11, project_code: 'RUNO-2026-011', project_desc: 'Valve Bracket', customer: 'Hyundai', category: 'HRS', vendor: 'Misumi', planned_start: '04-04-26', planned_end: '18-04-26', actual_end: '-', status: 'IN PROGRESS', progress: 45, priority: 'Normal', mfg_type: 'New', qty: '1 Set', incharge: 'Rajesh Sharma', machine: 'Surface Grinder 01', remarks: 'Plates ground flat.' },
+    { id: 'mfg-012', sr: 12, project_code: 'RUNO-2026-012', project_desc: 'Manifold Block', customer: 'Kia', category: 'HRTC', vendor: 'Rogers', planned_start: '05-04-26', planned_end: '20-04-26', actual_end: '-', status: 'ON HOLD', progress: 25, priority: 'Urgent', mfg_type: 'New', qty: '1 Set', incharge: 'Vikram Singh', machine: 'CNC Milling 01', remarks: 'Certification awaited.' },
+    { id: 'mfg-013', sr: 13, project_code: 'RUNO-2026-013', project_desc: 'Nozzle Tip', customer: 'Maruti Suzuki', category: 'SPARE - HRTC', vendor: 'Trelleborg', planned_start: '06-04-26', planned_end: '22-04-26', actual_end: '-', status: 'IN PROGRESS', progress: 55, priority: 'High', mfg_type: 'New', qty: '8 Sets', incharge: 'Rakesh Verma', machine: 'CNC Lathe 01', remarks: 'Copper tips turned.' },
+    { id: 'mfg-014', sr: 14, project_code: 'RUNO-2026-014', project_desc: 'Heater Band', customer: 'Ashok Leyland', category: 'HRS', vendor: 'Local', planned_start: '07-04-26', planned_end: '24-04-26', actual_end: '-', status: 'NOT STARTED', progress: 0, priority: 'Normal', mfg_type: 'New', qty: '6 Sets', incharge: 'Rajesh Sharma', machine: 'Assembly Bay 2', remarks: 'Requisition raised.' },
+    { id: 'mfg-015', sr: 15, project_code: 'RUNO-2026-015', project_desc: 'Air Vent', customer: 'TVS Motors', category: 'SPARE - HRS', vendor: 'CoorsTek', planned_start: '08-04-26', planned_end: '26-04-26', actual_end: '-', status: 'IN PROGRESS', progress: 35, priority: 'Normal', mfg_type: 'New', qty: '3 Sets', incharge: 'Vikram Singh', machine: 'EDM Wirecut 01', remarks: 'Slit EDM done.' }
   ],
 
   approvals: [
@@ -526,6 +511,84 @@ module.exports = {
       submitted_date: '2026-02-22',
       action_date: null,
       remarks: 'Under technical review by Anand Sharma.'
+    }
+  ],
+
+  purchaseRequests: [
+    {
+      sr: 1, id: 'pr-001', pr_no: 'PR-2026-001', date: '10-03-26', project_code: 'RUNO-2026-001',
+      project_desc: 'Rear Lamp Housing', item_desc: 'Heater Cartridge Ø8x100', qty: 10, unit: 'Nos',
+      pr_by: 'Rahul S.', required_date: '15-03-26', status: 'Pending', po_no: '-', vendor: 'Watlow', category: 'HRS'
+    },
+    {
+      sr: 2, id: 'pr-002', pr_no: 'PR-2026-002', date: '10-03-26', project_code: 'RUNO-2026-001',
+      project_desc: 'Rear Lamp Housing', item_desc: 'Thermocouple Type J', qty: 10, unit: 'Nos',
+      pr_by: 'Rahul S.', required_date: '15-03-26', status: 'Approved', po_no: '-', vendor: 'Omega', category: 'HRS'
+    },
+    {
+      sr: 3, id: 'pr-003', pr_no: 'PR-2026-003', date: '11-03-26', project_code: 'RUNO-2026-002',
+      project_desc: 'Bracket Cover', item_desc: 'Manifold Block (H13)', qty: 1, unit: 'Set',
+      pr_by: 'Amit K.', required_date: '20-03-26', status: 'PO Released', po_no: 'PO-2026-008', vendor: 'Steelage', category: 'HRS'
+    },
+    {
+      sr: 4, id: 'pr-004', pr_no: 'PR-2026-004', date: '12-03-26', project_code: 'RUNO-2026-003',
+      project_desc: 'Front Panel', item_desc: 'Nozzle Tip', qty: 8, unit: 'Nos',
+      pr_by: 'Neha P.', required_date: '18-03-26', status: 'In Transit', po_no: 'PO-2026-009', vendor: 'Meusburger', category: 'HRS'
+    },
+    {
+      sr: 5, id: 'pr-005', pr_no: 'PR-2026-005', date: '12-03-26', project_code: 'RUNO-2026-004',
+      project_desc: 'Switch Housing', item_desc: 'Heater Band', qty: 6, unit: 'Nos',
+      pr_by: 'Suresh M.', required_date: '20-03-26', status: 'Received', po_no: 'PO-2026-010', vendor: 'Tempco', category: 'HRS'
+    },
+    {
+      sr: 6, id: 'pr-006', pr_no: 'PR-2026-006', date: '13-03-26', project_code: 'RUNO-2026-004',
+      project_desc: 'Switch Housing', item_desc: 'Mould Base Plate', qty: 2, unit: 'Nos',
+      pr_by: 'Suresh M.', required_date: '22-03-26', status: 'PO Released', po_no: 'PO-2026-011', vendor: 'LKM', category: 'HRS'
+    },
+    {
+      sr: 7, id: 'pr-007', pr_no: 'PR-2026-007', date: '13-03-26', project_code: 'RUNO-2026-005',
+      project_desc: 'Sensor Cover', item_desc: 'Cables (High Temp)', qty: 20, unit: 'Mtr',
+      pr_by: 'Kiran D.', required_date: '18-03-26', status: 'In Transit', po_no: 'PO-2026-012', vendor: 'Igus', category: 'HRS'
+    },
+    {
+      sr: 8, id: 'pr-008', pr_no: 'PR-2026-008', date: '14-03-26', project_code: 'RUNO-2026-006',
+      project_desc: 'Connector Housing', item_desc: 'Connector 16 Pin', qty: 10, unit: 'Nos',
+      pr_by: 'Priya S.', required_date: '20-03-26', status: 'Approved', po_no: '-', vendor: 'Harting', category: 'HRS'
+    },
+    {
+      sr: 9, id: 'pr-009', pr_no: 'PR-2026-009', date: '14-03-26', project_code: 'RUNO-2026-007',
+      project_desc: 'Dashboard Housing', item_desc: 'Temperature Controller', qty: 2, unit: 'Nos',
+      pr_by: 'Rohit T.', required_date: '21-03-26', status: 'Pending', po_no: '-', vendor: 'Yudo', category: 'HRTC'
+    },
+    {
+      sr: 10, id: 'pr-010', pr_no: 'PR-2026-010', date: '15-03-26', project_code: 'RUNO-2026-008',
+      project_desc: 'Actuator Cover', item_desc: 'Actuator Cylinder', qty: 4, unit: 'Nos',
+      pr_by: 'Sneha V.', required_date: '25-03-26', status: 'PO Released', po_no: 'PO-2026-013', vendor: 'Festo', category: 'HRS'
+    },
+    {
+      sr: 11, id: 'pr-011', pr_no: 'PR-2026-011', date: '15-03-26', project_code: 'RUNO-2026-009',
+      project_desc: 'EGR Housing', item_desc: 'Spring', qty: 20, unit: 'Nos',
+      pr_by: 'Manish G.', required_date: '22-03-26', status: 'Received', po_no: 'PO-2026-014', vendor: 'Misumi', category: 'HRS'
+    },
+    {
+      sr: 12, id: 'pr-012', pr_no: 'PR-2026-012', date: '16-03-26', project_code: 'RUNO-2026-010',
+      project_desc: 'Mirror Base', item_desc: 'Insulation Plate', qty: 4, unit: 'Nos',
+      pr_by: 'Pooja R.', required_date: '24-03-26', status: 'In Transit', po_no: 'PO-2026-015', vendor: 'Rogers', category: 'HRS'
+    },
+    {
+      sr: 13, id: 'pr-013', pr_no: 'PR-2026-013', date: '16-03-26', project_code: 'RUNO-2026-011',
+      project_desc: 'Air Vent', item_desc: 'Sealing Ring', qty: 50, unit: 'Nos',
+      pr_by: 'Ajay S.', required_date: '22-03-26', status: 'Approved', po_no: '-', vendor: 'Trelleborg', category: 'HRS'
+    },
+    {
+      sr: 14, id: 'pr-014', pr_no: 'PR-2026-014', date: '17-03-26', project_code: 'RUNO-2026-012',
+      project_desc: 'Console Panel', item_desc: 'Fasteners (SS)', qty: 100, unit: 'Nos',
+      pr_by: 'Ritu M.', required_date: '24-03-26', status: 'Pending', po_no: '-', vendor: 'Local', category: 'HRS'
+    },
+    {
+      sr: 15, id: 'pr-015', pr_no: 'PR-2026-015', date: '17-03-26', project_code: 'Handle 2026-013',
+      project_desc: 'Handle Cover', item_desc: 'Ceramic Insulator', qty: 20, unit: 'Nos',
+      pr_by: 'Nikhil P.', required_date: '25-03-26', status: 'In Review', po_no: '-', vendor: 'CoorsTek', category: 'HRS'
     }
   ]
 };

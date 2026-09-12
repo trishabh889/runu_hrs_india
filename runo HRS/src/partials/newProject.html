@@ -1,51 +1,112 @@
-<div class="view-header">
+<div class="view-header" style="margin-bottom: 8px;">
   <div class="view-title-group">
-    <h1>CREATE NEW PROJECT</h1>
-    <p>Register a new Hot Runner System project with technical specifications</p>
+    <h1 style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
+      PROJECTS <span class="access-badge-yellow">( SALES + DESIGN + COMMERCIAL &amp; ADMIN ACCESS )</span>
+    </h1>
+    <p>Hot runner systems specifications, execution status, and delivery schedules</p>
   </div>
+</div>
+
+<!-- Top Red Action Buttons matching slide -->
+<div class="slide-action-bar">
+  <button type="button" class="btn-category-box active" id="btn-cat-hrs" data-category="HRS">+HRS</button>
+  <button type="button" class="btn-category-box" id="btn-cat-hrtc" data-category="HRTC">+HRTC</button>
+  <button type="button" class="btn-category-box" id="btn-cat-spare-hrs" data-category="SPARE-HRS">+SPARE HRS</button>
+  <button type="button" class="btn-category-box" id="btn-cat-spare-hrtc" data-category="SPARE-HRTC">+SPARE HRTC</button>
+  <button type="button" class="btn-category-box btn-category-export" id="btn-cat-export">EXPORT</button>
 </div>
 
 <div class="form-card">
   <form id="form-create-project" onsubmit="return false;">
-    <div class="form-grid">
-      <div class="form-group">
-        <label class="form-label">PROJECT CODE</label>
-        <input type="text" id="newproj-code" class="form-input" placeholder="e.g. RUNO-2026-002 (or leave blank for auto)">
-      </div>
+    <input type="hidden" id="newproj-category" value="HRS">
 
+    <div class="form-grid">
+      <!-- ROW 1: CUSTOMER NAME * & PROJECT DESCRIPTION * -->
       <div class="form-group">
-        <label class="form-label">CUSTOMER *</label>
+        <label class="form-label">CUSTOMER NAME *</label>
         <select id="newproj-customer" class="form-select" required></select>
       </div>
 
-      <div class="form-group span-2">
-        <label class="form-label">MOULD / COMPONENT DESCRIPTION *</label>
+      <div class="form-group">
+        <label class="form-label">PROJECT DESCRIPTION *</label>
         <input type="text" id="newproj-desc" class="form-input" placeholder="e.g. 4-Drop Prewired Hot Half for Automotive Rear Lamp" required>
       </div>
 
+      <!-- ROW 2: APPLICATION / INDUSTRY & NO OF DROPS * -->
       <div class="form-group">
-        <label class="form-label">NUMBER OF NOZZLE DROPS *</label>
+        <label class="form-label">APPLICATION / INDUSTRY</label>
+        <input type="text" id="newproj-industry" class="form-input" placeholder="e.g. Automotive, Packaging, Medical, Caps &amp; Closures">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">NO OF DROPS *</label>
         <input type="number" id="newproj-drops" class="form-input" value="4" min="1" max="64" required>
       </div>
 
+      <!-- ROW 3: HRS TYPE (SCROLL) * & PLASTIC MATERIAL/GRADE * -->
       <div class="form-group">
-        <label class="form-label">NOZZLE TYPE</label>
-        <input type="text" id="newproj-nozzle-type" class="form-input" placeholder="e.g. Valve Gate Pneumatic / Open Torpedo">
+        <label class="form-label">HRS TYPE (SCROLL) *</label>
+        <select id="newproj-hrs-type" class="form-select" required>
+          <option value="1. OPEN - RUNNER">1. OPEN - RUNNER</option>
+          <option value="1. OPEN - ON PART">1. OPEN - ON PART</option>
+          <option value="2. VALVE - RUNNER" selected>2. VALVE - RUNNER</option>
+          <option value="2. VALVE - ON PART">2. VALVE - ON PART</option>
+        </select>
       </div>
 
       <div class="form-group">
-        <label class="form-label">MANIFOLD TYPE</label>
-        <input type="text" id="newproj-manifold" class="form-input" placeholder="e.g. H13 Fully Balanced X-Manifold">
+        <label class="form-label">PLASTIC MATERIAL/GRADE *</label>
+        <input type="text" id="newproj-material" class="form-input" placeholder="e.g. Polypropylene (PP), PA66, ABS, PC" required>
+      </div>
+
+      <!-- ROW 4: PART WEIGHT (In GRAMS) & COLOR CHANGE - YES/NO -->
+      <div class="form-group">
+        <label class="form-label">PART WEIGHT (In GRAMS)</label>
+        <input type="text" id="newproj-part-weight" class="form-input" placeholder="e.g. 150 g / 250 g">
       </div>
 
       <div class="form-group">
-        <label class="form-label">RUNNER DIAMETER</label>
-        <input type="text" id="newproj-runner-dia" class="form-input" placeholder="e.g. 12 mm / 16 mm">
+        <label class="form-label">COLOR CHANGE - YES/NO</label>
+        <select id="newproj-color-change" class="form-select">
+          <option value="NO" selected>NO</option>
+          <option value="YES">YES</option>
+        </select>
+      </div>
+
+      <!-- ROW 5: MOULD TYPE - NEW / EXISTING & YEAR AND MONTH -->
+      <div class="form-group">
+        <label class="form-label">MOULD TYPE - NEW / EXISTING</label>
+        <select id="newproj-mould-type" class="form-select">
+          <option value="NEW MOULD" selected>NEW MOULD</option>
+          <option value="EXISTING MOULD">EXISTING MOULD</option>
+        </select>
       </div>
 
       <div class="form-group">
-        <label class="form-label">RESIN / PLASTIC MATERIAL</label>
-        <input type="text" id="newproj-material" class="form-input" placeholder="e.g. Polypropylene (PP), PA66, ABS">
+        <label class="form-label">YEAR AND MONTH</label>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <select id="newproj-year" class="form-select" style="font-weight: 700;"></select>
+          <select id="newproj-month" class="form-select" style="font-weight: 700;">
+            <option value="01">JAN (01)</option>
+            <option value="02">FEB (02)</option>
+            <option value="03">MAR (03)</option>
+            <option value="04">APR (04)</option>
+            <option value="05">MAY (05)</option>
+            <option value="06">JUN (06)</option>
+            <option value="07">JUL (07)</option>
+            <option value="08">AUG (08)</option>
+            <option value="09" selected>SEP (09)</option>
+            <option value="10">OCT (10)</option>
+            <option value="11">NOV (11)</option>
+            <option value="12">DEC (12)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ROW 6: PROJECT CODE & TARGET DELIVERY DATE * -->
+      <div class="form-group">
+        <label class="form-label">PROJECT CODE</label>
+        <input type="text" id="newproj-code" class="form-input" placeholder="e.g. RUNO-2026-002 (auto-generated)">
       </div>
 
       <div class="form-group">
@@ -53,30 +114,23 @@
         <input type="date" id="newproj-date" class="form-input" required>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">PRIORITY</label>
-        <select id="newproj-priority" class="form-select">
-          <option value="MEDIUM">MEDIUM</option>
-          <option value="HIGH">HIGH (EXPEDITE)</option>
-          <option value="CRITICAL">CRITICAL</option>
-          <option value="LOW">LOW</option>
-        </select>
-      </div>
-
-      <div class="form-group">
+      <!-- ROW 7: ESTIMATED COMMERCIAL VALUE -->
+      <div class="form-group span-2">
         <label class="form-label">ESTIMATED COMMERCIAL VALUE</label>
         <input type="text" id="newproj-value" class="form-input" placeholder="e.g. ₹ 5,50,000">
       </div>
 
+      <!-- ROW 8: TECHNICAL NOTES / SPECIAL REQUIREMENTS -->
       <div class="form-group span-2">
-        <label class="form-label">TECHNICAL SPECIFICATIONS & SPECIAL NOTES</label>
-        <textarea id="newproj-notes" class="form-textarea" placeholder="Include special thermocouple type, connector pinouts, manifold heater specs..."></textarea>
+        <label class="form-label">TECHNICAL NOTES / SPECIAL REQUIREMENTS</label>
+        <textarea id="newproj-notes" class="form-textarea" style="min-height: 80px;" placeholder="Include special thermocouple type, connector pinouts, manifold heater specs..."></textarea>
       </div>
     </div>
 
-    <div class="form-actions">
+    <div class="form-actions" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
       <button type="button" class="btn-action-secondary" id="btn-cancel-new-project">CANCEL</button>
-      <button type="submit" id="btn-submit-project" class="btn-action-primary">CREATE PROJECT</button>
+      <button type="reset" class="btn-action-secondary" id="btn-reset-new-project" style="border-color: #64748B; color: #94A3B8;">RESET</button>
+      <button type="submit" id="btn-submit-project" class="btn-action-primary">SAVE PROJECT</button>
     </div>
   </form>
 </div>

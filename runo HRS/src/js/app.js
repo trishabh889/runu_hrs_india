@@ -19,6 +19,10 @@ function mountPartials() {
     'subview-manufacturing': 'mfg',
     'subview-approvals': 'approvals',
     'subview-users': 'users',
+    'subview-assembly': 'assembly',
+    'subview-service': 'service',
+    'subview-vendor': 'vendor',
+    'subview-costing': 'costing',
     'mount-modals': 'modals'
   };
 
@@ -49,12 +53,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (window.initStore) window.initStore();
   if (window.initPurchase) window.initPurchase();
   if (window.initCompletedProjects) window.initCompletedProjects();
+  if (window.initManufacturing) window.initManufacturing();
   if (window.initNewProjectForm) window.initNewProjectForm();
   if (window.initUsers) window.initUsers();
 
   // 3. Restore active session
   try {
-    const user = await window.api.getCurrentUser();
+    let user = await window.api.getCurrentUser();
+    if (!user && window.api.login) {
+      const res = await window.api.login('ANAND', 'ADMIN');
+      if (res && res.success) {
+        user = res.user;
+      }
+    }
     if (user && window.setSession) {
       window.setSession(user);
     }

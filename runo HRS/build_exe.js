@@ -57,9 +57,15 @@ if (fs.existsSync(appDir)) {
 fs.mkdirSync(appDir, { recursive: true });
 
 console.log('Copying modular application source files...');
-const itemsToCopy = ['package.json', 'main.js', 'preload.js', 'db', 'ipc', 'src'];
+const itemsToCopy = [
+  'package.json', 'main.js', 'preload.js', 'logger.js',
+  'db', 'ipc', 'src', 'testing', 'data'
+];
 itemsToCopy.forEach(item => {
-  copyRecursive(path.join(projectRoot, item), path.join(appDir, item));
+  const itemPath = path.join(projectRoot, item);
+  if (fs.existsSync(itemPath)) {
+    copyRecursive(itemPath, path.join(appDir, item));
+  }
 });
 
 // Copy standalone icon & shortcut installer for portable distribution
@@ -97,6 +103,16 @@ if (fs.existsSync(outputDirX64)) {
 }
 copyRecursive(outputDir, outputDirX64);
 
+// Create ZIP archive for direct distribution
+const zipOutput = path.join(projectRoot, 'dist', 'RUNO_HRS_INDIA_MIS_Windows_x64.zip');
+try {
+  console.log('Generating ZIP distribution package...');
+  if (fs.existsSync(zipOutput)) fs.unlinkSync(zipOutput);
+  execSync(`powershell -NoProfile -Command "Compress-Archive -Path '${outputDirX64}\\*' -DestinationPath '${zipOutput}' -Force"`, { stdio: 'inherit' });
+  console.log('✅ Distribution archive created at:', zipOutput);
+} catch (e) {
+  console.warn('Note: ZIP archive generation skipped:', e.message);
+}
+
 console.log('✅ Standalone Modular Desktop Application successfully built at:');
 console.log(targetExe);
-

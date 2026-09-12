@@ -62,6 +62,40 @@ window.formatDate = function(dateStr) {
   return dateStr;
 };
 
+window.normalizeDateStr = function(dateStr) {
+  if (!dateStr || dateStr === '-' || dateStr === 'N/A' || dateStr === 'null' || dateStr === 'undefined') return '';
+  let s = String(dateStr).trim();
+  if (s.includes('T')) s = s.split('T')[0].trim();
+  const ymd = s.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
+  if (ymd) {
+    return `${ymd[1]}-${ymd[2].padStart(2, '0')}-${ymd[3].padStart(2, '0')}`;
+  }
+  const dmy4 = s.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
+  if (dmy4) {
+    return `${dmy4[3]}-${dmy4[2].padStart(2, '0')}-${dmy4[1].padStart(2, '0')}`;
+  }
+  const dmy2 = s.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{2})$/);
+  if (dmy2) {
+    const year = parseInt(dmy2[3]) >= 70 ? `19${dmy2[3]}` : `20${dmy2[3]}`;
+    return `${year}-${dmy2[2].padStart(2, '0')}-${dmy2[1].padStart(2, '0')}`;
+  }
+  const parsed = new Date(s);
+  if (!isNaN(parsed.getTime())) {
+    return parsed.toISOString().split('T')[0];
+  }
+  return '';
+};
+
+window.isDateInRange = function(dateVal, startVal, endVal) {
+  const d = window.normalizeDateStr(dateVal);
+  if (!d) return false;
+  const normStart = window.normalizeDateStr(startVal);
+  const normEnd = window.normalizeDateStr(endVal);
+  if (normStart && d < normStart) return false;
+  if (normEnd && d > normEnd) return false;
+  return true;
+};
+
 window.initCustomDropdowns = function() {
   document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
     if (dropdown.dataset.initialized) return;
@@ -167,14 +201,15 @@ window.showConfirmDialog = function({
 };
 
 window.exportTableToExcel = function(tableId, filename = 'export.xls') {
-  const table = typeof tableId === 'string' ? document.getElementById(tableId) : tableId;
-  if (!table) {
+  let el = typeof tableId === 'string' ? document.getElementById(tableId) : tableId;
+  if (!el) {
     if (window.showToast) window.showToast('Table not found for export', 'error');
     return;
   }
+  const table = el.tagName === 'TBODY' ? (el.closest('table') || el) : el;
 
   let html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
-  html += '<head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Sheet1</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><style>table { border-collapse: collapse; font-family: Segoe UI, sans-serif; font-size: 11px; } th, td { border: 1px solid #999; padding: 6px; } th { background: #E0E0E0; font-weight: bold; }</style></head><body>';
+  html += '<head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Sheet1</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><style>table { border-collapse: collapse; font-family: Cambria, Georgia, serif; font-size: 11px; } th, td { border: 1px solid #999; padding: 6px; } th { background: #E0E0E0; font-weight: bold; }</style></head><body>';
 
   const clone = table.cloneNode(true);
   clone.querySelectorAll('.action-col, .actions-cell, button').forEach(el => el.remove());
@@ -199,70 +234,182 @@ window.exportTableToExcel = function(tableId, filename = 'export.xls') {
   if (window.showToast) window.showToast(`Exported ${filename} successfully`, 'success');
 };
 
-window.exportTableToPDF = function(tableId, title = 'RUNO HRS REPORT') {
-  const table = typeof tableId === 'string' ? document.getElementById(tableId) : tableId;
-  if (!table) {
+window.exportTableToPDF = async function(tableId, title = 'RUNO HRS REPORT') {
+  let el = typeof tableId === 'string' ? document.getElementById(tableId) : tableId;
+  if (!el) {
     if (window.showToast) window.showToast('Table not found for printing', 'error');
     return;
   }
+  const table = el.tagName === 'TBODY' ? (el.closest('table') || el) : el;
+
   const clone = table.cloneNode(true);
-  clone.querySelectorAll('.action-col, .actions-cell, button').forEach(el => el.remove());
+  clone.querySelectorAll('.action-col, .actions-cell, button').forEach(item => item.remove());
   clone.querySelectorAll('select').forEach(sel => {
     const span = document.createElement('span');
     span.innerText = sel.options[sel.selectedIndex]?.text || sel.value;
     sel.parentNode.replaceChild(span, sel);
   });
 
-  const printWin = window.open('', '_blank', 'width=1000,height=720');
-  if (!printWin) {
-    window.print();
-    return;
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+  const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
+
+  const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>${title}</title>
+  <style>
+    @page {
+      size: A4 landscape;
+      margin: 10mm 12mm;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Cambria, Georgia, 'Times New Roman', serif;
+      margin: 0;
+      padding: 0;
+      color: #0f172a;
+      background: #ffffff;
+      font-size: 10px;
+    }
+    .pdf-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2.5px solid #F15A24;
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+    .brand-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: #F15A24;
+      letter-spacing: 0.5px;
+      margin: 0;
+    }
+    .brand-subtitle {
+      font-size: 11px;
+      color: #475569;
+      font-weight: 600;
+      margin-top: 2px;
+      letter-spacing: 0.3px;
+    }
+    .report-meta {
+      text-align: right;
+      font-size: 10px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+    .report-title-badge {
+      display: inline-block;
+      background: #fff7ed;
+      color: #ea580c;
+      border: 1px solid #fed7aa;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-top: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: auto;
+      margin-top: 6px;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 6px 7px;
+      text-align: left;
+      font-size: 9.5px;
+      vertical-align: middle;
+      word-break: break-word;
+    }
+    th {
+      background-color: #1e293b;
+      color: #ffffff;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      font-size: 9px;
+    }
+    tr:nth-child(even) td {
+      background-color: #f8fafc;
+    }
+    .badge, .status-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 8.5px;
+      font-weight: 700;
+      text-align: center;
+      background: #e2e8f0;
+      color: #334155;
+    }
+    .pdf-footer {
+      margin-top: 14px;
+      padding-top: 8px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <div class="pdf-header">
+    <div>
+      <div class="brand-title">RUNO HRS INDIA</div>
+      <div class="brand-subtitle">MANAGEMENT INFORMATION SYSTEM (MIS)</div>
+      <div class="report-title-badge">${title}</div>
+    </div>
+    <div class="report-meta">
+      <div><strong>Date:</strong> ${dateStr}</div>
+      <div><strong>Time:</strong> ${timeStr}</div>
+      <div><strong>Generated By:</strong> ${window.AppState?.currentUser?.username || 'ANAND'} (${window.AppState?.currentUser?.role || 'ADMIN'})</div>
+    </div>
+  </div>
+
+  ${clone.outerHTML}
+
+  <div class="pdf-footer">
+    <span>RUNO HRS INDIA &bull; Reliable Precision &bull; Confidential Internal Record</span>
+    <span>Generated via RUNO HRS MIS Desktop</span>
+  </div>
+</body>
+</html>`;
+
+  if (window.api && window.api.exportPDF) {
+    if (window.showToast) window.showToast('Preparing PDF document...', 'info');
+    try {
+      const cleanTitle = (title || 'REPORT').replace(/[^a-zA-Z0-9_-]/g, '_');
+      const res = await window.api.exportPDF({
+        html,
+        title,
+        filename: `RUNO_${cleanTitle}_${now.toISOString().split('T')[0]}.pdf`
+      });
+      if (res && res.success) {
+        if (window.showToast) window.showToast('PDF exported and opened successfully!', 'success');
+      } else if (res && !res.cancelled) {
+        if (window.showToast) window.showToast(res.error || 'Failed to export PDF', 'error');
+      }
+    } catch (e) {
+      console.error('Export PDF error:', e);
+      if (window.showToast) window.showToast('Export failed: ' + e.message, 'error');
+    }
+  } else {
+    const printWin = window.open('', '_blank', 'width=1100,height=750');
+    if (printWin) {
+      printWin.document.write(html);
+      printWin.document.close();
+      printWin.focus();
+      printWin.print();
+    }
   }
-
-  printWin.document.write(`
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title>${title}</title>
-      <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 20px; color: #1e293b; }
-        .header { border-bottom: 2px solid #FF5722; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .header h2 { margin: 0; color: #FF5722; font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
-        .header .meta { font-size: 11px; color: #64748b; text-align: right; }
-        table { width: 100%; border-collapse: collapse; font-size: 11px; }
-        th, td { border: 1px solid #cbd5e1; padding: 6px 8px; text-align: left; }
-        th { background: #f1f5f9; color: #0f172a; font-weight: 700; text-transform: uppercase; }
-        tr:nth-child(even) { background: #f8fafc; }
-        @media print {
-          body { margin: 0; }
-          @page { margin: 12mm; }
-        }
-      </style>
-    </head>
-    <body>
-      <div class="header">
-        <div>
-          <h2>RUNO HRS INDIA</h2>
-          <div style="font-size: 13px; font-weight: 600; color: #334155; margin-top: 2px;">${title}</div>
-        </div>
-        <div class="meta">
-          <div>Printed On: ${new Date().toLocaleString()}</div>
-          <div>Industrial Management Information System</div>
-        </div>
-      </div>
-      ${clone.outerHTML}
-      <script>
-        window.onload = function() {
-          window.focus();
-          window.print();
-          window.onafterprint = function() { window.close(); };
-        };
-      </script>
-    </body>
-    </html>
-  `);
-  printWin.document.close();
 };
-
 
 

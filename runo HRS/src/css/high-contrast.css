@@ -1,0 +1,226 @@
+/* ========================================================================== 
+   RUNO HRS INDIA - High Contrast Dark Theme
+   Loaded last so every module shares the same navy, orange and teal language.
+   ========================================================================== */
+
+:root {
+  --bg-app: #020b14;
+  --bg-content: #03101d;
+  --bg-surface: #071827;
+  --bg-card: #0a1d2f;
+  --bg-card-hover: #102b43;
+  --bg-input: #041321;
+  --bg-sidebar: #03111f;
+  --bg-sidebar-active: #14314a;
+  --bg-header: #03111f;
+  --bg-toolbar: #071a2b;
+  --bg-input-border: #315470;
+  --bg-table-header: #0b2439;
+  --bg-table-stripe: rgba(105, 170, 216, 0.06);
+  --bg-table-hover: rgba(255, 87, 34, 0.13);
+  --text-primary: #f8fbff;
+  --text-secondary: #c3d2e2;
+  --text-muted: #9eb2c7;
+  --sidebar-text: #c1d0df;
+  --sidebar-hover-bg: #10283e;
+  --sidebar-logout-text: #e0e9f2;
+  --sidebar-logout-border: #41617b;
+  --border-subtle: rgba(139, 184, 219, 0.24);
+  --border-card: rgba(139, 184, 219, 0.34);
+  --brand-orange: #ff6a2f;
+  --brand-orange-light: #ff8a5b;
+  --brand-orange-dark: #df3f0b;
+  --color-success: #18c995;
+  --color-info: #54a8ff;
+}
+body,
+#view-main {
+  background: var(--bg-app);
+}
+.app-header {
+  background: linear-gradient(90deg, #020c16 0%, #071a2a 55%, #020c16 100%);
+  border-bottom-color: rgba(255, 106, 47, 0.48);
+  box-shadow: 0 3px 18px rgba(0, 0, 0, 0.7);
+}
+.app-sidebar {
+  background: linear-gradient(180deg, #031321 0%, #051929 55%, #020d17 100%);
+  border-right-color: rgba(83, 145, 190, 0.38);
+}
+.nav-item:hover {
+  background: var(--sidebar-hover-bg);
+}
+.nav-item.active {
+  background: linear-gradient(90deg, #c93608 0%, #d63f0a 100%);
+  border-left-color: #ffb095;
+  box-shadow: 0 5px 18px rgba(223, 63, 11, 0.35);
+}
+.nav-item.active svg {
+  color: #ffffff;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
+}
+.app-content {
+  background: radial-gradient(ellipse at top left, #0a2034 0%, #03101d 58%);
+}
+.app-content::before {
+  background: radial-gradient(ellipse at top, rgba(31, 116, 170, 0.12), transparent 70%);
+}
+
+.header-search-container input,
+.search-box input,
+.form-input,
+.form-select,
+.form-textarea,
+.select-custom,
+.custom-dropdown-btn {
+  background-color: var(--bg-input) !important;
+  border-color: var(--bg-input-border) !important;
+  color: var(--text-primary) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #8fa6bb;
+  opacity: 1;
+}
+
+.header-search-container input:focus,
+.search-box input:focus,
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--brand-orange) !important;
+  box-shadow: 0 0 0 3px rgba(255, 106, 47, 0.24) !important;
+}
+
+.form-label,
+.kpi-label,
+.data-table th {
+  color: #d2deea;
+}
+
+.form-select option,
+.custom-dropdown-menu {
+  background: #071827;
+  color: #f8fbff;
+}
+
+.table-card,
+.form-card,
+.kpi-card,
+.modal-box,
+.toast {
+  background: linear-gradient(155deg, #0c2237 0%, #061522 100%) !important;
+  border-color: var(--border-card) !important;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.58);
+}
+
+.table-toolbar,
+.modal-header,
+.modal-footer {
+  border-color: var(--border-subtle) !important;
+}
+
+.data-table th {
+  background: #0b2439;
+  border-bottom-color: #315470;
+}
+
+.data-table td {
+  border-bottom-color: rgba(139, 184, 219, 0.16);
+}
+
+.data-table tbody tr:nth-child(even) td {
+  background: var(--bg-table-stripe);
+}
+
+.data-table tbody tr:hover td {
+  background: var(--bg-table-hover);
+}
+
+.btn-action-secondary,
+.btn-notification,
+.user-profile-badge,
+.btn-close-modal {
+  border-color: rgba(139, 184, 219, 0.34);
+  color: #e4edf6;
+}
+
+:is(.btn-icon, .btn-action-icon, .pr-action-btn) {
+  border-color: rgba(139, 184, 219, 0.34);
+  color: #ffffff !important;
+}
+
+:is(.btn-icon, .btn-action-icon, .pr-action-btn) svg {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+
+.btn-action-primary {
+  background: linear-gradient(135deg, #c93608 0%, #d63f0a 100%);
+}
+
+#btn-open-new-pr-modal,
+#btn-submit-purchase-request {
+  background: #087a59 !important;
+  border-color: #39dda9 !important;
+}
+
+.btn-action-secondary:hover,
+.btn-icon:hover,
+.btn-action-icon:hover,
+.pr-action-btn:hover,
+.btn-notification:hover,
+.user-profile-badge:hover {
+  background: rgba(255, 106, 47, 0.14);
+  border-color: var(--brand-orange);
+  color: #ffffff;
+}
+
+.badge,
+.status-pill,
+.mfg-badge {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 20px !important;
+  font-weight: 800;
+}
+
+.view-header {
+  border-bottom-color: rgba(139, 184, 219, 0.3);
+}
+
+#view-main [style*="color: #64748B"],
+#view-main [style*="color: #94A3B8"] {
+  color: var(--text-secondary) !important;
+}
+
+#pr-dropzone {
+  background: #061827 !important;
+  border-color: #527391 !important;
+}
+
+:where(button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid #ffb08f;
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: #03101d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #46647d;
+  border: 1px solid #03101d;
+}
+
+.user-profile-dropdown-menu {
+  background: #0d1520 !important;
+  border: 1px solid #527391 !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9) !important;
+}
+
+.profile-menu-item:hover {
+  background: rgba(255, 106, 47, 0.15) !important;
+  color: #ffffff !important;
+}
+

@@ -1,58 +1,278 @@
-<div class="view-header">
-  <div class="view-title-group">
-    <h1>DESIGN &amp; ENGINEERING LIFECYCLE</h1>
-    <p>Hot runner 2D AutoCAD detailing, 3D parametric flow modeling, design checks, and customer approvals</p>
+<!-- ==========================================================================
+     RUNO HRS INDIA - DESIGN DEPARTMENT: HOT RUNNER SOLUTIONS
+     Matches the reference UI layout, components, 7 KPI stat cards, and table
+     ========================================================================== -->
+
+<!-- Top Page Subheader -->
+<div class="design-page-header">
+  <div class="design-title-box">
+    <h1>DESIGN PROJECTS</h1>
+    <p>Track design activities from Concept to 3D design with time tracking</p>
   </div>
-  <div class="view-actions">
-    <button class="btn-action-primary" id="btn-design-refresh">⟳ REFRESH</button>
-    <button class="btn-action-secondary" id="btn-export-design-excel">EXPORT EXCEL</button>
-    <button class="btn-action-secondary" id="btn-export-design-pdf">EXPORT PDF</button>
+  <button class="btn-add-design" id="btn-add-new-design-project">
+    <svg viewBox="0 0 24 24" style="width: 15px; height: 15px; fill: currentColor;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+    <span>+ ADD NEW DESIGN PROJECT</span>
+  </button>
+</div>
+
+<!-- 7 KPI Metric Stat Cards Row -->
+<div class="design-kpi-row">
+  <!-- Card 1: Total Projects -->
+  <div class="design-kpi-card" data-kpi="TOTAL" style="cursor: pointer;" title="View all projects">
+    <div class="design-kpi-icon icon-blue">
+      <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+    </div>
+    <div class="design-kpi-content">
+      <span class="design-kpi-val" id="kpi-total-projects">15</span>
+      <span class="design-kpi-lbl">TOTAL PROJECTS</span>
+    </div>
+  </div>
+
+  <!-- Card 2: In Design -->
+  <div class="design-kpi-card" data-kpi="IN DESIGN" style="cursor: pointer;" title="Filter In Design">
+    <div class="design-kpi-icon icon-gear">
+      <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+    </div>
+    <div class="design-kpi-content">
+      <span class="design-kpi-val" id="kpi-in-design">6</span>
+      <span class="design-kpi-lbl">IN DESIGN</span>
+    </div>
+  </div>
+
+  <!-- Card 3: In Review -->
+  <div class="design-kpi-card" data-kpi="IN REVIEW" style="cursor: pointer;" title="Filter In Review">
+    <div class="design-kpi-icon icon-yellow">
+      <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+    </div>
+    <div class="design-kpi-content">
+      <span class="design-kpi-val" id="kpi-in-review">3</span>
+      <span class="design-kpi-lbl">IN REVIEW</span>
+    </div>
+  </div>
+
+  <!-- Card 4: Completed -->
+  <div class="design-kpi-card" data-kpi="COMPLETED" style="cursor: pointer;" title="Filter Completed">
+    <div class="design-kpi-icon icon-green">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+    </div>
+    <div class="design-kpi-content">
+      <span class="design-kpi-val" id="kpi-completed">4</span>
+      <span class="design-kpi-lbl">COMPLETED</span>
+    </div>
+  </div>
+
+  <!-- Card 5: Paused -->
+  <div class="design-kpi-card" data-kpi="PAUSED" style="cursor: pointer;" title="Filter Paused">
+    <div class="design-kpi-icon icon-red">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+    </div>
+    <div class="design-kpi-content">
+      <span class="design-kpi-val" id="kpi-paused">1</span>
+      <span class="design-kpi-lbl">PAUSED</span>
+    </div>
+  </div>
+
+  <!-- Card 6: On Hold -->
+  <div class="design-kpi-card" data-kpi="ON HOLD" style="cursor: pointer;" title="Filter On Hold">
+    <div class="design-kpi-icon icon-gray">
+      <svg viewBox="0 0 24 24"><path d="M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2H6zm10 14.5V20H8v-3.5l4-4 4 4zM12 11.5l-4-4V4h8v3.5l-4 4z"/></svg>
+    </div>
+    <div class="design-kpi-content">
+      <span class="design-kpi-val" id="kpi-on-hold">1</span>
+      <span class="design-kpi-lbl">ON HOLD</span>
+    </div>
+  </div>
+
+  <!-- Card 7: Sent to Customer -->
+  <div class="design-kpi-card" data-kpi="SENT TO CUSTOMER" style="cursor: pointer;" title="Filter Sent to Customer">
+    <div class="design-kpi-icon icon-purple">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </div>
+    <div class="design-kpi-content">
+      <span class="design-kpi-val" id="kpi-sent-to-customer">0</span>
+      <span class="design-kpi-lbl">SENT TO CUSTOMER</span>
+    </div>
   </div>
 </div>
 
-<div class="table-card">
-  <div class="table-toolbar">
-    <div class="search-box">
-      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-      <input type="text" id="search-design" placeholder="Search by Project, Customer or Engineer...">
-    </div>
-    <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px;">
-      SELECT A PROJECT ROW TO ADVANCE WORKFLOW MILESTONES
-    </div>
+<!-- Filter Toolbar Bar -->
+<div class="design-filter-bar">
+  <!-- Customer Dropdown -->
+  <select id="filter-design-customer" class="filter-item-select">
+    <option value="ALL">All Customers</option>
+  </select>
+
+  <!-- HRS Type Dropdown -->
+  <select id="filter-design-hrs-type" class="filter-item-select">
+    <option value="ALL">All HRS Type</option>
+    <option value="Valve Gate">Valve Gate</option>
+    <option value="Open Gate">Open Gate</option>
+    <option value="Sequential">Sequential</option>
+  </select>
+
+  <!-- Designer Dropdown -->
+  <select id="filter-design-designer" class="filter-item-select">
+    <option value="ALL">All Designers</option>
+  </select>
+
+  <!-- Status Dropdown -->
+  <select id="filter-design-status" class="filter-item-select">
+    <option value="ALL">All Status</option>
+    <option value="IN DESIGN">In Design</option>
+    <option value="IN REVIEW">In Review</option>
+    <option value="COMPLETED">Completed</option>
+    <option value="PAUSED">Paused</option>
+    <option value="ON HOLD">On Hold</option>
+    <option value="SENT TO CUSTOMER">Sent to Customer</option>
+  </select>
+
+  <!-- Date Range Box -->
+  <div class="filter-date-box" id="btn-date-range-trigger">
+    <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor;"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+    <input type="date" id="filter-date-start" title="Filter From Order Date">
+    <span>-</span>
+    <input type="date" id="filter-date-end" title="Filter To Order Date">
+    <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor;"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
   </div>
 
-  <div class="table-responsive">
-    <table class="data-table">
+  <!-- Search Input Box -->
+  <div class="filter-search-box">
+    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    <input type="text" id="search-design" placeholder="Search...">
+  </div>
+
+  <!-- Filter Apply & Reset Buttons -->
+  <button id="btn-design-filter" class="btn-filter-action" title="Apply filters">
+    <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor;"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+    <span>Filter</span>
+  </button>
+  <button id="btn-design-reset" class="btn-filter-action" title="Reset all filters" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15);">
+    <span>Reset</span>
+  </button>
+</div>
+
+<!-- Master Design Projects Table -->
+<div class="design-table-card">
+  <div class="design-table-wrapper">
+    <table class="design-master-table">
       <thead>
+        <!-- Row 1: Group & Standard Headers -->
         <tr>
-          <th>DATE</th>
-          <th>CUSTOMER NAME</th>
-          <th>PROJECT CODE</th>
-          <th>CATEGORY</th>
-          <th>QUOTE</th>
-          <th>PO STATUS</th>
-          <th>2D START</th>
-          <th>2D END</th>
-          <th>3D START</th>
-          <th>3D END</th>
-          <th>DESIGN SEND</th>
-          <th>OVERALL STATUS</th>
-          <th>OWNER</th>
+          <th rowspan="2" style="width: 45px;">SR<br>NO</th>
+          <th rowspan="2" style="width: 110px; text-align: left; padding-left: 12px;">PROJECT CODE</th>
+          <th rowspan="2" style="width: 140px; text-align: left; padding-left: 12px;">CUSTOMER</th>
+          <th rowspan="2" style="width: 180px; text-align: left; padding-left: 12px;">PROJECT DESCRIPTION</th>
+          <th rowspan="2" style="width: 100px; text-align: left; padding-left: 12px;">HRS TYPE</th>
+          <th rowspan="2" style="width: 100px; text-align: left; padding-left: 12px;">DESIGNER</th>
+
+          <!-- Stage 1 Group -->
+          <th colspan="3" class="group-header">
+            CONCEPT DESIGN<br>
+            <span style="font-size: 8.5px; opacity: 0.85; font-weight: 600;">(Hrs)</span>
+          </th>
+
+          <!-- Stage 2 Group -->
+          <th colspan="3" class="group-header">
+            2D DESIGN<br>
+            <span style="font-size: 8.5px; opacity: 0.85; font-weight: 600;">(Hrs)</span>
+          </th>
+
+          <!-- Stage 3 Group -->
+          <th colspan="3" class="group-header">
+            3D DESIGN<br>
+            <span style="font-size: 8.5px; opacity: 0.85; font-weight: 600;">(Hrs)</span>
+          </th>
+
+          <th rowspan="2" style="width: 120px;">OVERALL<br>STATUS</th>
+          <th rowspan="2" style="width: 50px;">UPLOAD</th>
+          <th rowspan="2" style="width: 50px;">COPY</th>
+          <th rowspan="2" style="width: 50px;">VIEW</th>
+          <th rowspan="2" style="width: 50px;">VIEW</th>
+          <th rowspan="2" style="width: 80px;">SEND TO<br>CUSTOMER</th>
+        </tr>
+
+        <!-- Row 2: Sub-headers for Stage Groups -->
+        <tr>
+          <th style="width: 32px;">H</th>
+          <th style="width: 50px;">ACTION</th>
+          <th style="width: 50px;">STATUS</th>
+
+          <th style="width: 32px;">H</th>
+          <th style="width: 50px;">ACTION</th>
+          <th style="width: 50px;">STATUS</th>
+
+          <th style="width: 32px;">H</th>
+          <th style="width: 50px;">ACTION</th>
+          <th style="width: 50px;">STATUS</th>
         </tr>
       </thead>
-      <tbody id="design-table-body"></tbody>
+      <tbody id="design-table-body">
+        <!-- Rendered dynamically by designView.js -->
+      </tbody>
     </table>
   </div>
 
-  <!-- Milestone Workflow Control Buttons (Bottom Action Bar) -->
-  <div class="design-action-bar">
-    <span style="font-size: 12px; font-weight: 700; color: var(--text-primary);" id="design-selected-hint">Select a row to execute design actions:</span>
-    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-      <button class="btn-workflow-step" id="btn-step-2d-start">START 2D</button>
-      <button class="btn-workflow-step" id="btn-step-2d-end">END 2D</button>
-      <button class="btn-workflow-step" id="btn-step-3d-start">START 3D</button>
-      <button class="btn-workflow-step" id="btn-step-3d-end">END 3D</button>
-      <button class="btn-workflow-step primary" id="btn-step-design-send">DESIGN SEND</button>
+  <!-- Table Footer / Pagination Controls -->
+  <div class="design-table-footer">
+    <div id="design-pagination-info">Showing 1 to 15 of 28 entries</div>
+    <div class="design-pagination-controls">
+      <button class="btn-page-nav" id="btn-page-prev">Previous</button>
+      <div id="design-page-numbers" style="display: flex; gap: 4px;">
+        <button class="btn-page-num active" data-page="1">1</button>
+        <button class="btn-page-num" data-page="2">2</button>
+      </div>
+      <button class="btn-page-nav" id="btn-page-next">Next</button>
+      <div style="display: flex; align-items: center; gap: 6px; margin-left: 10px;">
+        <select id="design-page-size" class="page-size-select">
+          <option value="15" selected>15</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+        </select>
+        <span>entries per page</span>
+      </div>
     </div>
+  </div>
+</div>
+
+<!-- Bottom Legends & Brand Motto -->
+<div class="design-bottom-bar">
+  <div class="design-legends-group">
+    <!-- Stage Action Legend -->
+    <div class="legend-section">
+      <span class="legend-title">Stage Action Legend:</span>
+      <span class="legend-pill">
+        <span class="btn-stage-circle play-green" style="width: 18px; height: 18px; pointer-events: none;">
+          <svg viewBox="0 0 24 24" style="width: 9px; height: 9px;"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+        <span>Play / Start</span>
+      </span>
+      <span class="legend-pill">
+        <span class="btn-stage-circle pause-amber" style="width: 18px; height: 18px; pointer-events: none;">
+          <svg viewBox="0 0 24 24" style="width: 9px; height: 9px;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </span>
+        <span>Pause</span>
+      </span>
+      <span class="legend-pill">
+        <span class="btn-stage-circle status-done" style="width: 18px; height: 18px; pointer-events: none;">
+          <svg viewBox="0 0 24 24" style="width: 10px; height: 10px;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </span>
+        <span>Complete</span>
+      </span>
+    </div>
+
+    <!-- Status Legend -->
+    <div class="legend-section">
+      <span class="legend-title">Status Legend:</span>
+      <span class="legend-badge status-pill pill-in-design">In Design</span>
+      <span class="legend-badge status-pill pill-in-review">In Review</span>
+      <span class="legend-badge status-pill pill-completed">Completed</span>
+      <span class="legend-badge status-pill pill-paused">Paused</span>
+      <span class="legend-badge status-pill pill-on-hold">On Hold</span>
+      <span class="legend-badge status-pill pill-sent">Sent to Customer</span>
+    </div>
+  </div>
+
+  <div class="legend-motto">
+    &ldquo;From Concept to Reliable Hot Runner Solution&rdquo;
   </div>
 </div>

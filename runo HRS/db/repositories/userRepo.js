@@ -27,6 +27,13 @@ class UserRepository {
     );
 
     if (user) {
+      if (user.username.toUpperCase() !== 'ANAND' && (user.status === 'PENDING_APPROVAL' || user.is_approved === false)) {
+        return {
+          success: false,
+          pendingApproval: true,
+          message: 'Admin approval is required before you can log in. PLEASE CONTACT ADMIN.'
+        };
+      }
       const { password, ...safeUser } = user;
       return { success: true, user: safeUser };
     }
@@ -42,15 +49,19 @@ class UserRepository {
       return { success: false, message: 'Username already exists!' };
     }
 
+    const isAutoApproved = (uClean === 'ANAND');
     const newUser = {
       id: `usr-${Date.now()}`,
       username: uClean,
       name: userData.name || userData.username,
-      role: (userData.role || 'ENGINEER').toUpperCase(),
+      role: (userData.role || 'DESIGN').toUpperCase(),
+      designation: userData.designation || userData.role || '',
       password: userData.password || 'USER123',
       email: userData.email || '',
       phone: userData.phone || '',
-      department: userData.department || 'Engineering',
+      department: userData.department || 'DESIGN',
+      status: isAutoApproved ? 'APPROVED' : 'PENDING_APPROVAL',
+      is_approved: isAutoApproved,
       created_at: new Date().toISOString().split('T')[0]
     };
 
@@ -58,7 +69,7 @@ class UserRepository {
     this.db.data.users.push(newUser);
     this.db.save();
     const { password, ...safeUser } = newUser;
-    return { success: true, user: safeUser };
+    return { success: true, user: safeUser, pendingApproval: !isAutoApproved };
   }
 
   update(id, updates) {

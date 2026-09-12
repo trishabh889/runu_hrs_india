@@ -9,7 +9,9 @@
       "email": "anand@runohrs.com",
       "phone": "+91 98765 43210",
       "department": "Executive Management",
-      "created_at": "2026-01-15"
+      "created_at": "2026-01-15",
+      "status": "APPROVED",
+      "is_approved": true
     },
     {
       "id": "usr-002",
@@ -20,7 +22,9 @@
       "email": "vikram@runohrs.com",
       "phone": "+91 98111 22334",
       "department": "Design & Tooling",
-      "created_at": "2026-02-10"
+      "created_at": "2026-02-10",
+      "status": "APPROVED",
+      "is_approved": true
     },
     {
       "id": "usr-003",
@@ -31,7 +35,9 @@
       "email": "rajesh@runohrs.com",
       "phone": "+91 98222 33445",
       "department": "CNC Machining",
-      "created_at": "2026-03-01"
+      "created_at": "2026-03-01",
+      "status": "APPROVED",
+      "is_approved": true
     },
     {
       "id": "usr-003",
@@ -42,7 +48,9 @@
       "email": "priya@runohrs.com",
       "phone": "+91 98111 55667",
       "department": "Commercial & Costing",
-      "created_at": "2026-02-12"
+      "created_at": "2026-02-12",
+      "status": "APPROVED",
+      "is_approved": true
     },
     {
       "id": "usr-004",
@@ -53,7 +61,9 @@
       "email": "rohit@runohrs.com",
       "phone": "+91 98111 77889",
       "department": "Design & Engineering",
-      "created_at": "2026-02-15"
+      "created_at": "2026-02-15",
+      "status": "APPROVED",
+      "is_approved": true
     },
     {
       "id": "usr-005",
@@ -64,7 +74,9 @@
       "email": "manish@runohrs.com",
       "phone": "+91 98111 99001",
       "department": "Accounts & Finance",
-      "created_at": "2026-02-18"
+      "created_at": "2026-02-18",
+      "status": "APPROVED",
+      "is_approved": true
     },
     {
       "id": "usr-007",
@@ -75,28 +87,12 @@
       "email": "suresh@runohrs.com",
       "phone": "+91 98333 11223",
       "department": "Procurement & Purchase",
-      "created_at": "2026-03-05"
+      "created_at": "2026-03-05",
+      "status": "APPROVED",
+      "is_approved": true
     }
   ],
   "customers": [
-    {
-      "id": "cust-001",
-      "company_name": "Minda Automotive Solutions Ltd.",
-      "customer_code": "RUNO-CUST-MIND",
-      "tier": "Tier-1 OEM Supplier",
-      "payment_terms": "30 Days Net",
-      "contact_person": "Ramesh Verma",
-      "designation": "Head - Tooling & NPD",
-      "phone": "+91 98200 11223",
-      "email": "r.verma@minda.com",
-      "gstin": "06AAACM1234D1Z5",
-      "pan": "AAACM1234D",
-      "city_state": "IMT Manesar, Haryana",
-      "address": "Plot 42, Sector 8, IMT Manesar, Gurugram, Haryana",
-      "industry": "Automotive Lighting & Plastics",
-      "total_projects": 1,
-      "created_at": "2026-01-20"
-    },
     {
       "id": "cust-002",
       "company_name": "Lumax Industries Pvt. Ltd.",
@@ -113,7 +109,9 @@
       "address": "Chakan MIDC Phase II, Pune, Maharashtra",
       "industry": "Automotive Components",
       "total_projects": 0,
-      "created_at": "2026-02-14"
+      "created_at": "2026-02-14",
+      "city": "Chakan Pune",
+      "state": "Maharashtra"
     },
     {
       "id": "cust-003",
@@ -132,37 +130,33 @@
       "industry": "Polymer Extrusion & Injection",
       "section": "SPARE-HRS",
       "total_projects": 1,
-      "created_at": "2026-02-20"
+      "created_at": "2026-02-20",
+      "city": "Aurangabad",
+      "state": "Maharashtra"
+    },
+    {
+      "id": "cust-001",
+      "company_name": "Minda Automotive Solutions Ltd.",
+      "customer_code": "RUNO-CUST-MIND",
+      "tier": "Tier-1 OEM Supplier",
+      "payment_terms": "30 Days Net",
+      "contact_person": "Ramesh Verma",
+      "designation": "Head - Tooling & NPD",
+      "phone": "+91 98200 11223",
+      "email": "r.verma@minda.com",
+      "gstin": "06AAACM1234D1Z5",
+      "pan": "AAACM1234D",
+      "city_state": "IMT Manesar, Haryana",
+      "address": "Plot 42, Sector 8, IMT Manesar, Gurugram, Haryana",
+      "industry": "Automotive Lighting & Plastics",
+      "section": "HRS",
+      "total_projects": 3,
+      "created_at": "2026-01-20",
+      "city": "IMT Manesar",
+      "state": "Haryana"
     }
   ],
   "projects": [
-    {
-      "id": "proj-001",
-      "project_code": "RUNO-2026-001",
-      "customer_id": "cust-001",
-      "customer_name": "Minda Automotive Solutions Ltd.",
-      "mould_description": "Rear Lamp Housing 4-Drop Prewired HRS",
-      "nozzle_count": 4,
-      "nozzle_type": "Valve Gate Pneumatic (Series 16)",
-      "manifold_type": "X-Style Balanced Manifold (H13 Hardened)",
-      "runner_diameter": "12 mm",
-      "gate_type": "Valve Gate 2.5mm",
-      "material": "Polycarbonate (PC) Clear",
-      "shot_weight": "340 grams",
-      "year": "2026",
-      "order_date": "2026-02-01",
-      "target_date": "2026-03-25",
-      "status": "ACTIVE",
-      "priority": "HIGH",
-      "project_manager": "Anand Sharma",
-      "lead_engineer": "Vikram Singh",
-      "value": "₹ 4,85,000",
-      "notes": "Pre-wired heavy duty ceramic connector assembly with J-Type thermocouple.",
-      "created_at": "2026-02-01",
-      "quote_status": "QUOTE SEND",
-      "po_received": "RECEIVED",
-      "category": "HRS"
-    },
     {
       "id": "proj-002",
       "project_code": "RUNO-2026-002",
@@ -238,68 +232,48 @@
       "created_by": "VIKRAM",
       "notes": "RUNO_SOURCE=SALES | ID_CARDNO=IDC-2026-03 | COST=215000 | MATERIAL=ABS Natural | NOZZLE_SERIES=Series 12 | GATE_TYPE=Torpedo Tip | CONNECTOR=6-Pin Heavy Duty | GATE_DIA=1.8 mm | GUIDE_DIA=5.0 mm",
       "created_at": "2026-03-01"
-    }
-  ],
-  "manufacturing": [
+    },
     {
-      "project_id": "proj-001",
-      "stages": {
-        "design_cad": {
-          "status": "COMPLETED",
-          "completed_date": "2026-02-08",
-          "notes": "3D CAD flow simulation approved."
-        },
-        "cnc_machining": {
-          "status": "COMPLETED",
-          "completed_date": "2026-02-18",
-          "notes": "Manifold block 5-axis CNC machining done."
-        },
-        "gun_drilling": {
-          "status": "COMPLETED",
-          "completed_date": "2026-02-23",
-          "notes": "Flow channels precision drilled (0.4 Ra)."
-        },
-        "hardening": {
-          "status": "IN_PROGRESS",
-          "completed_date": null,
-          "notes": "Vacuum heat treatment (48-50 HRC)."
-        },
-        "assembly": {
-          "status": "PENDING",
-          "completed_date": null,
-          "notes": "Nozzle fitment pending."
-        },
-        "wiring_testing": {
-          "status": "PENDING",
-          "completed_date": null,
-          "notes": "Heater and thermocouple testing."
-        },
-        "final_inspection": {
-          "status": "PENDING",
-          "completed_date": null,
-          "notes": "CMM inspection and dispatch packaging."
-        }
-      },
-      "current_stage": "hardening",
-      "overall_progress": 55,
-      "updated_at": "2026-02-23"
-    }
-  ],
-  "approvals": [
-    {
-      "id": "appr-001",
-      "project_id": "proj-001",
+      "id": "proj-001",
       "project_code": "RUNO-2026-001",
-      "title": "Manifold Flow Channel & Drop Pitch Sign-off",
-      "type": "DESIGN_APPROVAL",
-      "requested_by": "Vikram Singh",
-      "approved_by": "ANAND",
-      "status": "APPROVED",
-      "submitted_date": "2026-02-05",
-      "action_date": "2026-02-06",
-      "remarks": "Drawing v2 approved. Safe for CNC machining."
+      "customer_id": "cust-001",
+      "customer_name": "Minda Automotive Solutions Ltd.",
+      "mould_description": "Rear Lamp Housing 4-Drop Prewired HRS",
+      "category": "HRS",
+      "quote_status": "APPROVED",
+      "po_received": "RECEIVED",
+      "nozzle_count": 4,
+      "nozzle_type": "Valve Gate Pneumatic (Series 16)",
+      "manifold_type": "X-Style Balanced Manifold (H13 Hardened)",
+      "runner_diameter": "12 mm",
+      "gate_type": "Valve Gate 2.5mm",
+      "material": "Polycarbonate (PC) Clear",
+      "shot_weight": "340 grams",
+      "year": "2026",
+      "order_date": "2026-02-01",
+      "target_date": "2026-03-25",
+      "status": "ACTIVE",
+      "priority": "HIGH",
+      "project_manager": "Anand Sharma",
+      "lead_engineer": "Vikram Singh",
+      "value": "₹ 4,85,000",
+      "id_card_no": "IDC-2026-01",
+      "cost": "485000",
+      "hrs_type": "HRS",
+      "nozzle_series": "Series 16",
+      "connector": "16-Pin Heavy Duty Harting",
+      "gate_dia": "2.5 mm",
+      "guide_dia": "6.0 mm",
+      "remark": "High cosmetic optical clear lens component.",
+      "design_check": "CHECKED",
+      "owner": "VIKRAM",
+      "created_by": "VIKRAM",
+      "notes": "RUNO_SOURCE=SALES | ID_CARDNO=IDC-2026-01 | COST=485000 | MATERIAL=Polycarbonate (PC) Clear | NOZZLE_SERIES=Series 16 | GATE_TYPE=Valve Gate 2.5mm | CONNECTOR=16-Pin Heavy Duty | GATE_DIA=2.5 mm | GUIDE_DIA=6.0 mm",
+      "created_at": "2026-02-01"
     }
   ],
+  "manufacturing": [],
+  "approvals": [],
   "storeItems": [
     {
       "code": "ITM-VG-001",
@@ -485,13 +459,6 @@
     }
   ],
   "projectWorkflows": {
-    "proj-001": {
-      "2dStart": "02-Feb-2026 10:30:00",
-      "2dEnd": "05-Feb-2026 17:45:00",
-      "3dStart": "06-Feb-2026 09:15:00",
-      "3dEnd": "08-Feb-2026 18:00:00",
-      "designSend": "09-Feb-2026 11:20:00"
-    },
     "proj-002": {
       "2dStart": "16-Feb-2026 11:00:00",
       "2dEnd": "20-Feb-2026 16:30:00",
@@ -506,5 +473,412 @@
       "3dEnd": "-",
       "designSend": "-"
     }
-  }
+  },
+  "purchaseRequests": [
+    {
+      "sr": 1,
+      "id": "pr-001",
+      "pr_no": "PR-2026-001",
+      "project_code": "RUNO-2026-001",
+      "project_desc": "4-Drop Valve Gate System for Maruti Suzuki Front Bumper",
+      "date": "01-04-2026",
+      "required_date": "2026-04-20",
+      "category": "HRS",
+      "item_desc": "Manifold Block 4-Drop Prewired H13 Steel",
+      "vendor": "Steelage",
+      "status": "Received",
+      "priority": "Normal",
+      "requested_by": "Rohit Sharma (Design)",
+      "purpose": "Critical main manifold for Maruti project",
+      "items": [
+        {
+          "desc": "Manifold Block 4-Drop Prewired H13 Steel",
+          "drawing": "RUNO-MNF-001",
+          "spec": "H13 Vacuum Degassed Forged",
+          "qty": 1,
+          "unit": "PCS",
+          "vendor": "Steelage",
+          "remarks": "Rough machined"
+        }
+      ]
+    },
+    {
+      "sr": 2,
+      "id": "pr-002",
+      "pr_no": "PR-2026-002",
+      "project_code": "RUNO-2026-002",
+      "project_desc": "2-Drop Hot Half System for Tata Motors Rear Lamp",
+      "date": "02-04-2026",
+      "required_date": "2026-04-18",
+      "category": "HRS",
+      "item_desc": "Coil Heaters 230V 650W with J-Type TC",
+      "vendor": "Watlow",
+      "status": "Received",
+      "priority": "High",
+      "requested_by": "Rohit Sharma (Design)",
+      "purpose": "Nozzle heating bands",
+      "items": [
+        {
+          "desc": "Coil Heaters 230V 650W with J-Type TC",
+          "drawing": "WAT-CH-230V",
+          "spec": "230V, 650W, 1M Cable",
+          "qty": 8,
+          "unit": "NOS",
+          "vendor": "Watlow",
+          "remarks": "Tested"
+        }
+      ]
+    },
+    {
+      "sr": 3,
+      "id": "pr-003",
+      "pr_no": "PR-2026-003",
+      "project_code": "RUNO-2026-003",
+      "project_desc": "8-Drop Hot Half System for Hyundai Dashboard Panel",
+      "date": "03-04-2026",
+      "required_date": "2026-04-25",
+      "category": "HRTC",
+      "item_desc": "8-Zone Temperature Controller Module",
+      "vendor": "Omega",
+      "status": "PO Released",
+      "priority": "Urgent",
+      "requested_by": "Rajesh Patil (Store)",
+      "purpose": "Temperature Controller for 8-zone console",
+      "items": [
+        {
+          "desc": "8-Zone Temperature Controller Module",
+          "drawing": "TC-MOD-8Z",
+          "spec": "PID Microprocessor 16A/Zone",
+          "qty": 2,
+          "unit": "SET",
+          "vendor": "Omega",
+          "remarks": "Includes enclosure"
+        }
+      ]
+    },
+    {
+      "sr": 4,
+      "id": "pr-004",
+      "pr_no": "PR-2026-004",
+      "project_code": "RUNO-2026-004",
+      "project_desc": "4-Drop Open System for Hero MotoCorp Instrument Housing",
+      "date": "04-04-2026",
+      "required_date": "2026-04-22",
+      "category": "HRS",
+      "item_desc": "Valve Gate Cylinder Pneumatic 16mm",
+      "vendor": "Festo",
+      "status": "Approved",
+      "priority": "Normal",
+      "requested_by": "Rohit Sharma (Design)",
+      "purpose": "Pneumatic cylinder actuators",
+      "items": [
+        {
+          "desc": "Valve Gate Cylinder Pneumatic 16mm",
+          "drawing": "FESTO-DNC-16",
+          "spec": "Double Acting 16mm Bore",
+          "qty": 4,
+          "unit": "NOS",
+          "vendor": "Festo",
+          "remarks": "Compact model"
+        }
+      ]
+    },
+    {
+      "sr": 5,
+      "id": "pr-005",
+      "pr_no": "PR-2026-005",
+      "project_code": "RUNO-2026-005",
+      "project_desc": "6-Drop Prewired Hot Half for Havells Switch Frame",
+      "date": "05-04-2026",
+      "required_date": "2026-04-28",
+      "category": "HRS",
+      "item_desc": "Thermocouple Fe-Const J-Type 2.5m Cable",
+      "vendor": "Watlow",
+      "status": "In Review",
+      "priority": "Normal",
+      "requested_by": "Rohit Sharma (Design)",
+      "purpose": "Manifold zone monitoring",
+      "items": [
+        {
+          "desc": "Thermocouple Fe-Const J-Type 2.5m Cable",
+          "drawing": "TC-J-25M",
+          "spec": "Grounded Bayonet Type",
+          "qty": 12,
+          "unit": "NOS",
+          "vendor": "Watlow",
+          "remarks": "High accuracy"
+        }
+      ]
+    },
+    {
+      "sr": 6,
+      "id": "pr-006",
+      "pr_no": "PR-2026-006",
+      "project_code": "RUNO-2026-006",
+      "project_desc": "2-Drop Hot Runner for Schneider Electric Enclosure",
+      "date": "06-04-2026",
+      "required_date": "2026-04-29",
+      "category": "SPARE - HRS",
+      "item_desc": "Spare Valve Pins 3.5mm x 180mm M2 Steel",
+      "vendor": "Meusburger",
+      "status": "Pending",
+      "priority": "Normal",
+      "requested_by": "Vikram Singh (Sales)",
+      "purpose": "Client requested critical spares package",
+      "items": [
+        {
+          "desc": "Spare Valve Pins 3.5mm x 180mm M2 Steel",
+          "drawing": "VP-35-180",
+          "spec": "M2 HSS Hardened 62-64 HRC",
+          "qty": 6,
+          "unit": "PCS",
+          "vendor": "Meusburger",
+          "remarks": "Polished tip"
+        }
+      ]
+    },
+    {
+      "sr": 7,
+      "id": "pr-007",
+      "pr_no": "PR-2026-007",
+      "project_code": "RUNO-2026-007",
+      "project_desc": "4-Drop Valve Gate for Mahindra Thar Grille",
+      "date": "07-04-2026",
+      "required_date": "2026-04-26",
+      "category": "HRS",
+      "item_desc": "Tubular Heaters 8.5mm Dia x 600mm Bent",
+      "vendor": "Tempco",
+      "status": "In Transit",
+      "priority": "High",
+      "requested_by": "Rohit Sharma (Design)",
+      "purpose": "Manifold internal heating",
+      "items": [
+        {
+          "desc": "Tubular Heaters 8.5mm Dia x 600mm Bent",
+          "drawing": "TUB-85-600",
+          "spec": "Incoloy 800, 230V 1200W",
+          "qty": 4,
+          "unit": "NOS",
+          "vendor": "Tempco",
+          "remarks": "Factory formed"
+        }
+      ]
+    },
+    {
+      "sr": 8,
+      "id": "pr-008",
+      "pr_no": "PR-2026-008",
+      "project_code": "RUNO-2026-008",
+      "project_desc": "8-Drop Hot Half System for Honda Activa Inner Cowl",
+      "date": "08-04-2026",
+      "required_date": "2026-04-24",
+      "category": "HRS",
+      "item_desc": "Mold Base Plates 1.2312 Pre-machined",
+      "vendor": "LKM",
+      "status": "Received",
+      "priority": "High",
+      "requested_by": "Rohit Sharma (Design)",
+      "purpose": "Hot half backing plate and clamping plate",
+      "items": [
+        {
+          "desc": "Mold Base Plates 1.2312 Pre-machined",
+          "drawing": "LKM-MBP-8D",
+          "spec": "Steel 1.2312 (P20+S)",
+          "qty": 2,
+          "unit": "SET",
+          "vendor": "LKM",
+          "remarks": "Precision ground"
+        }
+      ]
+    },
+    {
+      "sr": 9,
+      "id": "pr-009",
+      "pr_no": "PR-2026-009",
+      "project_code": "RUNO-2026-009",
+      "project_desc": "12-Drop Multi-Tip System for Milton Medical Syringe",
+      "date": "09-04-2026",
+      "required_date": "2026-05-02",
+      "category": "HRS",
+      "item_desc": "Cable Track Energy Chain 15x20mm",
+      "vendor": "Igus",
+      "status": "PO Released",
+      "priority": "Normal",
+      "requested_by": "Rohit Sharma (Design)",
+      "purpose": "Wiring and pneumatic hose protection",
+      "items": [
+        {
+          "desc": "Cable Track Energy Chain 15x20mm",
+          "drawing": "IGUS-1520",
+          "spec": "Radius R38, Length 1.5M",
+          "qty": 3,
+          "unit": "MTR",
+          "vendor": "Igus",
+          "remarks": "Snap-open design"
+        }
+      ]
+    },
+    {
+      "sr": 10,
+      "id": "pr-010",
+      "pr_no": "PR-2026-010",
+      "project_code": "RUNO-2026-010",
+      "project_desc": "16-Zone Temperature Controller for Motherson",
+      "date": "10-04-2026",
+      "required_date": "2026-04-28",
+      "category": "SPARE - HRTC",
+      "item_desc": "Heavy Duty Connectors 16-Pin Han E",
+      "vendor": "Harting",
+      "status": "Approved",
+      "priority": "Normal",
+      "requested_by": "Rajesh Patil (Store)",
+      "purpose": "Heater power & thermocouple terminal",
+      "items": [
+        {
+          "desc": "Heavy Duty Connectors 16-Pin Han E",
+          "drawing": "HAN-16E-M",
+          "spec": "16-Pin 16A 500V Screw",
+          "qty": 6,
+          "unit": "SET",
+          "vendor": "Harting",
+          "remarks": "Includes hood & base"
+        }
+      ]
+    },
+    {
+      "sr": 11,
+      "id": "pr-011",
+      "pr_no": "PR-2026-011",
+      "project_code": "RUNO-2026-011",
+      "project_desc": "4-Drop Valve Gate for Bajaj Auto Fuel Tank Cover",
+      "date": "11-04-2026",
+      "required_date": "2026-04-30",
+      "category": "HRS",
+      "item_desc": "Nozzle Tips Beryllium Copper Alloy 25",
+      "vendor": "Yudo",
+      "status": "In Transit",
+      "priority": "Urgent",
+      "requested_by": "Rohit Sharma (Design)",
+      "purpose": "High thermal conductivity gate tips",
+      "items": [
+        {
+          "desc": "Nozzle Tips Beryllium Copper Alloy 25",
+          "drawing": "YUD-TIP-25",
+          "spec": "BeCu Alloy 25 Hardened",
+          "qty": 8,
+          "unit": "PCS",
+          "vendor": "Yudo",
+          "remarks": "TiN Coated"
+        }
+      ]
+    },
+    {
+      "sr": 12,
+      "id": "pr-012",
+      "pr_no": "PR-2026-012",
+      "project_code": "RUNO-2026-012",
+      "project_desc": "1-Drop Sprue Bushing System for Polycab Junction Box",
+      "date": "12-04-2026",
+      "required_date": "2026-04-25",
+      "category": "HRS",
+      "item_desc": "Locating Rings & Sprue Bushing Set",
+      "vendor": "Misumi",
+      "status": "Received",
+      "priority": "Normal",
+      "requested_by": "Rohit Sharma (Design)",
+      "purpose": "Injection moulding machine platen locating",
+      "items": [
+        {
+          "desc": "Locating Rings & Sprue Bushing Set",
+          "drawing": "MIS-LR-100",
+          "spec": "OD 100mm, ID 40mm H7",
+          "qty": 2,
+          "unit": "SET",
+          "vendor": "Misumi",
+          "remarks": "Hardened steel"
+        }
+      ]
+    },
+    {
+      "sr": 13,
+      "id": "pr-013",
+      "pr_no": "PR-2026-013",
+      "project_code": "RUNO-2026-013",
+      "project_desc": "6-Drop Prewired Hot Half for Godrej Refrigerator Trim",
+      "date": "13-04-2026",
+      "required_date": "2026-05-05",
+      "category": "HRS",
+      "item_desc": "Thermal Insulation Sheets 10mm Mica",
+      "vendor": "Rogers",
+      "status": "In Review",
+      "priority": "Normal",
+      "requested_by": "Rohit Sharma (Design)",
+      "purpose": "Heat insulation between manifold & clamping plates",
+      "items": [
+        {
+          "desc": "Thermal Insulation Sheets 10mm Mica",
+          "drawing": "ROG-MICA-10",
+          "spec": "10mm Thk x 500x500mm 500°C",
+          "qty": 4,
+          "unit": "PCS",
+          "vendor": "Rogers",
+          "remarks": "Compressive strength 400 MPa"
+        }
+      ]
+    },
+    {
+      "sr": 14,
+      "id": "pr-014",
+      "pr_no": "PR-2026-014",
+      "project_code": "RUNO-2026-014",
+      "project_desc": "2-Drop Hot Runner for Ashok Leyland Air Duct",
+      "date": "14-04-2026",
+      "required_date": "2026-05-04",
+      "category": "HRS",
+      "item_desc": "O-Rings Viton High Temp 200°C Pack of 50",
+      "vendor": "Trelleborg",
+      "status": "Pending",
+      "priority": "Normal",
+      "requested_by": "Rohit Sharma (Design)",
+      "purpose": "Cooling jacket and hydraulic sealing",
+      "items": [
+        {
+          "desc": "O-Rings Viton High Temp 200°C Pack of 50",
+          "drawing": "VIT-OR-200",
+          "spec": "FKM 75 Shore A Brown",
+          "qty": 2,
+          "unit": "PKT",
+          "vendor": "Trelleborg",
+          "remarks": "Pack of 50"
+        }
+      ]
+    },
+    {
+      "sr": 15,
+      "id": "pr-015",
+      "pr_no": "PR-2026-015",
+      "project_code": "RUNO-2026-015",
+      "project_desc": "8-Drop Hot Half System for Vivo Smartphone Rear Case",
+      "date": "15-04-2026",
+      "required_date": "2026-05-06",
+      "category": "HRS",
+      "item_desc": "Ceramic Terminal Blocks 6-Pole 400V",
+      "vendor": "CoorsTek",
+      "status": "PO Released",
+      "priority": "High",
+      "requested_by": "Rohit Sharma (Design)",
+      "purpose": "High temperature wire junction box",
+      "items": [
+        {
+          "desc": "Ceramic Terminal Blocks 6-Pole 400V",
+          "drawing": "CER-TB-6P",
+          "spec": "Steatite Ceramic 30A 400V",
+          "qty": 10,
+          "unit": "NOS",
+          "vendor": "CoorsTek",
+          "remarks": "Brass terminals"
+        }
+      ]
+    }
+  ]
 }

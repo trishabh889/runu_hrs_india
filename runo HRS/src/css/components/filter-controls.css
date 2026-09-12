@@ -1,0 +1,135 @@
+/* Shared dimensions for matching filter controls across every workspace. */
+:root {
+  --filter-height: 36px;
+  --filter-select-width: 180px;
+  --filter-search-width: 280px;
+  --filter-date-width: 140px;
+  --filter-action-width: 88px;
+  --control-radius: 6px;
+}
+.sub-view :is(.table-toolbar, .purchase-filter-bar, .design-filter-bar, .mfg-toolbar) {
+  display: flex;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 12px !important;
+  padding: 12px !important;
+  min-width: 0;
+  background: var(--bg-toolbar) !important;
+  border-color: var(--border-subtle) !important;
+}
+.sub-view :is(.purchase-filter-bar, .design-filter-bar, .mfg-toolbar) {
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.table-toolbar > div:has(.search-box, select, input[type="date"]) {
+  min-width: 0;
+  flex-wrap: wrap !important;
+}
+.sub-view :is(.filter-select-compact, .pr-filter-select, .filter-item-select,
+    .mfg-select-filter, .filter-group .custom-dropdown-btn) {
+  width: var(--filter-select-width) !important;
+  min-width: var(--filter-select-width) !important;
+  max-width: var(--filter-select-width) !important;
+  flex: 0 0 var(--filter-select-width) !important;
+  height: var(--filter-height) !important;
+  padding: 0 32px 0 12px !important;
+  border: 1px solid var(--bg-input-border) !important;
+  border-radius: var(--control-radius) !important;
+  background-color: var(--bg-input) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-primary);
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0;
+}
+.sub-view select:is(.filter-select-compact, .pr-filter-select, .filter-item-select, .mfg-select-filter) {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23cad8e5'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 14px;
+  background-position: right 10px center;
+}
+.filter-group .custom-dropdown-btn { padding-right: 12px !important; }
+.custom-dropdown-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sub-view :is(.search-box, .filter-search-box, .pr-search-box, .mfg-search-container) {
+  position: relative;
+  width: var(--filter-search-width) !important;
+  min-width: var(--filter-search-width) !important;
+  max-width: var(--filter-search-width) !important;
+  flex: 0 0 var(--filter-search-width) !important;
+  height: var(--filter-height);
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+.sub-view :is(.search-box, .filter-search-box, .pr-search-box, .mfg-search-container) input {
+  width: 100% !important;
+  height: var(--filter-height) !important;
+  padding: 0 12px 0 36px !important;
+  border: 1px solid var(--bg-input-border) !important;
+  border-radius: var(--control-radius);
+  background-color: var(--bg-input) !important;
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  font-size: 12px !important;
+  line-height: normal;
+}
+.sub-view :is(.search-box, .filter-search-box, .pr-search-box, .mfg-search-container) > svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  pointer-events: none;
+}
+.sub-view :is(.pr-date-range-box, .filter-date-box, .mfg-date-range) {
+  height: var(--filter-height);
+  padding: 0;
+  border: none;
+  background: transparent;
+  gap: 8px !important;
+  flex: 0 0 auto;
+}
+.sub-view :is(.table-toolbar input[type="date"], .pr-date-range-box input,
+    .filter-date-box input, .mfg-date-range input) {
+  width: var(--filter-date-width) !important;
+  min-width: var(--filter-date-width) !important;
+  max-width: var(--filter-date-width) !important;
+  flex: 0 0 var(--filter-date-width) !important;
+  height: var(--filter-height) !important;
+  padding: 0 10px !important;
+  background: var(--bg-input) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--bg-input-border) !important;
+  border-radius: var(--control-radius) !important;
+  font-family: var(--font-primary);
+  font-size: 12px !important;
+  font-weight: 400 !important;
+}
+.sub-view :is(.table-toolbar, .purchase-filter-bar, .design-filter-bar, .mfg-toolbar)
+    :is(.btn-action-secondary, .btn-pr-filter-btn, .btn-filter-action, .btn-mfg-filter) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: var(--filter-action-width) !important;
+  min-width: var(--filter-action-width);
+  flex: 0 0 var(--filter-action-width);
+  height: var(--filter-height) !important;
+  padding: 0 12px !important;
+  border: 1px solid var(--bg-input-border) !important;
+  border-radius: var(--control-radius) !important;
+  font-size: 12px !important;
+  white-space: nowrap;
+}
+.view-header { flex-wrap: wrap; gap: 16px; }
+.view-actions { flex-wrap: wrap; }
+.sub-view :is(.filter-select-compact, .pr-filter-select, .filter-item-select,
+    .mfg-select-filter, .filter-group .custom-dropdown-btn, input):focus-visible {
+  outline: 2px solid #ffc398;
+  outline-offset: 2px;
+}

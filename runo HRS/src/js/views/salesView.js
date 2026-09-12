@@ -8,12 +8,34 @@ function initSales() {
   const searchInput = document.getElementById('search-sales');
   const catFilter = document.getElementById('filter-sales-category');
   const fyFilter = document.getElementById('filter-sales-fy');
+  const startDateInput = document.getElementById('filter-sales-start');
+  const endDateInput = document.getElementById('filter-sales-end');
+  const btnReset = document.getElementById('btn-sales-filter-reset');
 
   const trigger = () => loadSales();
 
   if (searchInput) searchInput.addEventListener('input', trigger);
   if (catFilter) catFilter.addEventListener('change', trigger);
   if (fyFilter) fyFilter.addEventListener('change', trigger);
+
+  if (startDateInput) {
+    startDateInput.addEventListener('input', trigger);
+    startDateInput.addEventListener('change', trigger);
+  }
+  if (endDateInput) {
+    endDateInput.addEventListener('input', trigger);
+    endDateInput.addEventListener('change', trigger);
+  }
+  if (btnReset) {
+    btnReset.addEventListener('click', () => {
+      if (searchInput) searchInput.value = '';
+      if (catFilter) catFilter.value = 'ALL';
+      if (fyFilter) fyFilter.value = 'ALL';
+      if (startDateInput) startDateInput.value = '';
+      if (endDateInput) endDateInput.value = '';
+      loadSales();
+    });
+  }
 
   // Top action buttons
   document.getElementById('btn-sales-add-project')?.addEventListener('click', () => {
@@ -83,9 +105,17 @@ async function loadSales() {
   const search = document.getElementById('search-sales') ? document.getElementById('search-sales').value.trim() : '';
   const category = document.getElementById('filter-sales-category') ? document.getElementById('filter-sales-category').value : 'ALL';
   const fy = document.getElementById('filter-sales-fy') ? document.getElementById('filter-sales-fy').value : 'ALL';
+  const startDate = document.getElementById('filter-sales-start')?.value || '';
+  const endDate = document.getElementById('filter-sales-end')?.value || '';
 
   try {
-    let list = await window.api.getProjects({ category, year: fy, search });
+    let list = await window.api.getProjects({ category, year: fy, search, startDate, endDate });
+
+    // Client-side date filtering safety
+    if ((startDate || endDate) && window.isDateInRange) {
+      list = (list || []).filter(p => window.isDateInRange(p.order_date || p.created_at, startDate, endDate));
+    }
+
     const tbody = document.getElementById('sales-table-body');
     if (!tbody) return;
     tbody.innerHTML = '';
@@ -109,23 +139,24 @@ async function loadSales() {
         tr.classList.add('table-row-selected');
       });
 
-      const d2Status = wf['2dEnd'] !== '-' ? 'COMPLETED' : (wf['2dStart'] !== '-' ? 'IN PROGRESS' : 'PENDING');
-      const d3Status = wf['3dEnd'] !== '-' ? 'COMPLETED' : (wf['3dStart'] !== '-' ? 'IN PROGRESS' : 'PENDING');
-      const designSendStatus = wf['designSend'] !== '-' ? 'YES' : 'PENDING';
+      const poStatus = (p.po_received || '').toUpperCase() === 'RECEIVED' || (p.po_received || '').toUpperCase() === 'YES' ? 'RECEIVED' : 'PENDING';
+      const quoteStatus = (p.quote_status || 'PENDING').toUpperCase();
+      const designCheck = (p.design_check || 'NOT CHECKED').toUpperCase();
+      const projName = p.project_name || p.mould_description || p.project_code || 'PROJECT';
 
       tr.innerHTML = `
-        <td>${p.order_date || '-'}</td>
-        <td style="font-weight: 700; color: var(--text-primary);">${p.customer_name}</td>
-        <td><span style="font-family: monospace; font-weight: 700; color: var(--brand-orange);">${p.project_code}</span></td>
-        <td><span class="badge badge-active">${p.category || 'HRS'}</span></td>
-        <td><span class="badge ${['SENT', 'APPROVED'].includes((p.quote_status || '').toUpperCase()) ? 'badge-completed' : 'badge-review'}">${p.quote_status || 'PENDING'}</span></td>
-        <td><span class="badge ${(p.po_received || '').toUpperCase() === 'RECEIVED' ? 'badge-completed' : 'badge-inactive'}">${p.po_received || 'PENDING'}</span></td>
-        <td><span style="font-size: 11px; font-weight: 600;">${d2Status}</span></td>
-        <td><span style="font-size: 11px; font-weight: 600;">${d3Status}</span></td>
-        <td><span style="font-size: 11px; font-weight: 700; color: ${designSendStatus === 'YES' ? '#10B981' : 'var(--text-muted)'};">${designSendStatus}</span></td>
-        <td><span class="badge badge-active">${p.design_check || 'NOT CHECKED'}</span></td>
-        <td>${p.owner || 'VIKRAM'}</td>
-        <td><span class="badge badge-${(p.status || 'ACTIVE').toLowerCase()}">${p.status || 'ACTIVE'}</span></td>
+        <td style="white-space: nowrap; font-size: 11.5px; color: var(--text-secondary);">${p.order_date || p.created_at || '-'}</td>
+        <td style="font-weight: 700; color: var(--text-primary); font-size: 13px;">${p.customer_name || p.customer || '-'}</td>
+        <td>
+          <div style="font-weight: 600; color: var(--text-primary); font-size: 12.5px;">${projName}</div>
+          <div style="font-family: var(--font-primary); font-size: 10px; color: var(--brand-orange); font-weight: 700;">${p.project_code || ''}</div>
+        </td>
+        <td><span class="badge badge-category">${p.category || 'HRS'}</span></td>
+        <td><span class="badge ${['SENT', 'APPROVED'].includes(quoteStatus) ? 'badge-completed' : 'badge-review'}">${quoteStatus}</span></td>
+        <td><span class="badge ${poStatus === 'RECEIVED' ? 'badge-completed' : 'badge-inactive'}">${poStatus}</span></td>
+        <td><span class="badge ${designCheck === 'CHECKED' || designCheck === 'PASS' ? 'badge-completed' : 'badge-review'}">${designCheck}</span></td>
+        <td style="font-size: 12px; font-weight: 600; color: var(--text-secondary);">${p.owner || p.lead_engineer || 'ANAND'}</td>
+        <td><span class="badge badge-${(p.status || 'ACTIVE').toLowerCase().replace(/\s+/g, '-')}">${p.status || 'NOT STARTED'}</span></td>
         <td>
           <div class="table-actions">
             <button class="btn-icon" title="Update Quote" onclick="window.openSalesQuoteModal('${p.id}')">

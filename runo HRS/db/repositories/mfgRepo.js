@@ -66,6 +66,36 @@ class ManufacturingRepository {
     this.db.save();
     return { success: true, manufacturing: mfg };
   }
+
+  createRecord(data) {
+    const id = data.id || `mfg-rec-${Date.now()}`;
+    const newRecord = {
+      id,
+      ...data,
+      created_at: new Date().toISOString().split('T')[0]
+    };
+    if (!this.db.data.manufacturing) this.db.data.manufacturing = [];
+    this.db.data.manufacturing.unshift(newRecord);
+    this.db.save();
+    return { success: true, record: newRecord };
+  }
+
+  updateRecord(id, data) {
+    let rec = (this.db.data.manufacturing || []).find(m => m.id === id || m.project_id === id);
+    if (!rec) return { success: false, message: 'Record not found' };
+    Object.assign(rec, data);
+    rec.updated_at = new Date().toISOString().split('T')[0];
+    this.db.save();
+    return { success: true, record: rec };
+  }
+
+  deleteRecord(id) {
+    const idx = (this.db.data.manufacturing || []).findIndex(m => m.id === id || m.project_id === id);
+    if (idx === -1) return { success: false, message: 'Record not found' };
+    this.db.data.manufacturing.splice(idx, 1);
+    this.db.save();
+    return { success: true };
+  }
 }
 
 module.exports = ManufacturingRepository;
