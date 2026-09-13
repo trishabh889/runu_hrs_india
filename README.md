@@ -7,7 +7,7 @@ A modern, high-performance Windows desktop application engineered for **RUNO HRS
 [![Platform](https://img.shields.io/badge/Platform-Windows_10_%7C_11_64--bit-0078D6?style=for-the-badge&logo=windows)](https://github.com/trishabh889/runu_hrs_india/releases/latest/download/RUNO_HRS_INDIA_MIS_Windows_x64.zip)
 
 <p align="center">
-  <img src="runo%20HRS/src/assets/icon.png" width="180" alt="RUNO App Icon" />
+  <img src="https://raw.githubusercontent.com/trishabh889/runu_hrs_india/main/runo%20HRS/src/assets/icon.png" width="180" alt="RUNO App Icon" />
 </p>
 
 ---
