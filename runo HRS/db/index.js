@@ -5,6 +5,9 @@
 const StorageManager = require('./storage');
 const seedData = require('./seedData');
 const { normalizeDateStr } = require('./dateUtils');
+const { config } = require('../config');
+
+// Local domain repositories
 const UserRepository = require('./repositories/userRepo');
 const CustomerRepository = require('./repositories/customerRepo');
 const ProjectRepository = require('./repositories/projectRepo');
@@ -13,13 +16,48 @@ const ApprovalRepository = require('./repositories/approvalRepo');
 const AccountsRepository = require('./repositories/accountsRepo');
 const StoreRepository = require('./repositories/storeRepo');
 
+// Supabase domain repositories
+const SupabaseAdapter = require('./adapters/supabaseAdapter');
+const SupabaseCustomerRepository = require('./repositories/supabase/supabaseCustomerRepo');
+const SupabaseProjectRepository = require('./repositories/supabase/supabaseProjectRepo');
+const SupabaseManufacturingRepository = require('./repositories/supabase/supabaseMfgRepo');
+const SupabaseApprovalRepository = require('./repositories/supabase/supabaseApprovalRepo');
+const SupabaseAccountsRepository = require('./repositories/supabase/supabaseAccountsRepo');
+const SupabaseStoreRepository = require('./repositories/supabase/supabaseStoreRepo');
+const SupabaseUserRepository = require('./repositories/supabase/supabaseUserRepo');
+const SupabasePurchaseRepository = require('./repositories/supabase/supabasePurchaseRepo');
+
 class DatabaseCoordinator {
   constructor() {
     this.storage = new StorageManager();
     this.data = this.storage.read() || this.initSeed();
     this.ensureSchema();
+    this.backend = config.backend;
 
-    // Initialize all domain repositories
+    if (this.backend === 'supabase') {
+      try {
+        this.adapter = new SupabaseAdapter();
+        this.users = new SupabaseUserRepository(this.adapter);
+        this.customers = new SupabaseCustomerRepository(this.adapter);
+        this.projects = new SupabaseProjectRepository(this.adapter);
+        this.manufacturing = new SupabaseManufacturingRepository(this.adapter);
+        this.approvals = new SupabaseApprovalRepository(this.adapter);
+        this.accounts = new SupabaseAccountsRepository(this.adapter);
+        this.store = new SupabaseStoreRepository(this.adapter);
+        this.purchase = new SupabasePurchaseRepository(this.adapter);
+        console.log('[DB] Initialized in SUPABASE backend mode.');
+      } catch (err) {
+        console.error('[DB] Failed to init Supabase backend, falling back to LOCAL mode:', err.message);
+        this.backend = 'local';
+        this.initLocalRepositories();
+      }
+    } else {
+      this.initLocalRepositories();
+      console.log('[DB] Initialized in LOCAL backend mode.');
+    }
+  }
+
+  initLocalRepositories() {
     this.users = new UserRepository(this);
     this.customers = new CustomerRepository(this);
     this.projects = new ProjectRepository(this);
@@ -27,6 +65,12 @@ class DatabaseCoordinator {
     this.approvals = new ApprovalRepository(this);
     this.accounts = new AccountsRepository(this);
     this.store = new StoreRepository(this);
+    this.purchase = {
+      getRequests: (f) => this.getPurchaseRequests(f),
+      createRequest: (d) => this.createPurchaseRequest(d),
+      updateRequest: (id, d) => this.updatePurchaseRequest(id, d),
+      deleteRequest: (id) => this.deletePurchaseRequest(id)
+    };
   }
 
   initSeed() {
@@ -178,6 +222,9 @@ class DatabaseCoordinator {
   // PURCHASE REQUESTS REPOSITORY METHODS (SLIDE 2)
   // --------------------------------------------------------------------------
   getPurchaseRequests(filters = {}) {
+    if (this.backend === 'supabase' && this.purchase && this.purchase.getRequests) {
+      return this.purchase.getRequests(filters);
+    }
     let list = this.data.purchaseRequests || [];
     const search = (filters.search || '').trim().toLowerCase();
     const project = (filters.project || 'ALL').trim();
@@ -206,6 +253,9 @@ class DatabaseCoordinator {
   }
 
   createPurchaseRequest(data) {
+    if (this.backend === 'supabase' && this.purchase && this.purchase.createRequest) {
+      return this.purchase.createRequest(data);
+    }
     if (!this.data.purchaseRequests) this.data.purchaseRequests = [];
     const nextSr = this.data.purchaseRequests.length + 1;
     const prNo = data.pr_no || `PR-2026-${String(nextSr).padStart(3, '0')}`;
@@ -235,6 +285,9 @@ class DatabaseCoordinator {
   }
 
   updatePurchaseRequest(id, updateData) {
+    if (this.backend === 'supabase' && this.purchase && this.purchase.updateRequest) {
+      return this.purchase.updateRequest(id, updateData);
+    }
     if (!this.data.purchaseRequests) return { success: false, message: 'No PRs found' };
     const idx = this.data.purchaseRequests.findIndex(p => p.id === id || p.pr_no === id);
     if (idx === -1) return { success: false, message: 'PR not found' };
@@ -244,6 +297,9 @@ class DatabaseCoordinator {
   }
 
   deletePurchaseRequest(id) {
+    if (this.backend === 'supabase' && this.purchase && this.purchase.deleteRequest) {
+      return this.purchase.deleteRequest(id);
+    }
     if (!this.data.purchaseRequests) return { success: false, message: 'No PRs found' };
     const before = this.data.purchaseRequests.length;
     this.data.purchaseRequests = this.data.purchaseRequests.filter(p => p.id !== id && p.pr_no !== id);

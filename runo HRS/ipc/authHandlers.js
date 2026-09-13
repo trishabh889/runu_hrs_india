@@ -4,9 +4,18 @@
 
 const { ipcMain } = require('electron');
 const db = require('../db');
+const authService = require('../services/auth/authService');
+const { config } = require('../config');
 
 function registerAuthHandlers(sessionState) {
-  ipcMain.handle('auth:login', (event, { username, password }) => {
+  ipcMain.handle('auth:login', async (event, { username, password }) => {
+    if (config.backend === 'supabase' && config.supabase.isConfigured) {
+      const supaRes = await authService.login(username, password);
+      if (supaRes.success) {
+        sessionState.currentUser = supaRes.user;
+        return supaRes;
+      }
+    }
     const res = db.users.authenticate(username, password);
     if (res.success) {
       sessionState.currentUser = res.user;
@@ -14,8 +23,8 @@ function registerAuthHandlers(sessionState) {
     return res;
   });
 
-  ipcMain.handle('auth:register', (event, userData) => {
-    const res = db.users.create(userData);
+  ipcMain.handle('auth:register', async (event, userData) => {
+    const res = await db.users.create(userData);
     if (res.success && !res.pendingApproval) {
       sessionState.currentUser = res.user;
     }
@@ -26,10 +35,14 @@ function registerAuthHandlers(sessionState) {
     return sessionState.currentUser;
   });
 
-  ipcMain.handle('auth:logout', () => {
+  ipcMain.handle('auth:logout', async () => {
+    if (config.backend === 'supabase' && config.supabase.isConfigured) {
+      await authService.logout();
+    }
     sessionState.currentUser = null;
     return { success: true };
   });
+
 
   // User management handlers
   ipcMain.handle('users:getAll', () => db.users.getAll());

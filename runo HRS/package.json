@@ -17,6 +17,7 @@
   "author": "RUNO HRS INDIA",
   "license": "ISC",
   "dependencies": {
+    "@supabase/supabase-js": "^2.116.0",
     "flatpickr": "^4.6.13",
     "tom-select": "^2.6.2"
   }
