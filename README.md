@@ -16,7 +16,12 @@ A modern, high-performance Windows desktop application engineered for **RUNO HRS
 
 > **No installation or coding software (Node.js/Python) required.** The package is completely portable and self-contained.
 
-### 📥 [Click Here to Download Latest `RUNO_HRS_INDIA_MIS_Windows_x64.zip` (v1.1.0)](https://github.com/trishabh889/runu_hrs_india/releases/latest/download/RUNO_HRS_INDIA_MIS_Windows_x64.zip)
+### 📥 Download Options:
+- 🚀 **[Click Here to Download `RUNO_HRS_INDIA_MIS_Windows_x64.zip` (v1.1.0)](https://github.com/trishabh889/runu_hrs_india/releases/download/v1.1.0/RUNO_HRS_INDIA_MIS_Windows_x64.zip)**
+- 🌐 **[GitHub Releases Page (v1.1.0)](https://github.com/trishabh889/runu_hrs_india/releases/tag/v1.1.0)**
+- 🔄 **[Permanent Latest Release Link](https://github.com/trishabh889/runu_hrs_india/releases/latest/download/RUNO_HRS_INDIA_MIS_Windows_x64.zip)**
+
+> 💡 *Note: Agar aap VS Code / IDE ke markdown preview me click kar rahe hain toh download trigger nahi hoga kyunki editor external binary download block karta hai. Link ko Chrome/Edge browser me open karein ya GitHub release page se download karein.*
 
 ### 🛠️ Quick Start (2 Steps):
 1. **Unzip**: Right-click the downloaded zip file and select **"Extract All..."**.
