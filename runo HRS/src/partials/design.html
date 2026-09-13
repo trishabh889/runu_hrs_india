@@ -235,11 +235,11 @@
 </div>
 
 <!-- Bottom Legends & Brand Motto -->
-<div class="design-bottom-bar">
+<div class="design-bottom-bar status-legend-footer">
   <div class="design-legends-group">
     <!-- Stage Action Legend -->
-    <div class="legend-section">
-      <span class="legend-title">Stage Action Legend:</span>
+    <div class="stage-action-legend" role="group" aria-label="Stage action legend">
+      <span class="status-legend__title">Stage Action Legend:</span>
       <span class="legend-pill">
         <span class="btn-stage-circle play-green" style="width: 20px; height: 20px; pointer-events: none;">
           <svg viewBox="0 0 24 24" width="9" height="9" style="margin-left: 1px;"><path d="M8 5.5v13l11-6.5z" fill="#FFFFFF"/></svg>
@@ -266,18 +266,20 @@
     </div>
 
     <!-- Status Legend -->
-    <div class="legend-section">
-      <span class="legend-title">Status Legend:</span>
-      <span class="legend-badge status-pill pill-in-design">In Design</span>
-      <span class="legend-badge status-pill pill-in-review">In Review</span>
-      <span class="legend-badge status-pill pill-completed">Completed</span>
-      <span class="legend-badge status-pill pill-paused">Paused</span>
-      <span class="legend-badge status-pill pill-on-hold">On Hold</span>
-      <span class="legend-badge status-pill pill-sent">Sent to Customer</span>
+    <div class="status-legend" role="group" aria-label="Status legend">
+      <span class="status-legend__title">Status Legend:</span>
+      <div class="status-legend__items">
+        <span class="status-legend__item"><span class="status-legend__dot status-pill pill-in-design" aria-hidden="true"></span><span>In Design</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot status-pill pill-in-review" aria-hidden="true"></span><span>In Review</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot status-pill pill-completed" aria-hidden="true"></span><span>Completed</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot status-pill pill-paused" aria-hidden="true"></span><span>Paused</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot status-pill pill-on-hold" aria-hidden="true"></span><span>On Hold</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot status-pill pill-sent" aria-hidden="true"></span><span>Sent to Customer</span></span>
+      </div>
     </div>
   </div>
 
-  <div class="legend-motto">
+  <div class="legend-motto status-legend-note">
     &ldquo;From Concept to Reliable Hot Runner Solution&rdquo;
   </div>
 </div>

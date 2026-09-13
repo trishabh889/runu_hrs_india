@@ -247,7 +247,9 @@
 }
 
 .filter-search-box input:focus {
-  border-color: #FF5722;
+  border-color: #386b94;
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(56, 107, 148, 0.4);
 }
 
 .filter-search-box svg {
@@ -635,10 +637,10 @@
 }
 
 .btn-page-num.active {
-  background: #FF5722;
-  border-color: #FF5722;
-  color: #FFFFFF;
-  box-shadow: 0 0 10px rgba(255, 87, 34, 0.4);
+  background: #FF5722 !important;
+  border-color: #FF5722 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 10px rgba(255, 87, 34, 0.45) !important;
 }
 
 .page-size-select {
@@ -736,8 +738,9 @@
 }
 
 .header-search-container input:focus {
-  border-color: #FF5722;
-  box-shadow: 0 0 12px rgba(255, 87, 34, 0.25);
+  border-color: #386b94;
+  box-shadow: 0 0 0 1px rgba(56, 107, 148, 0.4);
+  outline: none;
 }
 
 .header-search-container svg {

@@ -89,7 +89,7 @@
             <th style="width: 95px; color: #34D399;">DISCOUNT</th>
             <th style="width: 115px; color: #34D399;">FINAL PRICE</th>
             <th style="width: 140px;">REMARK</th>
-            <th style="width: 140px; color: #FBBF24;">STATUS (SCROLL)</th>
+            <th style="width: 140px; color: #FBBF24;">STATUS</th>
             <th style="width: 140px; color: #FBBF24;">PO STATUS</th>
           </tr>
         </thead>
@@ -132,7 +132,7 @@
             <th style="width: 140px;">HRTC TYPE</th>
             <th style="width: 130px;">CABLE LENGTH</th>
             <th style="width: 160px;">REMARK</th>
-            <th style="width: 145px; color: #FBBF24;">STATUS (SCROLL)</th>
+            <th style="width: 145px; color: #FBBF24;">STATUS</th>
             <th style="width: 145px; color: #FBBF24;">PO STATUS</th>
           </tr>
         </thead>
@@ -158,24 +158,19 @@
     </div>
   </div>
 
-  <!-- Status Color Coding Legend Bar -->
-  <div class="comm-legend-bar">
-    <span style="font-size: 11px; font-weight: 800; color: #FFFFFF; letter-spacing: 0.6px;">
-      STATUS LEGEND:
-    </span>
-    <div class="comm-legend-item">
-      <span class="comm-legend-dot" style="background: #EAB308; box-shadow: 0 0 6px #EAB308;"></span>
-      <span>PENDING - YELLOW</span>
+  <!-- Status Legend -->
+  <div class="status-legend-footer">
+    <div class="status-legend" role="group" aria-label="Status legend">
+      <span class="status-legend__title">Status Legend:</span>
+      <div class="status-legend__items">
+        <span class="status-legend__item"><span class="status-legend__dot badge-comm-pending" aria-hidden="true"></span><span>Pending</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot badge-comm-submitted" aria-hidden="true"></span><span>Submitted</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot badge-comm-submitted" aria-hidden="true"></span><span>Received</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot badge-comm-cancel" aria-hidden="true"></span><span>Cancel</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot badge-comm-cancel" aria-hidden="true"></span><span>Order Cancel</span></span>
+      </div>
     </div>
-    <div class="comm-legend-item">
-      <span class="comm-legend-dot" style="background: #22C55E; box-shadow: 0 0 6px #22C55E;"></span>
-      <span>SUBMITTED / RECEIVED - GREEN</span>
-    </div>
-    <div class="comm-legend-item">
-      <span class="comm-legend-dot" style="background: #EF4444; box-shadow: 0 0 6px #EF4444;"></span>
-      <span>CANCEL / ORDER CANCEL - RED</span>
-    </div>
-    <div style="margin-left: auto; font-size: 10.5px; color: #94A3B8;">
+    <div class="status-legend-note">
       Role-authorized fields save automatically on change
     </div>
   </div>

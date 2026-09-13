@@ -444,9 +444,10 @@
 }
 
 .mfg-page-btn.active {
-  background: #F97316;
-  color: #FFFFFF;
-  border-color: #F97316;
+  background: #FF5722 !important;
+  color: #FFFFFF !important;
+  border-color: #FF5722 !important;
+  box-shadow: 0 2px 10px rgba(255, 87, 34, 0.45) !important;
 }
 
 .mfg-page-btn:hover:not(.active) {

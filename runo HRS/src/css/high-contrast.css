@@ -65,15 +65,26 @@ body,
   background: radial-gradient(ellipse at top, rgba(31, 116, 170, 0.12), transparent 70%);
 }
 
-.header-search-container input,
-.search-box input,
 .form-input,
 .form-select,
 .form-textarea,
-.select-custom,
-.custom-dropdown-btn {
+.select-custom {
   background-color: var(--bg-input) !important;
   border-color: var(--bg-input-border) !important;
+  color: var(--text-primary) !important;
+}
+
+.header-search-container input,
+.search-box input {
+  background-color: var(--bg-table-header, #14334a) !important;
+  border: 1px solid #2c4c63 !important;
+  color: var(--text-primary) !important;
+  outline: none !important;
+}
+
+.custom-dropdown-btn {
+  background-color: var(--bg-table-header, #14334a) !important;
+  border-color: #2c4c63 !important;
   color: var(--text-primary) !important;
 }
 
@@ -84,12 +95,19 @@ textarea::placeholder {
 }
 
 .header-search-container input:focus,
-.search-box input:focus,
+.search-box input:focus {
+  border-color: #386b94 !important;
+  background-color: var(--bg-table-header, #14334a) !important;
+  box-shadow: 0 0 0 1px rgba(56, 107, 148, 0.4) !important;
+  outline: none !important;
+}
+
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
-  border-color: var(--brand-orange) !important;
-  box-shadow: 0 0 0 3px rgba(255, 106, 47, 0.24) !important;
+  border-color: #2c4c63 !important;
+  box-shadow: 0 0 0 2px rgba(44, 76, 99, 0.35) !important;
+  outline: none !important;
 }
 
 .form-label,
@@ -200,8 +218,7 @@ textarea::placeholder {
 }
 
 :where(button, input, select, textarea, [tabindex]):focus-visible {
-  outline: 2px solid #ffb08f;
-  outline-offset: 2px;
+  outline: none !important;
 }
 
 ::-webkit-scrollbar-track {

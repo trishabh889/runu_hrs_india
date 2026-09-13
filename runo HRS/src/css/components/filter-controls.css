@@ -69,13 +69,24 @@
   width: 100% !important;
   height: var(--filter-height) !important;
   padding: 0 12px 0 36px !important;
-  border: 1px solid var(--bg-input-border) !important;
+  border: 1px solid #2c4c63 !important;
   border-radius: var(--control-radius);
-  background-color: var(--bg-input) !important;
+  background-color: var(--bg-table-header, #14334a) !important;
   color: var(--text-primary);
   font-family: var(--font-primary);
   font-size: 12px !important;
   line-height: normal;
+  outline: none !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+}
+.sub-view :is(.search-box, .filter-search-box, .pr-search-box, .mfg-search-container) input:focus,
+.sub-view :is(.search-box, .filter-search-box, .pr-search-box, .mfg-search-container) input:focus-visible {
+  border-color: #386b94 !important;
+  background-color: var(--bg-table-header, #14334a) !important;
+  box-shadow: 0 0 0 1px rgba(56, 107, 148, 0.4) !important;
+  outline: none !important;
+  outline-color: transparent !important;
 }
 .sub-view :is(.search-box, .filter-search-box, .pr-search-box, .mfg-search-container) > svg {
   position: absolute;
@@ -138,6 +149,5 @@ input.flatpickr-input[type="hidden"] {
 .view-actions { flex-wrap: wrap; }
 .sub-view :is(.filter-select-compact, .pr-filter-select, .filter-item-select,
     .mfg-select-filter, .filter-group .custom-dropdown-btn, input):focus-visible {
-  outline: 2px solid #ffc398;
-  outline-offset: 2px;
+  outline: none !important;
 }

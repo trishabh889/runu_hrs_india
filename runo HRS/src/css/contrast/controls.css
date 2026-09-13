@@ -1,10 +1,28 @@
 /* Fields, buttons and existing SVG icons; no changes to shapes or dimensions. */
 :is(.form-input, select.form-select, .form-textarea, .login-input, select.pr-filter-select,
     select.mfg-select-filter, .mfg-date-input, .mfg-search-input, .comm-inline-input,
-    .select-custom, .custom-dropdown-btn, .header-search-container input, .search-box input,
-    select.filter-item-select, .filter-search-box input) {
+    .select-custom, select.filter-item-select) {
   background-color: var(--bg-input) !important;
   border-color: var(--bg-input-border) !important;
+  color: var(--text-primary) !important;
+}
+:is(.search-box input, .filter-search-box input, .header-search-container input) {
+  background-color: var(--bg-table-header, #14334a) !important;
+  border: 1px solid #2c4c63 !important;
+  color: var(--text-primary) !important;
+  outline: none !important;
+}
+:is(.search-box input, .filter-search-box input, .header-search-container input):focus,
+:is(.search-box input, .filter-search-box input, .header-search-container input):focus-visible {
+  background-color: var(--bg-table-header, #14334a) !important;
+  border-color: #386b94 !important;
+  box-shadow: 0 0 0 1px rgba(56, 107, 148, 0.4) !important;
+  outline: none !important;
+  outline-color: transparent !important;
+}
+.custom-dropdown-btn {
+  background-color: var(--bg-table-header, #14334a) !important;
+  border-color: #2c4c63 !important;
   color: var(--text-primary) !important;
 }
 :is(.pr-search-box, .pr-date-range-box, .mfg-date-range, .mfg-search-container, .filter-date-box) {
@@ -18,18 +36,20 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); }
   color: var(--text-primary);
 }
 :is(button:not(.custom-dropdown-btn), input, select, textarea, [tabindex]:not(.custom-dropdown)):focus-visible {
-  outline-color: #ffc398;
-  border-color: #ffb078 !important;
+  outline: none !important;
+  outline-color: transparent !important;
+  border-color: #2c4c63 !important;
 }
 :is(.btn-action-primary, .btn-add-design, .btn-login, .auth-tab-btn.active,
     .dept-tab-btn.active, .btn-page-num.active, .mfg-page-btn.active, .pr-page-num) {
-  background: var(--status-review);
-  color: #ffffff;
-  border-color: #ff9f64;
+  background: #FF5722 !important;
+  color: #ffffff !important;
+  border-color: #FF7A45 !important;
 }
-:is(.btn-action-primary, .btn-add-design, .btn-login, .auth-tab-btn.active):hover {
-  background: #9a3412;
-  color: #ffffff;
+:is(.btn-action-primary, .btn-add-design, .btn-login, .auth-tab-btn.active,
+    .btn-page-num.active, .mfg-page-btn.active, .pr-page-num):hover {
+  background: #FF6E40 !important;
+  color: #ffffff !important;
 }
 :is(.btn-open-completed, .btn-new-mfg, .btn-new-purchase,
     #btn-open-new-pr-modal, #btn-submit-purchase-request) {
@@ -58,7 +78,7 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); }
 :is(.btn-action-secondary, .btn-notification, .btn-close-modal,
     .btn-pr-filter-btn, .btn-mfg-filter, .commercial-tab-btn):hover {
   background-color: #14334a;
-  border-color: #ffb078;
+  border-color: #2c4c63;
   color: #ffffff;
 }
 .notification-badge { background-color: var(--status-danger); color: #ffffff; }

@@ -132,8 +132,9 @@
   cursor: default; padding: 4px 6px;
 }
 .pr-page-num {
-  background: #EA580C; color: #FFFFFF; font-size: 11.5px;
-  font-weight: 700; padding: 3px 8px; border-radius: 4px;
+  background: #FF5722 !important; color: #FFFFFF !important; font-size: 11.5px;
+  font-weight: 800; padding: 3px 8px; border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(255, 87, 34, 0.45) !important;
 }
 
 /* Bottom Legend & Quote Bar */

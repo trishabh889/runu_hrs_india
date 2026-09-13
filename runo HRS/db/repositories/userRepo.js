@@ -23,7 +23,7 @@ class UserRepository {
     const pClean = (password || '').trim();
 
     const user = (this.db.data.users || []).find(
-      u => u.username.toUpperCase() === uClean && u.password === pClean
+      u => u.username.toUpperCase() === uClean
     );
 
     if (user) {
@@ -31,11 +31,14 @@ class UserRepository {
         return {
           success: false,
           pendingApproval: true,
+          username: user.username,
           message: 'Admin approval is required before you can log in. PLEASE CONTACT ADMIN.'
         };
       }
-      const { password, ...safeUser } = user;
-      return { success: true, user: safeUser };
+      if (user.password === pClean) {
+        const { password, ...safeUser } = user;
+        return { success: true, user: safeUser };
+      }
     }
     return { success: false, message: 'Invalid Username or Password!' };
   }

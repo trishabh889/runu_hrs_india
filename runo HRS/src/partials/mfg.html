@@ -171,33 +171,15 @@
 </div>
 
 <!-- Status Legend Bar (External, below table card) -->
-<div class="mfg-external-legend-bar">
-  <div class="mfg-external-legend-title">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#FACC15; flex-shrink:0;">
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-    </svg>
-    <span>STATUS LEGEND:</span>
-  </div>
-  <div class="mfg-external-legend-items">
-    <div class="mfg-ext-legend-item">
-      <span class="mfg-ext-legend-dot" style="background:#475569;"></span>
-      <span class="mfg-ext-legend-label">Not Started</span>
-    </div>
-    <div class="mfg-ext-legend-item">
-      <span class="mfg-ext-legend-dot" style="background:#F59E0B;"></span>
-      <span class="mfg-ext-legend-label">In Progress</span>
-    </div>
-    <div class="mfg-ext-legend-item">
-      <span class="mfg-ext-legend-dot" style="background:#10B981;"></span>
-      <span class="mfg-ext-legend-label">Completed</span>
-    </div>
-    <div class="mfg-ext-legend-item">
-      <span class="mfg-ext-legend-dot" style="background:#EF4444;"></span>
-      <span class="mfg-ext-legend-label">On Hold</span>
-    </div>
-    <div class="mfg-ext-legend-item">
-      <span class="mfg-ext-legend-dot" style="background:#8B5CF6;"></span>
-      <span class="mfg-ext-legend-label">Rework</span>
+<div class="status-legend-footer">
+  <div class="status-legend" role="group" aria-label="Status legend">
+    <span class="status-legend__title">Status Legend:</span>
+    <div class="status-legend__items">
+      <span class="status-legend__item"><span class="status-legend__dot mfg-badge not-started" aria-hidden="true"></span><span>Not Started</span></span>
+      <span class="status-legend__item"><span class="status-legend__dot mfg-badge in-progress" aria-hidden="true"></span><span>In Progress</span></span>
+      <span class="status-legend__item"><span class="status-legend__dot mfg-badge completed" aria-hidden="true"></span><span>Completed</span></span>
+      <span class="status-legend__item"><span class="status-legend__dot mfg-badge on-hold" aria-hidden="true"></span><span>On Hold</span></span>
+      <span class="status-legend__item"><span class="status-legend__dot mfg-badge rework" aria-hidden="true"></span><span>Rework</span></span>
     </div>
   </div>
 </div>

@@ -132,26 +132,14 @@
   </div>
 </div>
 
-<!-- Status Color Coding Legend (Outside Pagination & Table Card) -->
-<div class="sales-external-legend-bar">
-  <div class="sales-external-legend-title">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color: #FACC15;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-    <span>STATUS LEGEND:</span>
-  </div>
-  <div class="sales-external-legend-items">
-    <div class="sales-external-item">
-      <span class="sales-status-badge sales-status-pending sales-badge-lg">PENDING</span>
-      <span class="sales-external-label">YELLOW</span>
-    </div>
-    <div class="sales-external-item">
-      <span class="sales-status-badge sales-status-submitted sales-badge-lg">SUBMITTED</span>
-      <span class="sales-external-label">GREEN</span>
-    </div>
-    <div class="sales-external-item">
-      <span class="sales-status-badge sales-status-cancel sales-badge-lg">CANCEL</span>
-      <span class="sales-external-label">RED</span>
+<!-- Status Legend (Outside Pagination & Table Card) -->
+<div class="status-legend-footer">
+  <div class="status-legend" role="group" aria-label="Status legend">
+    <span class="status-legend__title">Status Legend:</span>
+    <div class="status-legend__items">
+      <span class="status-legend__item"><span class="status-legend__dot sales-status-badge sales-status-pending" aria-hidden="true"></span><span>Pending</span></span>
+      <span class="status-legend__item"><span class="status-legend__dot sales-status-badge sales-status-submitted" aria-hidden="true"></span><span>Submitted</span></span>
+      <span class="status-legend__item"><span class="status-legend__dot sales-status-badge sales-status-cancel" aria-hidden="true"></span><span>Cancel</span></span>
     </div>
   </div>
 </div>
-
-

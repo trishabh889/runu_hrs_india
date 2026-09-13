@@ -219,11 +219,20 @@
 .btn-page-num.active,
 .mfg-page-btn.active,
 .pr-page-num {
-  background: #D97706 !important;
-  border-color: #F59E0B !important;
+  background: #FF5722 !important;
+  border-color: #FF5722 !important;
   color: #FFFFFF !important;
   font-weight: 800 !important;
-  box-shadow: 0 0 10px rgba(217, 119, 6, 0.4) !important;
+  box-shadow: 0 2px 10px rgba(255, 87, 34, 0.45) !important;
+}
+
+.btn-page-num.active:hover,
+.mfg-page-btn.active:hover,
+.pr-page-num:hover {
+  background: #FF6E40 !important;
+  border-color: #FF6E40 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(255, 87, 34, 0.6) !important;
 }
 
 .pagination-ellipsis {

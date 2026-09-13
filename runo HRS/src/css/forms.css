@@ -74,9 +74,9 @@
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
-  border-color: rgba(255, 87, 34, 0.6);
-  background: rgba(255, 87, 34, 0.03);
-  box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.1), 0 0 12px rgba(255, 87, 34, 0.08);
+  border-color: #386b94;
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(56, 107, 148, 0.4);
 }
 
 .form-textarea {
@@ -180,7 +180,7 @@
   transition: all var(--transition-fast); box-shadow: var(--shadow-sm);
 }
 .custom-dropdown-btn:hover, .custom-dropdown.open .custom-dropdown-btn {
-  border-color: var(--brand-orange); color: var(--brand-orange);
+  border-color: #386b94; color: #FFFFFF;
 }
 .custom-dropdown-arrow { transition: transform var(--transition-fast); flex-shrink: 0; }
 .custom-dropdown.open .custom-dropdown-arrow { transform: rotate(180deg); }
