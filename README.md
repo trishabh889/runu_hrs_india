@@ -2,9 +2,9 @@
 
 A modern, high-performance Windows desktop application engineered for **RUNO HRS INDIA (Hot Runner Systems)**.
 
-[![Download Windows App](https://img.shields.io/badge/Download-RUNO_HRS_MIS_v1.0.0_(Windows_x64)-FF5722?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/trishabh889/runu_hrs_india/releases/download/v1.0.0/RUNO_HRS_INDIA_MIS_Windows_x64.zip)
-[![Release](https://img.shields.io/badge/Release-v1.0.0-10B981?style=for-the-badge)](https://github.com/trishabh889/runu_hrs_india/releases/tag/v1.0.0)
-[![Platform](https://img.shields.io/badge/Platform-Windows_10_%7C_11_64--bit-0078D6?style=for-the-badge&logo=windows)](https://github.com/trishabh889/runu_hrs_india/releases/download/v1.0.0/RUNO_HRS_INDIA_MIS_Windows_x64.zip)
+[![Download Windows App](https://img.shields.io/badge/Download-RUNO_HRS_MIS_Latest_(Windows_x64)-FF5722?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/trishabh889/runu_hrs_india/releases/latest/download/RUNO_HRS_INDIA_MIS_Windows_x64.zip)
+[![Release](https://img.shields.io/badge/Release-v1.1.0-10B981?style=for-the-badge)](https://github.com/trishabh889/runu_hrs_india/releases/latest)
+[![Platform](https://img.shields.io/badge/Platform-Windows_10_%7C_11_64--bit-0078D6?style=for-the-badge&logo=windows)](https://github.com/trishabh889/runu_hrs_india/releases/latest/download/RUNO_HRS_INDIA_MIS_Windows_x64.zip)
 
 <p align="center">
   <img src="runo%20HRS/src/assets/icon.png" width="180" alt="RUNO App Icon" />
@@ -16,7 +16,7 @@ A modern, high-performance Windows desktop application engineered for **RUNO HRS
 
 > **No installation or coding software (Node.js/Python) required.** The package is completely portable and self-contained.
 
-### 📥 [Click Here to Download `RUNO_HRS_INDIA_MIS_Windows_x64.zip` (v1.0.0)](https://github.com/trishabh889/runu_hrs_india/releases/download/v1.0.0/RUNO_HRS_INDIA_MIS_Windows_x64.zip)
+### 📥 [Click Here to Download Latest `RUNO_HRS_INDIA_MIS_Windows_x64.zip` (v1.1.0)](https://github.com/trishabh889/runu_hrs_india/releases/latest/download/RUNO_HRS_INDIA_MIS_Windows_x64.zip)
 
 ### 🛠️ Quick Start (2 Steps):
 1. **Unzip**: Right-click the downloaded zip file and select **"Extract All..."**.

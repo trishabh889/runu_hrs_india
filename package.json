@@ -1,7 +1,7 @@
 {
   "name": "runo-hrs-mis",
   "productName": "RUNO HRS INDIA - MIS",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "RUNO HRS INDIA Management Information System Desktop Application",
   "main": "runo HRS/main.js",
   "scripts": {

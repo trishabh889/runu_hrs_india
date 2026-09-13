@@ -59,7 +59,7 @@ fs.mkdirSync(appDir, { recursive: true });
 console.log('Copying modular application source files...');
 const itemsToCopy = [
   'package.json', 'main.js', 'preload.js', 'logger.js',
-  'db', 'ipc', 'src', 'testing', 'data'
+  'config', 'services', 'db', 'ipc', 'src', 'testing', 'data', 'node_modules'
 ];
 itemsToCopy.forEach(item => {
   const itemPath = path.join(projectRoot, item);
@@ -110,6 +110,15 @@ try {
   if (fs.existsSync(zipOutput)) fs.unlinkSync(zipOutput);
   execSync(`powershell -NoProfile -Command "Compress-Archive -Path '${outputDirX64}\\*' -DestinationPath '${zipOutput}' -Force"`, { stdio: 'inherit' });
   console.log('✅ Distribution archive created at:', zipOutput);
+
+  // Synchronize zip to project root directory
+  const rootZip = path.join(projectRoot, '..', 'RUNO_HRS_INDIA_MIS_Windows_x64.zip');
+  try {
+    fs.copyFileSync(zipOutput, rootZip);
+    console.log('✅ Synchronized root distribution archive at:', rootZip);
+  } catch (err) {
+    console.warn('Note: Could not sync root zip:', err.message);
+  }
 } catch (e) {
   console.warn('Note: ZIP archive generation skipped:', e.message);
 }
