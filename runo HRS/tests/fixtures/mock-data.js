@@ -13,6 +13,8 @@ module.exports = {
       email: 'admin@synth.test',
       phone: '+91 99999 00001',
       department: 'Executive Management',
+      status: 'APPROVED',
+      is_approved: true,
       created_at: '2026-04-10'
     },
     {
@@ -24,6 +26,8 @@ module.exports = {
       email: 'sales@synth.test',
       phone: '+91 99999 00002',
       department: 'Sales & Marketing',
+      status: 'APPROVED',
+      is_approved: true,
       created_at: '2026-04-11'
     }
   ],

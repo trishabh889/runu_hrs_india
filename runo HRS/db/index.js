@@ -65,14 +65,19 @@ class DatabaseCoordinator {
       }
     });
 
-    // Ensure all existing users have approval status set (ANAND is always APPROVED)
+    // Ensure all existing users have approval status set (ANAND and default seed users are APPROVED; others require explicit admin approval)
     (this.data.users || []).forEach(u => {
-      if (u.username.toUpperCase() === 'ANAND' || !u.status) {
-        if (!u.status || u.username.toUpperCase() === 'ANAND') {
-          u.status = 'APPROVED';
-          u.is_approved = true;
-          modified = true;
-        }
+      const uName = (u.username || '').toUpperCase();
+      if (uName === 'ANAND' || uName === 'TESTADMIN') {
+        u.status = 'APPROVED';
+        u.is_approved = true;
+      } else if (!u.status) {
+        const isSeed = (seedData.users || []).some(su => (su.username || '').toUpperCase() === uName);
+        u.status = isSeed ? 'APPROVED' : 'PENDING_APPROVAL';
+        u.is_approved = isSeed;
+        modified = true;
+      } else {
+        u.is_approved = (u.status === 'APPROVED');
       }
     });
 

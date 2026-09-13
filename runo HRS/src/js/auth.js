@@ -88,6 +88,11 @@ function initAuth() {
           'ACCOUNT APPROVAL REQUIRED',
           `Admin approve karega tabhi login hoga. User "${username}" is pending administrator approval. Please contact admin.`
         );
+      } else if (res.rejected) {
+        showApprovalModal(
+          'ACCOUNT ACCESS REJECTED',
+          `Your account "${username}" access has been rejected or revoked. PLEASE CONTACT ADMIN.`
+        );
       } else {
         errorMsg.innerText = res.message || 'Invalid Username or Password';
         errorMsg.style.display = 'block';
@@ -295,6 +300,11 @@ function applyRBAC(role) {
   const usersNav = document.querySelector('.nav-item[data-view="users"]');
   if (usersNav) {
     usersNav.style.display = (roleUpper === 'ADMIN') ? 'flex' : 'none';
+  }
+
+  const itemUsers = document.getElementById('menu-item-users');
+  if (itemUsers) {
+    itemUsers.style.display = (roleUpper === 'ADMIN') ? 'flex' : 'none';
   }
 }
 

@@ -27,13 +27,23 @@ class UserRepository {
     );
 
     if (user) {
-      if (user.username.toUpperCase() !== 'ANAND' && (user.status === 'PENDING_APPROVAL' || user.is_approved === false)) {
-        return {
-          success: false,
-          pendingApproval: true,
-          username: user.username,
-          message: 'Admin approval is required before you can log in. PLEASE CONTACT ADMIN.'
-        };
+      if (user.username.toUpperCase() !== 'ANAND') {
+        if (user.status === 'REJECTED') {
+          return {
+            success: false,
+            rejected: true,
+            username: user.username,
+            message: 'Your account access has been rejected or revoked. PLEASE CONTACT ADMIN.'
+          };
+        }
+        if (user.status === 'PENDING_APPROVAL' || user.is_approved === false) {
+          return {
+            success: false,
+            pendingApproval: true,
+            username: user.username,
+            message: 'Admin approval is required before you can log in. PLEASE CONTACT ADMIN.'
+          };
+        }
       }
       if (user.password === pClean) {
         const { password, ...safeUser } = user;
@@ -79,8 +89,13 @@ class UserRepository {
     const idx = (this.db.data.users || []).findIndex(u => u.id === id || u.username.toUpperCase() === id.toUpperCase());
     if (idx === -1) return { success: false, message: 'User not found' };
 
-    if (this.db.data.users[idx].username === 'ANAND' && updates.role && updates.role !== 'ADMIN') {
-      return { success: false, message: 'Primary Admin role cannot be changed' };
+    if (this.db.data.users[idx].username === 'ANAND') {
+      if (updates.role && updates.role !== 'ADMIN') {
+        return { success: false, message: 'Primary Admin role cannot be changed' };
+      }
+      if (updates.status && updates.status !== 'APPROVED') {
+        return { success: false, message: 'Primary Admin status cannot be changed' };
+      }
     }
 
     this.db.data.users[idx] = { ...this.db.data.users[idx], ...updates };

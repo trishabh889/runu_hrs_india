@@ -63,6 +63,19 @@ function toggleSidebar(forceState) {
 }
 
 function switchView(viewName) {
+  // Guard User Management to ADMIN only
+  if (viewName === 'users') {
+    const user = window.AppState && window.AppState.currentUser;
+    const roleUpper = (user?.role || '').toUpperCase();
+    if (roleUpper !== 'ADMIN') {
+      if (window.showToast) {
+        window.showToast('Access Denied: User Management is restricted to Administrators only.', 'error');
+      }
+      switchView('dashboard');
+      return;
+    }
+  }
+
   window.AppState.activeView = viewName;
 
   // Unconditionally remove active state from all nav items to prevent dual highlight

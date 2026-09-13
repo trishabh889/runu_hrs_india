@@ -129,10 +129,42 @@ async function loadUsers() {
     usersState.currentPage = validPage;
 
     pageItems.forEach(u => {
-      const isApproved = u.status === 'APPROVED' || u.is_approved === true || u.username === 'ANAND';
-      const statusBadge = isApproved
-        ? `<span class="badge badge-completed">APPROVED</span>`
-        : `<span class="badge badge-pending">PENDING APPROVAL</span>`;
+      const isSuperAdmin = (u.username || '').toUpperCase() === 'ANAND';
+      const isApproved = isSuperAdmin || (u.status === 'APPROVED' && u.is_approved !== false);
+      const isRejected = !isSuperAdmin && u.status === 'REJECTED';
+      const isPending = !isSuperAdmin && !isApproved && !isRejected;
+
+      let statusBadge;
+      if (isApproved) {
+        statusBadge = `<span class="badge badge-completed">APPROVED</span>`;
+      } else if (isRejected) {
+        statusBadge = `<span class="badge" style="background: rgba(239, 68, 68, 0.15); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.3);">REJECTED</span>`;
+      } else {
+        statusBadge = `<span class="badge badge-pending">PENDING APPROVAL</span>`;
+      }
+
+      let approvalButtons = '';
+      if (!isSuperAdmin) {
+        if (isPending) {
+          approvalButtons = `
+            <button class="btn-table-action btn-approve-user" style="background: #10B981; color: #FFFFFF; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; cursor: pointer;" title="Approve Account" onclick="approveUser('${u.id}')">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+              APPROVE
+            </button>
+            <button class="btn-table-action btn-reject-user" style="background: #EF4444; color: #FFFFFF; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; cursor: pointer;" title="Reject Account" onclick="rejectUser('${u.id}')">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+              REJECT
+            </button>
+          `;
+        } else if (isRejected) {
+          approvalButtons = `
+            <button class="btn-table-action btn-approve-user" style="background: #10B981; color: #FFFFFF; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; cursor: pointer;" title="Re-Approve Account" onclick="approveUser('${u.id}')">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+              APPROVE
+            </button>
+          `;
+        }
+      }
 
       const tr = document.createElement('tr');
       tr.innerHTML = `
@@ -148,19 +180,14 @@ async function loadUsers() {
         <td>${u.created_at || '-'}</td>
         <td>
           <div class="table-actions">
-            ${!isApproved ? `
-              <button class="btn-table-action" style="background: #10B981; color: #FFFFFF; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; cursor: pointer;" title="Approve Account" onclick="approveUser('${u.id}')">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
-                APPROVE
-              </button>
-            ` : ''}
+            ${approvalButtons}
             <button class="btn-icon" title="Change Password" onclick="openChangePasswordModal('${u.username}')">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
             </button>
             <button class="btn-icon" title="Edit" onclick="editUser('${u.id}')">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
             </button>
-            ${u.username !== 'ANAND' ? `
+            ${!isSuperAdmin ? `
               <button class="btn-icon danger" title="Delete" onclick="deleteUser('${u.id}')">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
               </button>
@@ -222,6 +249,28 @@ window.approveUser = async function(id) {
   }
 };
 
+window.rejectUser = async function(id) {
+  const u = window.AppState.users.find(item => item.id === id);
+  const userName = u ? u.username : 'user';
+  const confirmed = await window.showConfirmDialog({
+    title: 'REJECT / REVOKE USER ACCESS',
+    message: `Are you sure you want to reject / revoke access for user account "${userName}"?`,
+    subtext: 'This user will be blocked from logging into RUNO HRS MIS until re-approved.',
+    confirmText: 'REJECT ACCESS',
+    cancelText: 'CANCEL',
+    danger: true
+  });
+  if (!confirmed) return;
+
+  const res = await window.api.updateUser(id, { status: 'REJECTED', is_approved: false });
+  if (res.success) {
+    window.showToast(`User "${userName}" rejected successfully. Access blocked.`, 'info');
+    loadUsers();
+  } else {
+    window.showToast(res.message || 'Failed to reject user', 'error');
+  }
+};
+
 window.editUser = function(id) {
   const u = window.AppState.users.find(item => item.id === id);
   if (!u) return;
@@ -238,7 +287,7 @@ window.editUser = function(id) {
 
   const statusSelect = document.getElementById('usr-status');
   if (statusSelect) {
-    statusSelect.value = (u.status === 'PENDING_APPROVAL' && u.username !== 'ANAND') ? 'PENDING_APPROVAL' : 'APPROVED';
+    statusSelect.value = (u.username === 'ANAND') ? 'APPROVED' : (u.status || 'PENDING_APPROVAL');
     statusSelect.disabled = (u.username === 'ANAND');
   }
 
@@ -270,3 +319,5 @@ window.deleteUser = async function(id) {
 
 window.initUsers = initUsers;
 window.loadUsers = loadUsers;
+window.approveUser = approveUser;
+window.rejectUser = rejectUser;

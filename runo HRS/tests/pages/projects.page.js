@@ -7,8 +7,9 @@ class ProjectsPage {
     this.page = page;
     this.searchInput = page.locator('#search-projects');
     this.tableBody = page.locator('#projects-table-body');
-    this.sectionFilterInput = page.locator('#select-projects-section');
-    this.statusFilterInput = page.locator('#select-projects-filter');
+    this.sectionDropdown = page.locator('#dropdown-projects-section');
+    this.statusDropdown = page.locator('#dropdown-projects-filter');
+    this.kpiTotal = page.locator('#kpi-proj-total');
   }
 
   async clickNewProject() {
@@ -31,6 +32,16 @@ class ProjectsPage {
   async search(query) {
     await this.searchInput.fill(query);
     await this.searchInput.dispatchEvent('input');
+  }
+
+  async filterByStatus(statusValue) {
+    await this.statusDropdown.locator('.custom-dropdown-btn').click();
+    await this.statusDropdown.locator(`.custom-dropdown-item[data-value="${statusValue}"]`).click();
+  }
+
+  async filterBySection(sectionValue) {
+    await this.sectionDropdown.locator('.custom-dropdown-btn').click();
+    await this.sectionDropdown.locator(`.custom-dropdown-item[data-value="${sectionValue}"]`).click();
   }
 
   async getRowCount() {

@@ -1,5 +1,5 @@
 // ==========================================================================
-// RUNO HRS MIS - E2E Test: Projects Workflow & Search (PROJ-01, SALES-01)
+// RUNO HRS MIS - E2E Test: Projects Workflow & Search (PROJ-01, PROJ-02)
 // ==========================================================================
 
 const { test, expect } = require('@playwright/test');
@@ -7,7 +7,7 @@ const { launchTestApp, closeTestApp } = require('../fixtures/electron.fixture');
 const NavigationPage = require('../pages/navigation.page');
 const ProjectsPage = require('../pages/projects.page');
 
-test.describe('Projects Workflow (PROJ-01, SALES-01)', () => {
+test.describe('Projects Workflow (PROJ-01, PROJ-02)', () => {
   let context = null;
 
   test.afterEach(async () => {
@@ -39,7 +39,7 @@ test.describe('Projects Workflow (PROJ-01, SALES-01)', () => {
     expect(rowTexts.some(t => t.includes('Synthetic 8-Drop Manifold'))).toBe(true);
   });
 
-  test('SALES-01: Search projects table by keyword and customer name', async () => {
+  test('PROJ-02: Search projects table by keyword and customer name', async () => {
     context = await launchTestApp({ tag: 'proj-search' });
     const { window } = context;
     const navPage = new NavigationPage(window);
@@ -61,5 +61,27 @@ test.describe('Projects Workflow (PROJ-01, SALES-01)', () => {
 
     const emptyRows = await projPage.getRowTexts();
     expect(emptyRows.some(t => t.includes('Front Bumper'))).toBe(false);
+  });
+
+  test('PROJ-03: Apply section and status filters on projects table', async () => {
+    context = await launchTestApp({ tag: 'proj-filter' });
+    const { window } = context;
+    const navPage = new NavigationPage(window);
+    const projPage = new ProjectsPage(window);
+
+    await navPage.navigateTo('projects');
+    await window.waitForTimeout(500);
+
+    // Filter by Section 'HRS'
+    await projPage.filterBySection('HRS');
+    await window.waitForTimeout(400);
+    let rows = await projPage.getRowTexts();
+    expect(rows.length).toBeGreaterThan(0);
+
+    // Filter by Status 'ACTIVE'
+    await projPage.filterByStatus('ACTIVE');
+    await window.waitForTimeout(400);
+    rows = await projPage.getRowTexts();
+    expect(rows.length).toBeGreaterThan(0);
   });
 });

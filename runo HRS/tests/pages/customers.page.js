@@ -7,9 +7,6 @@ class CustomersPage {
     this.page = page;
     this.addCustomerBtn = page.locator('#btn-add-customer-modal');
     this.searchInput = page.locator('#search-customers');
-    this.cityFilter = page.locator('#filter-cust-city');
-    this.stateFilter = page.locator('#filter-cust-state');
-    this.categoryFilter = page.locator('#filter-cust-project-category');
     this.tableBody = page.locator('#customers-table-body');
     this.form = page.locator('#form-customer');
     this.companyInput = page.locator('#cust-company');
@@ -39,13 +36,51 @@ class CustomersPage {
     await this.saveBtn.click();
   }
 
+  async editCustomer(updatedData) {
+    const editBtn = this.tableBody.locator('button.btn-icon').first();
+    await editBtn.click();
+    await this.form.waitFor({ state: 'visible' });
+    if (updatedData.company_name) await this.companyInput.fill(updatedData.company_name);
+    if (updatedData.contact_person) await this.contactInput.fill(updatedData.contact_person);
+    if (updatedData.phone) await this.phoneInput.fill(updatedData.phone);
+    if (updatedData.city) await this.cityInput.fill(updatedData.city);
+    await this.saveBtn.click();
+    await this.page.waitForTimeout(600);
+  }
+
   async search(query) {
     await this.searchInput.fill(query);
     await this.searchInput.dispatchEvent('input');
   }
 
   async filterByCategory(category) {
-    await this.categoryFilter.selectOption(category);
+    await this.page.evaluate((cat) => {
+      const el = document.getElementById('filter-cust-project-category');
+      if (el) {
+        el.value = cat;
+        el.dispatchEvent(new Event('change'));
+      }
+    }, category);
+  }
+
+  async filterByCity(city) {
+    await this.page.evaluate((c) => {
+      const el = document.getElementById('filter-cust-city');
+      if (el) {
+        el.value = c;
+        el.dispatchEvent(new Event('change'));
+      }
+    }, city);
+  }
+
+  async filterByState(state) {
+    await this.page.evaluate((s) => {
+      const el = document.getElementById('filter-cust-state');
+      if (el) {
+        el.value = s;
+        el.dispatchEvent(new Event('change'));
+      }
+    }, state);
   }
 
   async getRowCount() {
