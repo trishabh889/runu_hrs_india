@@ -17,7 +17,7 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); }
   background-color: var(--bg-surface);
   color: var(--text-primary);
 }
-:is(button, input, select, textarea, [tabindex]):focus-visible {
+:is(button:not(.custom-dropdown-btn), input, select, textarea, [tabindex]:not(.custom-dropdown)):focus-visible {
   outline-color: #ffc398;
   border-color: #ffb078 !important;
 }
@@ -33,13 +33,13 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); }
 }
 :is(.btn-open-completed, .btn-new-mfg, .btn-new-purchase,
     #btn-open-new-pr-modal, #btn-submit-purchase-request) {
-  background: var(--status-success) !important;
-  border-color: #34d399 !important;
+  background: var(--status-review) !important;
+  border-color: #ff9f64 !important;
   color: #ffffff !important;
 }
 :is(.btn-open-completed, .btn-new-mfg, .btn-new-purchase,
     #btn-open-new-pr-modal, #btn-submit-purchase-request):hover {
-  background: #065f46 !important;
+  background: #9a3412 !important;
 }
 .btn-category-box, .btn-category-box.btn-category-export {
   color: var(--brand-orange);

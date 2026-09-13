@@ -5,11 +5,11 @@
 .purchase-heading { font-size: 20px; font-weight: 800; color: #FFFFFF; margin: 0; letter-spacing: 0.5px; }
 .purchase-subheading { font-size: 11.5px; color: #7E91AA; margin: 3px 0 0 0; }
 .btn-new-purchase {
-  background: #059669; color: #FFFFFF; border: 1px solid #10B981; border-radius: 6px;
+  background: #c2410c; color: #FFFFFF; border: 1px solid #ff9f64; border-radius: 6px;
   padding: 8px 16px; font-size: 12px; font-weight: 800; cursor: pointer;
   display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease;
 }
-.btn-new-purchase:hover { background: #10B981; box-shadow: 0 0 12px rgba(16, 185, 129, 0.4); }
+.btn-new-purchase:hover { background: #9a3412; box-shadow: 0 0 12px rgba(194, 65, 12, 0.4); }
 
 /* 6 KPI Cards Grid */
 .purchase-kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 14px; }
@@ -66,8 +66,8 @@
 }
 .pr-data-table { width: 100%; border-collapse: collapse; font-size: 11.5px; color: #CBD5E1; }
 .pr-data-table th {
-  background: var(--bg-table-header, #14334a); color: #CBD5E1; font-size: 10px; font-weight: 800;
-  letter-spacing: 0.6px; text-transform: uppercase; padding: 10px 8px;
+  background: var(--bg-table-header, #14334a); color: #CBD5E1; font-size: 11.5px; font-weight: 800;
+  letter-spacing: 0.6px; text-transform: uppercase; padding: 10px 12px;
   text-align: left; border-bottom: 1px solid rgba(59, 130, 246, 0.25); white-space: nowrap;
 }
 .pr-data-table td {

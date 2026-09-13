@@ -125,12 +125,28 @@ async function loadSales() {
       list = (list || []).filter(p => window.isDateInRange(p.order_date || p.created_at, startDate, endDate));
     }
 
+    // Load manufacturing records for stage linking
+    let mfgList = [];
+    try {
+      if (window.api && window.api.getManufacturing) {
+        mfgList = await window.api.getManufacturing() || [];
+      }
+    } catch (e) {
+      console.warn('Could not load mfg records for sales view:', e);
+    }
+    const mfgMap = {};
+    (Array.isArray(mfgList) ? mfgList : []).forEach(m => {
+      if (m.project_code) mfgMap[m.project_code] = m;
+      if (m.project_id) mfgMap[m.project_id] = m;
+      if (m.id) mfgMap[m.id] = m;
+    });
+
     const tbody = document.getElementById('sales-table-body');
     if (!tbody) return;
     tbody.innerHTML = '';
 
-    if (list.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="13" style="text-align: center; color: var(--text-muted); padding: 24px;">No sales projects match the selected filters.</td></tr>';
+    if (!list || list.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="15" style="text-align: center; color: var(--text-muted); padding: 28px;">No sales projects match the selected filters.</td></tr>';
       if (window.renderTablePagination) {
         window.renderTablePagination({
           infoId: 'sales-pagination-info',
@@ -160,42 +176,92 @@ async function loadSales() {
       : { pageItems: list, totalEntries: list.length, totalPages: 1, validPage: 1, startIdx: 0, endIdx: list.length });
     salesState.currentPage = validPage;
 
+    // RBAC: Check if current user can edit PO (Admin, Sales, Commercial, Design)
+    const userRole = (window.AppState?.currentUser?.role || 'ADMIN').toUpperCase();
+    const canEditPO = ['ADMIN', 'SALES', 'COMMERCIAL', 'DESIGN'].includes(userRole);
+
     for (const p of pageItems) {
-      const wf = await window.api.getWorkflow(p.id);
       const isSelected = p.id === selectedSalesProjectId;
       const tr = document.createElement('tr');
       tr.className = isSelected ? 'table-row-selected' : '';
       tr.style.cursor = 'pointer';
 
       tr.addEventListener('click', (e) => {
-        if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+        if (e.target.tagName === 'BUTTON' || e.target.closest('button') || e.target.tagName === 'SELECT') return;
         selectedSalesProjectId = p.id;
         document.querySelectorAll('#sales-table-body tr').forEach(r => r.classList.remove('table-row-selected'));
         tr.classList.add('table-row-selected');
       });
 
-      const poStatus = (p.po_received || '').toUpperCase() === 'RECEIVED' || (p.po_received || '').toUpperCase() === 'YES' ? 'RECEIVED' : 'PENDING';
-      const quoteStatus = (p.quote_status || 'PENDING').toUpperCase();
-      const designCheck = (p.design_check || 'NOT CHECKED').toUpperCase();
-      const projName = p.project_name || p.mould_description || p.project_code || 'PROJECT';
+      // 1. Project Specifications
+      const projCode = p.project_code || 'RUNO-2026-000';
+      const custName = p.customer_name || p.customer || '-';
+      const mouldDesc = p.mould_description || p.project_name || 'Hot Runner System';
+      const typeVal = getProjectType(p);
+      const dropsCount = parseInt(p.nozzle_count || p.drops) || 1;
+      const dropsLabel = `${dropsCount} Drop${dropsCount > 1 ? 's' : ''}`;
+
+      // 2. Department Pipeline Statuses (PENDING / SUBMITTED / CANCEL)
+      const quoteStatus = getQuoteStatus(p);
+      const designStatus = getDesignStatus(p);
+      const poStatus = getPOStatus(p);
+      const mfgStatus = getMfgStatus(p, mfgMap);
+      const assemblyStatus = getAssemblyStatus(p, mfgMap);
+      const dispatchStatus = getDispatchStatus(p);
+      const serviceStatus = getServiceStatus(p);
+      const paymentStatus = getPaymentStatus(p);
+      const finalStatus = getFinalStatus(p);
+
+      // PO cell rendering: inline interactive select for authorized roles, else static badge
+      let poCellHtml = '';
+      if (canEditPO) {
+        const poCls = poStatus === 'SUBMITTED' ? 'sel-submitted' : (poStatus === 'CANCEL' ? 'sel-cancel' : 'sel-pending');
+        poCellHtml = `
+          <select class="sales-status-select ${poCls}" onchange="window.changeSalesPO('${p.id}', this.value)" title="Click to change PO status (Admin/Sales/Commercial/Design)">
+            <option value="PENDING" ${poStatus === 'PENDING' ? 'selected' : ''}>PENDING</option>
+            <option value="SUBMITTED" ${poStatus === 'SUBMITTED' ? 'selected' : ''}>SUBMITTED</option>
+            <option value="CANCEL" ${poStatus === 'CANCEL' ? 'selected' : ''}>CANCEL</option>
+          </select>
+        `;
+      } else {
+        poCellHtml = renderStatusBadge(poStatus);
+      }
 
       tr.innerHTML = `
-        <td style="white-space: nowrap; font-size: 11.5px; color: var(--text-secondary);">${p.order_date || p.created_at || '-'}</td>
-        <td style="font-weight: 700; color: var(--text-primary); font-size: 13px;">${p.customer_name || p.customer || '-'}</td>
-        <td>
-          <div style="font-weight: 600; color: var(--text-primary); font-size: 12.5px;">${projName}</div>
-          <div style="font-family: var(--font-primary); font-size: 10px; color: var(--brand-orange); font-weight: 700;">${p.project_code || ''}</div>
+        <td style="font-weight: 800; color: var(--brand-orange); font-size: 13px; font-family: var(--font-primary); white-space: nowrap;">
+          ${projCode}
         </td>
-        <td><span class="badge badge-category">${p.category || 'HRS'}</span></td>
-        <td><span class="badge ${['SENT', 'APPROVED'].includes(quoteStatus) ? 'badge-completed' : 'badge-review'}">${quoteStatus}</span></td>
-        <td><span class="badge ${poStatus === 'RECEIVED' ? 'badge-completed' : 'badge-inactive'}">${poStatus}</span></td>
-        <td><span class="badge ${designCheck === 'CHECKED' || designCheck === 'PASS' ? 'badge-completed' : 'badge-review'}">${designCheck}</span></td>
-        <td style="font-size: 12px; font-weight: 600; color: var(--text-secondary);">${p.owner || p.lead_engineer || 'ANAND'}</td>
-        <td><span class="badge badge-${(p.status || 'ACTIVE').toLowerCase().replace(/\s+/g, '-')}">${p.status || 'NOT STARTED'}</span></td>
-        <td>
-          <div class="table-actions">
+        <td style="font-weight: 700; color: var(--text-primary); font-size: 12.5px;">
+          ${custName}
+        </td>
+        <td style="color: #E2E8F0; font-size: 12px; font-weight: 500;">
+          ${mouldDesc}
+        </td>
+        <td style="text-align: center;">
+          <span class="sales-type-box">${typeVal}</span>
+        </td>
+        <td style="text-align: center;">
+          <span class="sales-drops-box">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            ${dropsLabel}
+          </span>
+        </td>
+        <td style="text-align: center;">${renderStatusBadge(quoteStatus)}</td>
+        <td style="text-align: center;">${renderStatusBadge(designStatus)}</td>
+        <td style="text-align: center;">${poCellHtml}</td>
+        <td style="text-align: center;">${renderStatusBadge(mfgStatus)}</td>
+        <td style="text-align: center;">${renderStatusBadge(assemblyStatus)}</td>
+        <td style="text-align: center;">${renderStatusBadge(dispatchStatus)}</td>
+        <td style="text-align: center;">${renderStatusBadge(serviceStatus)}</td>
+        <td style="text-align: center;">${renderStatusBadge(paymentStatus)}</td>
+        <td style="text-align: center;">${renderStatusBadge(finalStatus)}</td>
+        <td style="text-align: center;">
+          <div class="table-actions" style="justify-content: center; gap: 4px;">
             <button class="btn-icon" title="Update Quote" onclick="window.openSalesQuoteModal('${p.id}')">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+            </button>
+            <button class="btn-icon" title="Update PO Modal" onclick="openUpdatePOModal('${p.id}')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
             </button>
             <button class="btn-icon danger" title="Delete Project" onclick="window.deleteSalesProject('${p.id}')">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
@@ -235,6 +301,127 @@ async function loadSales() {
   }
 }
 
+// Helper: Determine TYPE (OPEN / VALVE / HRTC / SPARE)
+function getProjectType(p) {
+  if (p.type) {
+    const t = String(p.type).toUpperCase().trim();
+    if (['OPEN', 'VALVE', 'HRTC', 'SPARE'].includes(t)) return t;
+  }
+  const cat = (p.category || '').toUpperCase();
+  if (cat.includes('HRTC')) return 'HRTC';
+  if (cat.includes('SPARE')) return 'SPARE';
+  const nozzle = (p.nozzle_type || p.hrs_type || p.mould_description || '').toUpperCase();
+  if (nozzle.includes('VALVE')) return 'VALVE';
+  if (nozzle.includes('OPEN')) return 'OPEN';
+  return 'VALVE';
+}
+
+// 3-State Status Logic: PENDING (Yellow) / SUBMITTED (Green) / CANCEL (Red)
+function renderStatusBadge(status) {
+  const s = (status || 'PENDING').toUpperCase();
+  const cls = s === 'SUBMITTED' ? 'sales-status-submitted' : (s === 'CANCEL' ? 'sales-status-cancel' : 'sales-status-pending');
+  return `<span class="sales-status-badge ${cls}">${s}</span>`;
+}
+
+function getQuoteStatus(p) {
+  const val = (p.quote_status || '').toUpperCase();
+  if (['SUBMITTED', 'QUOTE SUBMITTED', 'SENT', 'APPROVED'].includes(val)) return 'SUBMITTED';
+  if (['CANCEL', 'CANCELLED', 'ORDER CANCEL', 'REJECTED'].includes(val)) return 'CANCEL';
+  return 'PENDING';
+}
+
+function getDesignStatus(p) {
+  const val = (p.design_status || p.design_check || '').toUpperCase();
+  if (['SUBMITTED', 'APPROVED', 'CHECKED', 'PASS', 'COMPLETED'].includes(val)) return 'SUBMITTED';
+  if (['CANCEL', 'CANCELLED', 'REJECTED', 'FAIL'].includes(val)) return 'CANCEL';
+  return 'PENDING';
+}
+
+function getPOStatus(p) {
+  const val = (p.po_received || p.po_status || '').toUpperCase();
+  if (['RECEIVED', 'YES', 'SUBMITTED', 'PO RECEIVED'].includes(val)) return 'SUBMITTED';
+  if (['CANCEL', 'ORDER CANCEL', 'CANCELLED'].includes(val)) return 'CANCEL';
+  return 'PENDING';
+}
+
+function getMfgStatus(p, mfgMap) {
+  if (p.mfg_status) {
+    const val = p.mfg_status.toUpperCase();
+    if (['SUBMITTED', 'COMPLETED'].includes(val)) return 'SUBMITTED';
+    if (['CANCEL', 'CANCELLED'].includes(val)) return 'CANCEL';
+    return 'PENDING';
+  }
+  const mfg = mfgMap && (mfgMap[p.project_code] || mfgMap[p.id]);
+  if (mfg) {
+    const s = (mfg.status || '').toUpperCase();
+    if (s === 'COMPLETED' || mfg.overall_progress === 100) return 'SUBMITTED';
+    if (s === 'CANCELLED' || s === 'CANCEL') return 'CANCEL';
+    return 'PENDING';
+  }
+  return 'PENDING';
+}
+
+function getAssemblyStatus(p, mfgMap) {
+  if (p.assembly_status) {
+    const val = p.assembly_status.toUpperCase();
+    if (['SUBMITTED', 'COMPLETED'].includes(val)) return 'SUBMITTED';
+    if (['CANCEL', 'CANCELLED'].includes(val)) return 'CANCEL';
+    return 'PENDING';
+  }
+  const mfg = mfgMap && (mfgMap[p.project_code] || mfgMap[p.id]);
+  if (mfg && mfg.stages && mfg.stages.assembly) {
+    const st = (mfg.stages.assembly.status || '').toUpperCase();
+    if (st === 'COMPLETED') return 'SUBMITTED';
+    if (st === 'CANCELLED') return 'CANCEL';
+  }
+  return 'PENDING';
+}
+
+function getDispatchStatus(p) {
+  const val = (p.dispatch_status || '').toUpperCase();
+  if (['SUBMITTED', 'DISPATCHED', 'COMPLETED'].includes(val) || (p.status === 'COMPLETED' && val !== 'CANCEL')) return 'SUBMITTED';
+  if (['CANCEL', 'CANCELLED'].includes(val)) return 'CANCEL';
+  return 'PENDING';
+}
+
+function getServiceStatus(p) {
+  const val = (p.service_status || '').toUpperCase();
+  if (['SUBMITTED', 'COMPLETED', 'INSTALLED', 'DONE'].includes(val)) return 'SUBMITTED';
+  if (['CANCEL', 'CANCELLED'].includes(val)) return 'CANCEL';
+  return 'PENDING';
+}
+
+function getPaymentStatus(p) {
+  const val = (p.payment_status || '').toUpperCase();
+  if (['SUBMITTED', 'PAID', 'RECEIVED', 'COMPLETED'].includes(val)) return 'SUBMITTED';
+  if (['CANCEL', 'CANCELLED', 'BAD DEBT'].includes(val)) return 'CANCEL';
+  return 'PENDING';
+}
+
+function getFinalStatus(p) {
+  const val = (p.status || '').toUpperCase();
+  if (['COMPLETED', 'DELIVERED'].includes(val)) return 'SUBMITTED';
+  if (['CANCEL', 'CANCELLED', 'CLOSED'].includes(val)) return 'CANCEL';
+  return 'PENDING';
+}
+
+// Inline PO updater (Admin, Sales, Commercial, Design)
+window.changeSalesPO = async function(id, status) {
+  try {
+    const poVal = status === 'SUBMITTED' ? 'RECEIVED' : status;
+    const res = await window.api.updatePO(id, poVal);
+    if (res && res.success) {
+      window.showToast(`PO Status updated to ${status}`, 'success');
+      loadSales();
+    } else {
+      window.showToast('Failed to update PO status', 'error');
+    }
+  } catch (err) {
+    console.error('Error updating PO status:', err);
+    window.showToast('Error updating PO status', 'error');
+  }
+};
+
 window.openSalesQuoteModal = function(id) {
   openUpdateQuoteModal(id);
 };
@@ -258,3 +445,4 @@ window.deleteSalesProject = async function(id) {
 
 window.initSales = initSales;
 window.loadSales = loadSales;
+

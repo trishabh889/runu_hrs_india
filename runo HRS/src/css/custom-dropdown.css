@@ -57,8 +57,12 @@ select[data-custom-dropdown-hidden] {
 }
 
 .custom-dropdown-btn:hover,
+.custom-dropdown-btn:focus,
+.custom-dropdown-btn:focus-visible,
 .custom-dropdown.open .custom-dropdown-btn {
   border-color: #3B82F6 !important;
+  outline: none !important;
+  outline-color: transparent !important;
   color: #FFFFFF !important;
   background-color: #14334a !important;
   box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35) !important;

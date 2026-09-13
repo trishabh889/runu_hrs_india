@@ -1,11 +1,12 @@
 /* Consistent table density, with horizontal scrolling for wide domain schemas. */
 :root {
-  --table-header-height: 40px;
+  --table-header-height: 42px;
   --table-row-height: 52px;
+  --table-header-padding: 11px 12px;
   --table-cell-padding: 8px 12px;
   --table-radius: 8px;
 }
-:is(.table-card, .pr-table-card, .design-table-card, .mfg-table-card) {
+:is(.table-card, .pr-table-card, .design-table-card, .mfg-table) {
   width: 100%;
   min-width: 0;
   border-radius: var(--table-radius);
@@ -22,19 +23,18 @@
   font-family: var(--font-primary);
   font-size: 12px !important;
 }
-:is(.data-table, .pr-data-table, .design-master-table, .mfg-table) thead th {
+:is(.data-table, .pr-data-table, .mfg-table) thead th {
   height: var(--table-header-height) !important;
-  padding: var(--table-cell-padding) !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
+  min-height: var(--table-header-height) !important;
+  padding: var(--table-header-padding, 11px 12px) !important;
+  font-size: 11.5px !important;
+  font-weight: 800 !important;
   line-height: 16px;
-  letter-spacing: 0.5px !important;
+  letter-spacing: 0.6px !important;
   white-space: nowrap;
-  vertical-align: middle;
+  vertical-align: middle !important;
   text-align: left;
 }
-/* Each tier is 40px; row-spanning labels cover both tiers. */
-.design-master-table thead th.group-header { padding: 3px 12px !important; }
 :is(.data-table, .pr-data-table, .design-master-table, .mfg-table) tbody td {
   height: var(--table-row-height);
   padding: var(--table-cell-padding) !important;
@@ -46,7 +46,6 @@
 .design-master-table thead th.th-stage-sub,
 .design-master-table thead th.group-header {
   text-align: center !important;
-  padding: 4px 2px !important;
 }
 .design-master-table tbody td.td-stage-cell,
 .design-master-table tbody td.td-hrs-num,
@@ -220,11 +219,11 @@
 .btn-page-num.active,
 .mfg-page-btn.active,
 .pr-page-num {
-  background: #2563EB !important;
-  border-color: #3B82F6 !important;
+  background: #D97706 !important;
+  border-color: #F59E0B !important;
   color: #FFFFFF !important;
   font-weight: 800 !important;
-  box-shadow: 0 0 10px rgba(59, 130, 246, 0.4) !important;
+  box-shadow: 0 0 10px rgba(217, 119, 6, 0.4) !important;
 }
 
 .pagination-ellipsis {

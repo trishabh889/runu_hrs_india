@@ -4,7 +4,7 @@
 
 /* Top Action Button */
 .btn-new-mfg {
-  background: #059669;
+  background: #c2410c;
   color: #FFFFFF;
   border: none;
   border-radius: 4px;
@@ -17,14 +17,14 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 2px 10px rgba(5, 150, 105, 0.4);
+  box-shadow: 0 2px 10px rgba(194, 65, 12, 0.4);
   transition: all var(--transition-fast);
 }
 
 .btn-new-mfg:hover {
-  background: #047857;
+  background: #9a3412;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.5);
+  box-shadow: 0 4px 12px rgba(194, 65, 12, 0.5);
 }
 
 /* 6 KPI Cards Grid */
@@ -222,11 +222,11 @@
 .mfg-table th {
   background: var(--bg-table-header, #14334a);
   color: #CBD5E1;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
-  padding: 6px 6px;
+  padding: 10px 12px;
   border-bottom: 1px solid rgba(59, 130, 246, 0.25);
   white-space: nowrap;
 }
@@ -369,29 +369,62 @@
   padding: 12px 16px;
   background: #0d121d;
   border-top: 1px solid #1e293b;
-  flex-wrap: wrap;
   gap: 12px;
 }
 
-.mfg-status-legend {
+/* External Status Legend Bar */
+.mfg-external-legend-bar {
   display: flex;
   align-items: center;
-  gap: 14px;
-  font-size: 11px;
-  color: #94A3B8;
+  gap: 24px;
+  margin-top: 14px;
+  padding: 11px 20px;
+  background: #0B1220;
+  border: 1px solid #1B2842;
+  border-radius: 8px;
+  flex-wrap: wrap;
 }
 
-.mfg-legend-item {
+.mfg-external-legend-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #FACC15;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.mfg-external-legend-items {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-.mfg-legend-color {
-  width: 14px;
-  height: 10px;
-  border-radius: 2px;
+.mfg-ext-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
+
+.mfg-ext-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+
+.mfg-ext-legend-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #CBD5E1;
+  letter-spacing: 0.3px;
+}
+
 
 .mfg-pagination {
   display: flex;

@@ -150,20 +150,9 @@
     </table>
   </div>
 
-  <!-- Table Footer with Status Legend & Pagination -->
+  <!-- Table Footer: Entries Count + Pagination only -->
   <div class="mfg-table-footer">
-    <div style="display: flex; flex-direction: column; gap: 8px;">
-      <div id="mfg-showing-entries" style="font-size: 11px; color: #94A3B8;">Showing 1 to 15 of 15 entries</div>
-      <div class="mfg-status-legend">
-        <span style="font-weight: 700; color: #cbd5e1;">Status Legend:</span>
-        <div class="mfg-legend-item"><span class="mfg-legend-color" style="background: #475569;"></span><span>Not Started</span></div>
-        <div class="mfg-legend-item"><span class="mfg-legend-color" style="background: #F59E0B;"></span><span>In Progress</span></div>
-        <div class="mfg-legend-item"><span class="mfg-legend-color" style="background: #10B981;"></span><span>Completed</span></div>
-        <div class="mfg-legend-item"><span class="mfg-legend-color" style="background: #EF4444;"></span><span>On Hold</span></div>
-        <div class="mfg-legend-item"><span class="mfg-legend-color" style="background: #8B5CF6;"></span><span>Rework</span></div>
-      </div>
-    </div>
-
+    <div id="mfg-showing-entries" style="font-size: 11px; color: #94A3B8;">Showing 1 to 15 of 15 entries</div>
     <div class="mfg-pagination">
       <button type="button" class="btn-page-nav" id="btn-mfg-prev">Previous</button>
       <div id="mfg-page-numbers" class="page-numbers"></div>
@@ -180,6 +169,39 @@
     </div>
   </div>
 </div>
+
+<!-- Status Legend Bar (External, below table card) -->
+<div class="mfg-external-legend-bar">
+  <div class="mfg-external-legend-title">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#FACC15; flex-shrink:0;">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+    </svg>
+    <span>STATUS LEGEND:</span>
+  </div>
+  <div class="mfg-external-legend-items">
+    <div class="mfg-ext-legend-item">
+      <span class="mfg-ext-legend-dot" style="background:#475569;"></span>
+      <span class="mfg-ext-legend-label">Not Started</span>
+    </div>
+    <div class="mfg-ext-legend-item">
+      <span class="mfg-ext-legend-dot" style="background:#F59E0B;"></span>
+      <span class="mfg-ext-legend-label">In Progress</span>
+    </div>
+    <div class="mfg-ext-legend-item">
+      <span class="mfg-ext-legend-dot" style="background:#10B981;"></span>
+      <span class="mfg-ext-legend-label">Completed</span>
+    </div>
+    <div class="mfg-ext-legend-item">
+      <span class="mfg-ext-legend-dot" style="background:#EF4444;"></span>
+      <span class="mfg-ext-legend-label">On Hold</span>
+    </div>
+    <div class="mfg-ext-legend-item">
+      <span class="mfg-ext-legend-dot" style="background:#8B5CF6;"></span>
+      <span class="mfg-ext-legend-label">Rework</span>
+    </div>
+  </div>
+</div>
+
 
 <!-- Modal: New Manufacturing Entry matching screenshot -->
 <div id="modal-new-manufacturing" class="mfg-modal-overlay">
